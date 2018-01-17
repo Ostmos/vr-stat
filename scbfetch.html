@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-4 mb-4">SCB</h1>
+        <div class="d-flex">
+            <button class="btn btn-warning mr-4" id="getPosts">Get SCB Data</button>
+        </div>
+        <div id="output"></div>
+    </div>
+  <script>
+    document.getElementById('getPosts').addEventListener
+    ('click', getPosts);
+
+    function getPosts(){
+        fetch('http://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0401/BE0401B/BefProgFoddaMedel10')
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            console.log(data.title);
+            let output = `<h4 class="mb-4">${data.title}</h4>`;
+            document.getElementById('output').innerHTML = output;
+        })
+    }
+    </script>
+</body>
+</html>
