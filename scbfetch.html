@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fetch API</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1 class="display-4 mb-4">SCB</h1>
-        <div class="d-flex">
-            <button class="btn btn-warning mr-4" id="getPosts">Get SCB Data</button>
+        <div class="form-group">
+            <input type="text" id="search" class="search" placeholder="URL" required>
         </div>
+        <button class="btn btn-primary" id="getPosts">Get SCB Data</button>
         <div id="output"></div>
     </div>
   <script>
@@ -20,7 +22,10 @@
     ('click', getPosts);
 
     function getPosts(){
-        fetch('http://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0401/BE0401B/BefProgFoddaMedel10')
+        console.log('hello');
+        var url = document.querySelector('.search').value;
+
+        fetch(url)
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
