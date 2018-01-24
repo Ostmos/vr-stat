@@ -28,9 +28,8 @@
         fetch(url)
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
-            console.log(data.title);
             let output = `<h4 class="mb-4">${data.title}</h4>`;
+            
             document.getElementById('output').innerHTML = output;
         })
     }
