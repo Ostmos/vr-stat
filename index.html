@@ -26,22 +26,45 @@
                 }
             </script>
             <a-entity rotation="0 45 0" position="1 0 -2">
-                <a-plane id="wall1" position="0 0.5 0" width="1" rotation="0 -180 0" material="" geometry="" opacity="0.25"></a-plane>
-                <a-plane position="0.5 0.5 -0.5" width="1" rotation="0 270 0" material="" geometry="" opacity="0.25"></a-plane>
-                <a-plane position="-0.5 0.5 -0.5" width="1" rotation="0 -270 0" material="" geometry="" opacity="0.25"></a-plane>
-                <a-plane position="0 0.5 -1" width="1" material="" geometry="" opacity="0.5"></a-plane>
-                <a-entity line="opacity:0.6;start:0.5 0 0;end:0.5 1 0;color:black" rotation="90 0 0" <="" a-entity="" position="0 0.5 -1"></a-entity>
+                <a-plane id="wall1" position="0 0.5 0" width="1" height="1" rotation="0 -180 0" material="" geometry="" opacity="0.25">
+                        <a-text value="Y-Axis" ;="" opacity="0.4" position="-0.4 0 0" rotation="0 0 90" color="black" text="width:1.8099999999999998; align:right; baseline:bottom"></a-text>
+                </a-plane>
+                <a-plane id="wall2" position="0.5 0.5 -0.5" width="1" height="1" rotation="0 270 0" material="" geometry="" opacity="0.25"></a-plane>
+                <a-plane id="wall3"position="-0.5 0.5 -0.5" width="1" height="1" rotation="0 -270 0" material="" geometry="" opacity="0.25"></a-plane>
+                <a-plane id="wall4"position="0 0.5 -1" width="1" height="1" material="" geometry="" opacity="0.25">
+                        <a-text value="Y-Axis" ;="" opacity="0.4" position="-0.4 0 0" rotation="0 0 90" color="black" text="width:1.8099999999999998; align:right; baseline:bottom"></a-text>
+                </a-plane>
                 <script>
-                    var plane=document.querySelector('#wall1');
-                    for (var i = 0; i<10; i++){
-                        var line = document.createElement('a-entity');
-                        line.setAttribute('line','opacity:0.6;start:-0.5 0 0;end:0.5 0 0;color:black');
-                        line.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
-                        line.setAttribute('rotation', '0 0 0');
-                        plane.appendChild(line);
+                    var plane1=document.querySelector('#wall1');
+                    var plane2=document.querySelector('#wall2');
+                    var plane3=document.querySelector('#wall3');
+                    var plane4=document.querySelector('#wall4');
+                    for (var i = 0; i<11; i++){
+                        var line1 = document.createElement('a-entity');
+                        var line2 = document.createElement('a-entity');
+                        var line3 = document.createElement('a-entity');
+                        var line4 = document.createElement('a-entity');
+                        line1.setAttribute('line','opacity:0.4; start:-0.3 0 0; end:0.5 0 0; color:black');
+                        line1.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
+                        line1.setAttribute('rotation', '0 0 0');
+
+                        line2.setAttribute('line','opacity:0.4; start:-0.5 0 0; end:0.5 0 0; color:black');
+                        line2.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
+                        line2.setAttribute('rotation', '0 0 0');
+
+                        line3.setAttribute('line','opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black');
+                        line3.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
+                        line3.setAttribute('rotation', '0 0 0');
+
+                        line4.setAttribute('line','opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black');
+                        line4.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
+                        line4.setAttribute('rotation', '0 0 0');
+                        plane1.appendChild(line1);
+                        plane2.appendChild(line2);
+                        plane3.appendChild(line3);
+                        plane4.appendChild(line4);
                     }
                 </script>
-                
             </a-entity>
         </a-scene>
     </body>
