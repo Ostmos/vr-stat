@@ -25,6 +25,24 @@
                     scene.appendChild(cylinder);
                 }
             </script>
+            <a-entity rotation="0 45 0" position="1 0 -2">
+                <a-plane id="wall1" position="0 0.5 0" width="1" rotation="0 -180 0" material="" geometry="" opacity="0.25"></a-plane>
+                <a-plane position="0.5 0.5 -0.5" width="1" rotation="0 270 0" material="" geometry="" opacity="0.25"></a-plane>
+                <a-plane position="-0.5 0.5 -0.5" width="1" rotation="0 -270 0" material="" geometry="" opacity="0.25"></a-plane>
+                <a-plane position="0 0.5 -1" width="1" material="" geometry="" opacity="0.5"></a-plane>
+                <a-entity line="opacity:0.6;start:0.5 0 0;end:0.5 1 0;color:black" rotation="90 0 0" <="" a-entity="" position="0 0.5 -1"></a-entity>
+                <script>
+                    var plane=document.querySelector('#wall1');
+                    for (var i = 0; i<10; i++){
+                        var line = document.createElement('a-entity');
+                        line.setAttribute('line','opacity:0.6;start:-0.5 0 0;end:0.5 0 0;color:black');
+                        line.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
+                        line.setAttribute('rotation', '0 0 0');
+                        plane.appendChild(line);
+                    }
+                </script>
+                
+            </a-entity>
         </a-scene>
     </body>
 </html>
