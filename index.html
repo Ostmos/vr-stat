@@ -16,16 +16,42 @@
             <a-sky color="#fef5ee"></a-sky>
 =======
             <script>
+                var posX    = getX(); 
+                var posZ    = getZ();
                 var heights = getY();
+
                 var length = heights.length;
-                for(var i = 0; i < length; i++) {
-                    var scene = document.querySelector('a-scene');
-                    var cylinder = document.createElement('a-cylinder');
-                    cylinder.setAttribute('color', '#FF9500');
-                    cylinder.setAttribute('height', heights[i]);
-                    cylinder.setAttribute('radius', '0.75');
-                    cylinder.setAttribute('position', heights[i] + ' 5.5 ' + '-5');
-                    scene.appendChild(cylinder);
+
+                var planePos = document.querySelector('a-plane').getAttribute('position');
+                var  planeW  = document.querySelector('a-plane').getAttribute('width');
+                var plane = document.querySelector('a-plane');
+                var  planeD= document.querySelector('a-plane').getAttribute('depth');
+                var boxPosY  = planePos[1] + planeW/2 - 0.5;
+                var boxPosZ  = planePos[2] + planeD/2 - 0.5;
+                var pX = planePos[0] - (planeW/2) + 0.5;
+                var count = 0;
+                for(var i = 0; i < Math.sqrt(length); i++) {
+                    console.log(Math.sqrt(length));
+                    for(var j = 0; j < Math.sqrt(length); j++) {
+
+                        var scene = document.querySelector('a-scene');
+                        var cylinder = document.createElement('a-box');
+                        
+                        cylinder.setAttribute('color', '#FF9500');
+                        cylinder.setAttribute('height', heights[count]);
+                        console.log(heights[count]);
+                        cylinder.setAttribute('depth', 1);
+                        cylinder.setAttribute('width', 1);
+                        //cylinder.setAttribute('radius', '0.75');ount
+                        cylinder.setAttribute('position', pX++ + ' ' + boxPosY  + ' ' + boxPosZ + heights[count]/2);
+                        cylinder.setAttribute('rotation', '0 0  0');
+                        scene.appendChild(cylinder);
+                        count++;
+                    }
+                    boxPosZ++;
+                    pX = planePos[0] - (planeW/2) + 0.5;
+                    
+
                 }
             </script>
 >>>>>>> 9942ddd9f3a91f2c6f3d55eebe999504afc74a5d
