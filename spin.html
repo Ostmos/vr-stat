@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script src="scbwrapper.js"></script>
+        <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-click-drag-component"></script>
+        <script src="box.js"></script>
+        <script>
+            import deepEqual from 'deep-equal';
+            registerAframeClickDragComponent(window.AFRAME);
+            AFRAME.registerComponent('handle-events', {
+                init: function(){
+                    var sceneEl = document.querySelector('a-scene');
+                    var boxEl = sceneEl.querySelector('.box');
+
+                    boxEl.addEventListener('click', function (){
+                        boxEl.setAttribute('scale', {x: 2, y: 2, z: 2});
+                    });
+                }
+            });
+        </script>
+    </head>
+
+    <body>
+        <a-scene>
+            <a-box class="box" material="color: red" position="0 5 0" scale="3 3 3" handle-events></a-box>
+            <a-plane material="color: grey" width="10" height="10" position="0 0 0" rotation="-90 0 0"></a-plane>
+            <a-camera position="0 5 15">
+                <a-cursor></a-cursor>
+            </a-camera>
+        </a-scene>
+    </body>
