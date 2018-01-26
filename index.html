@@ -12,14 +12,11 @@
             <a-entity box="size: 2; height: 3.0; depth: 1; color: red"; position="1 1.5 -5"></a-entity>
             <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10as" color="#0b7c7c"></a-plane>
             <a-sky color="#fef5ee"></a-sky>
-<<<<<<< HEAD
-            <a-sky color="#fef5ee"></a-sky>
-=======
             <script>
                 var posX    = getX(); 
                 var posZ    = getZ();
                 var heights = getY();
-
+                var colorValues = ['black', 'orange', 'purple', 'green', 'pink'];
                 var length = heights.length;
 
                 var planePos = document.querySelector('a-plane').getAttribute('position');
@@ -42,19 +39,20 @@
                         console.log(heights[count]);
                         cylinder.setAttribute('depth', 1);
                         cylinder.setAttribute('width', 1);
+                        cylinder.setAttribute('color', colorValues[Math.floor(Math.random() * 5)]);
+                        boxPosY = planePos[1] + heights[count]/2;  
                         //cylinder.setAttribute('radius', '0.75');ount
-                        cylinder.setAttribute('position', pX++ + ' ' + boxPosY  + ' ' + boxPosZ + heights[count]/2);
+                        cylinder.setAttribute('position', pX++ + ' ' + boxPosY + ' ' + boxPosZ);
                         cylinder.setAttribute('rotation', '0 0  0');
                         scene.appendChild(cylinder);
                         count++;
                     }
-                    boxPosZ++;
+                    boxPosZ--;
                     pX = planePos[0] - (planeW/2) + 0.5;
                     
 
                 }
             </script>
->>>>>>> 9942ddd9f3a91f2c6f3d55eebe999504afc74a5d
         </a-scene>
     </body>
 </html>
