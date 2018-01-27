@@ -1,4 +1,4 @@
-AFRAME.registerComponent('box-chart', {
+AFRAME.registerComponent('bar-chart', {
     schema: {
     size: {type: 'number', default: 10},
     color: {type: 'color', default: '#FFF'}
