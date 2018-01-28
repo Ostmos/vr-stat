@@ -9,9 +9,10 @@ init: function() {
     object.position.z = -14; 
     object.position.y = -5;
 
-    var geometry = new THREE.PlaneGeometry(14 , 14);
+    const PLANE_WIDTH = 14;
+    var geometry = new THREE.PlaneGeometry(PLANE_WIDTH , PLANE_WIDTH);
     geometry.rotateX(Math.PI / 2);
-    var material = new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide});
+    var material = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
     var plane = new THREE.Mesh(geometry, material);
     
     object.add(plane);
@@ -20,6 +21,7 @@ init: function() {
     const START_X = -4.75;
     const START_Z = 4.75;
 
+    // Bars
     for (var i = 0, j = 0; i < 400; i++) {
         const HEIGHT = Math.random() * 5;
         var color = new THREE.Color(Math.random() * 0xff0000);
@@ -40,8 +42,27 @@ init: function() {
 
         object.add(cube);
     }
+    
+    const P = PLANE_WIDTH;
 
+    var corners = [
+        new THREE.Vector3(-P / 2, 0, P / 2),
+        new THREE.Vector3(-P / 2, P / 2, P / 2),
+        new THREE.Vector3(-P / 2, 0, -P / 2),
+        new THREE.Vector3(-P / 2, P / 2, -P / 2),
+        new THREE.Vector3(P / 2, 0, -P / 2),
+        new THREE.Vector3(P / 2, P / 2, -P / 2),
+    ];
 
+    // Line
+    var material = new THREE.LineBasicMaterial({color: 0x2A363B});
+    var geometry = new THREE.Geometry();
+    for (var i = 0; i < corners.length; i++) {
+        geometry.vertices.push(corners[i]);
+    }
+
+    var line = new THREE.LineSegments( geometry, material );
+    object.add( line );
 },
 
 });
