@@ -23,21 +23,21 @@
                 var length = heights.length;
                 var text = document.querySelector('a-text');
                 text.setAttribute('position', "0 -4.5 0");
-
                 text.setAttribute('color', "black");
                 var planePos = document.querySelector('a-plane').getAttribute('position');
                 var  planeW  = document.querySelector('a-plane').getAttribute('width');
-                var  planeH  = 0//document.querySelector('a-plane').getAttribute('height');
-
+                var  planeH  = 0;
                 var plane = document.querySelector('a-plane');
                 var boxPosY  = planePos[1] + planeW/2 - 0.5;
                 var boxPosZ  = planePos[2] + planeH/2 - 0.5;
                 var pX = planePos[0] - (planeW/2) + 0.5;
+                var startTextX = ((-plane.getAttribute('width')/2) + posX.length);
+                var startTextZ = ((-10/2) +posZ.length);
+                //var startTextZ = -(posZ.length + plane.);
                 var count = 0;
-                for(var i = 0; i < Math.sqrt(length); i++) {
+                for(var i = 0; i < posZ.length; i++) {
                     console.log(Math.sqrt(length));
-                    for(var j = 0; j < Math.sqrt(length); j++) {
-
+                    for(var j = 0; j < posX.length; j++) {
                         var scene = document.querySelector('a-scene');
                         var bar = document.createElement('a-box');
                         
@@ -56,19 +56,17 @@
                     }
                     var ZText = document.createElement('a-text');
                     ZText.setAttribute('value', posZ[i]);
-                    ZText.setAttribute('position', '0 ' + (0.5 - ((document.querySelector('a-plane').getAttribute('width')/2)-i)) + ' 0' );
+                    ZText.setAttribute('position',startTextX  + ' ' + (0.5 - ((document.querySelector('a-plane').getAttribute('width')/2)-i)) + ' 0' );
                     ZText.setAttribute('rotation', '0 0  0');
                     plane.appendChild(ZText);
                     boxPosZ--;
                     pX = planePos[0] - (planeW/2) + 0.5;
                     
-
                 }
-
-                for(var o=0; o < Math.sqrt(length); o++){
+                for(var o=0; o < posZ.length; o++){
                     var XText = document.createElement('a-text');
                     XText.setAttribute('value', posX[o]);
-                    XText.setAttribute('position', (0.5 - ((document.querySelector('a-plane').getAttribute('width')/2)-o)) + ' 0' + ' 0' );
+                    XText.setAttribute('position', (0.5 - ((document.querySelector('a-plane').getAttribute('width')/2)-o)) + ' ' + startTextZ+ ' ' +  0);
                     XText.setAttribute('rotation', '0 0 90');
                     plane.appendChild(XText);
                     console.log("loop2");
