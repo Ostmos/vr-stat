@@ -5,12 +5,12 @@ AFRAME.registerComponent('bar-chart', {
 },
 
 init: function() {
-    var object = this.el.object3D;
+    var object = this.el.object3D
     object.position.z = -14; 
     object.position.y = -5;
 
-    const PLANE_WIDTH = 14;
-    var geometry = new THREE.PlaneGeometry(PLANE_WIDTH , PLANE_WIDTH);
+    const CUBE_SIZE = 14;
+    var geometry = new THREE.PlaneGeometry(CUBE_SIZE, CUBE_SIZE);
     geometry.rotateX(Math.PI / 2);
     var material = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
     var plane = new THREE.Mesh(geometry, material);
@@ -43,25 +43,25 @@ init: function() {
         object.add(cube);
     }
     
-    const P = PLANE_WIDTH;
 
-    var corners = [
-        new THREE.Vector3(-P / 2, 0, P / 2),
-        new THREE.Vector3(-P / 2, P / 2, P / 2),
-        new THREE.Vector3(-P / 2, 0, -P / 2),
-        new THREE.Vector3(-P / 2, P / 2, -P / 2),
-        new THREE.Vector3(P / 2, 0, -P / 2),
-        new THREE.Vector3(P / 2, P / 2, -P / 2),
-    ];
+    // Lines
+    const C = CUBE_SIZE;
 
-    // Line
+    var start = new THREE.Vector3(-C / 2, 0, C / 2);
+    var start2 = new THREE.Vector3(-C / 2, 0, -C / 2);
+    var start3 = new THREE.Vector3(C / 2, 0, -C / 2);
+
     var material = new THREE.LineBasicMaterial({color: 0x2A363B});
     var geometry = new THREE.Geometry();
-    for (var i = 0; i < corners.length; i++) {
-        geometry.vertices.push(corners[i]);
+    
+    for (var i = 0; i < 10; i++) {
+        geometry.vertices.push(new THREE.Vector3(start.x, start.y + i, start.z));
+        geometry.vertices.push(new THREE.Vector3(start2.x, start2.y + i, start2.z));
+        geometry.vertices.push(new THREE.Vector3(start2.x, start2.y + i, start2.z));
+        geometry.vertices.push(new THREE.Vector3(start3.x, start3.y + i, start3.z));
     }
-
     var line = new THREE.LineSegments( geometry, material );
+
     object.add( line );
 },
 
