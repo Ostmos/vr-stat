@@ -8,7 +8,12 @@
   </head>
   <body>
       <a-scene>
-        <a-entity bar-chart="size: 0.5; color:#6699ff"; position="-0.5 4 -5"></a-entity>
+        <a-entity bar-chart="size: 0.5; color:#7ec0ee"; position="-0.5 4 -5">
+          <a-animation attribute="rotation" to="0 360 0"
+               dur="10000" fill="forwards" repeat="indefinite"></a-animation>
+        </a-entity>
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity laser-controls="hand: left"></a-entity>
       </a-scene>
   </body>
 </html>
