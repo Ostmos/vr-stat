@@ -2,18 +2,33 @@
     <head>
         <script src="scbwrapper.js"></script>
         <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-        <script src="https://unpkg.com/aframe-click-drag-component"></script>
         <script src="box.js"></script>
         <script>
-            import deepEqual from 'deep-equal';
-            registerAframeClickDragComponent(window.AFRAME);
-            AFRAME.registerComponent('handle-events', {
+            AFRAME.registerComponent('spin', {
                 init: function(){
                     var sceneEl = document.querySelector('a-scene');
-                    var boxEl = sceneEl.querySelector('.box');
+                    var entEl = sceneEl.querySelector('.ent');
+                    var boxEl = entEl.querySelector('.box');
+                    var isOff = true;
 
                     boxEl.addEventListener('click', function (){
-                        boxEl.setAttribute('scale', {x: 2, y: 2, z: 2});
+                        if(isOff){
+                            isOff= !isOff;
+                            var a = entEl.getAttribute('rotation').x;
+                            var b = entEl.getAttribute('rotation').y;
+                            var c = entEl.getAttribute('rotation').z;
+                            entEl.querySelector('a-animation').setAttribute('rotation', {x: 0, y: 0, z: 0});
+                            entEl.querySelector('a-animation').setAttribute('from', {x: a, y: b, z: c});
+                            entEl.querySelector('a-animation').setAttribute('dur', 10000);
+                        }else{
+                            isOff= !isOff;
+                            var a = entEl.getAttribute('rotation').x;
+                            var b = entEl.getAttribute('rotation').y;
+                            var c = entEl.getAttribute('rotation').z;
+                            console.log(b);
+                            entEl.querySelector('a-animation').setAttribute('dur', 0);
+                            entEl.querySelector('a-entity').setAttribute('rotation', {x: a, y: b, z: c});
+                        };
                     });
                 }
             });
@@ -22,9 +37,18 @@
 
     <body>
         <a-scene>
-            <a-box class="box" material="color: red" position="0 5 0" scale="3 3 3" handle-events></a-box>
+            <a-entity class="ent">
+                <a-animation attribute="rotation" dur="0" to="0 360 0" repeat="indefinite"></a-animation>
+                <a-entity class="box" 
+                          geometry="primitive: box; width: 5; height: 5; depth:5" 
+                          material="color: red" 
+                          position="0 10 0"
+                          rotation="0 0 0"
+                          spin>
+                </a-entity>
+            </a-entity>
             <a-plane material="color: grey" width="10" height="10" position="0 0 0" rotation="-90 0 0"></a-plane>
-            <a-camera position="0 5 15">
+            <a-camera position="0 10 15">
                 <a-cursor></a-cursor>
             </a-camera>
         </a-scene>
