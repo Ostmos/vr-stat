@@ -1,3 +1,6 @@
+//yoyoyoy
+
+
 AFRAME.registerComponent('bar-chart', {
     schema: {
     size: {type: 'number', default: 10},
