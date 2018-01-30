@@ -9,8 +9,8 @@ AFRAME.registerComponent('bar-chart', {
 
 init: function() {
     var object = this.el.object3D
-    object.position.z = -14; 
-    object.position.y = -5;
+    object.position.z = 0; 
+    object.position.y = 0;
 
     const CUBE_SIZE = 14;
     var geometry = new THREE.PlaneGeometry(CUBE_SIZE, CUBE_SIZE);
