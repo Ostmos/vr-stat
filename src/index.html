@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="components/bar-chart.js"></script>
+    <script src="statistics/fetchhelper.js"></script>
+  </head>
+  <body>
+      <a-scene>
+        <a-entity bar-chart="size: 0.5; color:#7ec0ee"; position="-0.5 4 -5">
+          <a-animation attribute="rotation" to="0 360 0"
+               dur="10000" fill="forwards" repeat="indefinite"></a-animation>
+        </a-entity>
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity laser-controls="hand: left"></a-entity>
+      </a-scene>
+  </body>
+</html>
