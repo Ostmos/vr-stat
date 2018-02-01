@@ -73,4 +73,12 @@ AFRAME.registerComponent('bar-chart', {
         var line = new THREE.LineSegments( geometry, material );
         object.add( line );
     },
+
+    tick: function(time, timeDelta) {
+        // This should be replaced with the value from the controllers
+        const swipeLength = 0.001;
+        
+        this.el.object3D.rotateX(swipeLength);
+        this.el.object3D.rotateY(swipeLength);
+    }
 });

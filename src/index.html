@@ -43,11 +43,15 @@
             <a-animation class="animation" attribute="rotation" dur="0" from="0 0 0" to="0 360 0" repeat="indefinite"></a-animation>
             <a-entity class="bar" 
                       bar-chart="outerPlaneSize: 5; color:#7ec0ee; offset:0.4";
-                      rotation="0 0 0">
+                      rotation="0 0 0" position="5 0 5">
+            </a-entity>
+            <a-entity class="bar" 
+                      bar-chart="outerPlaneSize: 5; color:#7ec0ee; offset:0.4";
+                      rotation="0 0 0" position ="-5 0 5">
             </a-entity>
         </a-entity>
-        <a-box class="box" position="8 3 0" spin></a-box>
-        <a-sky color="#ECECEC"></a-sky>
+        <a-box class="box" position="8 3 0" spin color="#AFAFAF"></a-box>
+        <a-sky color="#FFFFFF"></a-sky>
         <a-entity laser-controls="hand: left"></a-entity>
         <a-camera position="8 3 15"><a-cursor></a-cursor></a-camera>
       </a-scene>
