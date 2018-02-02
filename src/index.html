@@ -39,6 +39,10 @@
   </head>
   <body>
       <a-scene>
+        <a-camera position="8 3 15"> </a-camera>
+        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
+        <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"></a-entity>
+
         <a-entity class="ent" rotation="0 0 0">
             <a-animation class="animation" attribute="rotation" dur="0" from="0 0 0" to="0 360 0" repeat="indefinite"></a-animation>
             <a-entity class="bar" 
@@ -52,8 +56,6 @@
         </a-entity>
         <a-box class="box" position="8 3 0" spin color="#AFAFAF"></a-box>
         <a-sky color="#FFFFFF"></a-sky>
-        <a-entity laser-controls="hand: left"></a-entity>
-        <a-camera position="8 3 15"><a-cursor></a-cursor></a-camera>
       </a-scene>
   </body>
 </html>
