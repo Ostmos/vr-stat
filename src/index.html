@@ -39,8 +39,7 @@
   </head>
   <body>
       <a-scene>
-        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75"></a-entity>
-        <a-camera position="8 3 15"><a-cursor></a-cursor></a-camera>
+        <a-camera position="8 3 15"><a-entity laser-controls="hand: right" line="color: red; opacity: 0.75"></a-entity></a-camera>
         <a-entity class="ent" rotation="0 0 0">
             <a-animation class="animation" attribute="rotation" dur="0" from="0 0 0" to="0 360 0" repeat="indefinite"></a-animation>
             <a-entity class="bar" 
