@@ -17,11 +17,6 @@ AFRAME.registerComponent('bar-chart', {
         var outerPlaneMaterial = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
         var outerPlane = new THREE.Mesh(outerPlaneGeometry, outerPlaneMaterial);
         
-                //adding canvas element to mesh and pushes it to the outerPlane as a child
-
-
-
-        
         object.add(outerPlane);
 
         // Test data
@@ -38,10 +33,16 @@ AFRAME.registerComponent('bar-chart', {
             innerPlaneSize / 2 - barWidth / 2,
         );
 
+        var newRow = true;
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext("2d");
+
+
         for (var i = 0, j = 0; i < heights.length; i++) {
             if (i % Math.sqrt(heights.length) == 0 && i != 0) {
                 j++;   
             }
+
             if (heights[i] != 0) {
                 var color = new THREE.Color(Math.random() * 0xFF0000);
                 var material = new THREE.MeshBasicMaterial({color: color});
@@ -51,37 +52,11 @@ AFRAME.registerComponent('bar-chart', {
                 cube.translateX(barPos.x + barWidth * (i % 20));
                 cube.translateY(heights[i] / 2);
                 cube.translateZ(barPos.z - barWidth * j);
-                var canvas = document.createElement('canvas');
-                var ctx = canvas.getContext("2d");
-                /*ctx.font = "4px Arial";
-                ctx.fillStyle = "red";
-                ctx.fillText("Hello World",6,6); 
-                */
 
             }
-                /*
-                        //adding canvas element to mesh and pushes it to the outerPlane as a child
-        		var c = document.createElement('canvas');
-        		var ctx = c.getContext("2d");
-        		ctx.font = "30px Arial";
-        		ctx.fillText("Hello World",20,20); 
 
-        		var texture = new THREE.Texture(c);
-
-        		//texture.needsUpdate = true; 
-
-        	var material = new THREE.MeshBasicMaterial({
-            	map : texture
-        	});
-
-        	var mesh = new THREE.Mesh(new THREE.PlaneGeometry(c.width, c.height), material);
-        	mesh.translateX(barPos.x + barWidth * (i % 20));
-        	mesh.translateY(heights[i] / 2);
-            mesh.translateZ(barPos.z - barWidth * j);
-        	object.add(mesh);
-			*/
                 object.add(cube);
-                                            if(i % 20 == 19){
+                if(i % 20 == 19){
                     ctx.font = '20pt Arial';
                     ctx.fillStyle = 'red';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -90,10 +65,7 @@ AFRAME.registerComponent('bar-chart', {
                     ctx.fillStyle = 'white';
                     //ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
-                    ctx.fillText(new Date().getTime(), canvas.width / 2, canvas.height / 2);
-
-                //var div = document.createElement('a-text');
-                //div.value = "hej";
+                    ctx.fillText("value", canvas.width / 2, canvas.height / 2);
 
                 var texture = new THREE.Texture(canvas);
 
@@ -103,41 +75,41 @@ AFRAME.registerComponent('bar-chart', {
                 map : texture
             });
                 var mesh = new THREE.Mesh(new THREE.PlaneGeometry(barWidth, barWidth), material);
-            //  mesh.translateX(150);
                 mesh.translateX((barPos.x +1 + barWidth * (i % 20)));
                 mesh.translateY((heights[i] / 2)*0);
-                mesh.translateZ(barPos.z - barWidth * j);
+                mesh.translateZ(barPos.z - barWidth * (j));
                 object.add(mesh);
             }
+            if(j % 20 == 0){
+                console.log(i);
+                    ctx.font = '20pt Arial';
+                    ctx.fillStyle = 'red';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'black';
+                    ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+                    ctx.fillStyle = 'white';
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("value", canvas.width / 2, canvas.height / 2);
+                    var texture = new THREE.Texture(canvas);
 
+                texture.needsUpdate = true; 
+
+            var material = new THREE.MeshBasicMaterial({
+                map : texture
+            });
+                var mesh = new THREE.Mesh(new THREE.PlaneGeometry(barWidth, barWidth), material);
+                mesh.translateX((barPos.x + barWidth * (i % 20)));
+                mesh.translateY((heights[i] / 2)*0);
+                mesh.translateZ(barPos.z + 1 - (barWidth * j));
+                mesh.rotation.x += 15;
+                object.add(mesh);
+            }
         }
 
-                    ctx.font = '20pt Arial';
-                    ctx.fillStyle = 'red';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = 'black';
-                    ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
-                    ctx.fillStyle = 'white';
-                    //ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(new Date().getTime(), canvas.width / 2, canvas.height / 2);
 
-                //var div = document.createElement('a-text');
-                //div.value = "hej";
 
-                var texture = new THREE.Texture(canvas);
 
-                texture.needsUpdate = true; 
 
-            var material = new THREE.MeshBasicMaterial({
-                map : texture
-            });
-                var mesh = new THREE.Mesh(new THREE.PlaneGeometry(barWidth, barWidth), material);
-            //  mesh.translateX(150);
-                mesh.translateX((barPos.x +1 + barWidth * (i % 20)));
-                mesh.translateY((heights[i] / 2)*0);
-                mesh.translateZ(barPos.z + 1 - barWidth * j);
-                object.add(mesh);
 
         // Lines
         const lengthToCorners = data.outerPlaneSize / 2;
