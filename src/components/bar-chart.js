@@ -24,9 +24,10 @@ AFRAME.registerComponent('bar-chart', {
         }
 
             // Bar dimensions
-        const barSize = 1;
-        var outerPlaneWidth = barSize * testData.xLabels.length + data.offset * 2;
-        var outerPlaneHeight = barSize * testData.yLabels.length + data.offset * 2;
+        const BAR_SIZE = 1;
+        const BIAS = 0.01;
+        var outerPlaneWidth = BAR_SIZE * testData.xLabels.length + data.offset * 2;
+        var outerPlaneHeight = BAR_SIZE * testData.yLabels.length + data.offset * 2;
 
         // Outer plane
         var outerPlaneGeometry = new THREE.PlaneGeometry(outerPlaneWidth, outerPlaneHeight);
@@ -40,9 +41,9 @@ AFRAME.registerComponent('bar-chart', {
         var innerPlaneHeight = outerPlaneHeight - data.offset * 2;
 
         var barPos = new THREE.Vector3(
-            -innerPlaneWidth / 2 + barSize / 2,
+            -innerPlaneWidth / 2 + BAR_SIZE / 2,
             0, 
-            innerPlaneHeight / 2 - barSize / 2,
+            innerPlaneHeight / 2 - BAR_SIZE / 2,
         );
 
         
@@ -53,12 +54,12 @@ AFRAME.registerComponent('bar-chart', {
             if (testData.yValues[i] != 0) {
                 var color = new THREE.Color(Math.random() * 0xFF0000);
                 var material = new THREE.MeshBasicMaterial({color: color});
-                var geometry = new THREE.BoxGeometry(barSize, testData.yValues[i], barSize);
+                var geometry = new THREE.BoxGeometry(BAR_SIZE, testData.yValues[i], BAR_SIZE);
                 var cube = new THREE.Mesh(geometry, material);
 
-                cube.translateX(barPos.x + barSize * (i % testData.xLabels.length));
-                cube.translateY(testData.yValues[i] / 2);
-                cube.translateZ(barPos.z - barSize * j);
+                cube.translateX(barPos.x + BAR_SIZE * (i % testData.xLabels.length));
+                cube.translateY(testData.yValues[i] / 2 + BIAS);
+                cube.translateZ(barPos.z - BAR_SIZE * j);
 
                 object.add(cube);
             }
