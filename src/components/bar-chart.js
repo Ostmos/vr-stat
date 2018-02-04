@@ -20,32 +20,42 @@ AFRAME.registerComponent('bar-chart', {
         object.add(outerPlane);
 
         // Test data
-        var heights = new Array(400);
-        for (var i = 0; i < 400; i++) {
-            heights[i] = Math.floor(Math.random() * Math.floor(data.outerPlaneSize));
+        testData = {
+            yLabels: ["Reg1", "Reg2", "Reg3", "Reg4", "Reg5"],
+            xLabels: ["2015", "2016", "2017"],
+            yRange: [0, 100],
+            yValues: [],
+            getSize: function() {
+                return this.xLabels.length * this.yLabels.length;
+            }
+        };
+
+        for (var i = 0; i < testData.getSize(); i++) {
+            testData.yValues[i] = Math.floor(Math.random() * 10);
         }
 
         // Bars
-        var barWidth = (innerPlaneSize / Math.sqrt(heights.length));
+        var barWidth = (innerPlaneSize / testData.xLabels.length);
+        var barDepth = (innerPlaneSize / testData.yLabels.length);
         var barPos = new THREE.Vector3(
             -innerPlaneSize / 2 + barWidth / 2,
             0, 
-            innerPlaneSize / 2 - barWidth / 2,
+            innerPlaneSize / 2 - barDepth / 2,
         );
 
-        for (var i = 0, j = 0; i < heights.length; i++) {
-            if (i % Math.sqrt(heights.length) == 0 && i != 0) {
+        for (var i = 0, j = 0; i < testData.yValues.length; i++) {
+            if (i % testData.xLabels.length == 0 && i != 0) {
                 j++;   
             }
-            if (heights[i] != 0) {
+            if (testData.yValues[i] != 0) {
                 var color = new THREE.Color(Math.random() * 0xFF0000);
                 var material = new THREE.MeshBasicMaterial({color: color});
-                var geometry = new THREE.BoxGeometry(barWidth, heights[i], barWidth);
+                var geometry = new THREE.BoxGeometry(barWidth, testData.yValues[i], barDepth);
                 var cube = new THREE.Mesh(geometry, material);
 
-                cube.translateX(barPos.x + barWidth * (i % 20));
-                cube.translateY(heights[i] / 2);
-                cube.translateZ(barPos.z - barWidth * j);
+                cube.translateX(barPos.x + barWidth * (i % testData.xLabels.length));
+                cube.translateY(testData.yValues[i] / 2);
+                cube.translateZ(barPos.z - barDepth * j);
 
                 object.add(cube);
             }
@@ -62,7 +72,7 @@ AFRAME.registerComponent('bar-chart', {
         var geometry = new THREE.Geometry();
         
         const numberOfLines = 10;
-        var lineStep = Math.max(...heights) / numberOfLines;
+        var lineStep = Math.max(...testData.yValues) / numberOfLines;
 
         for (var i = 1; i <= 10; i++) {
             geometry.vertices.push(new THREE.Vector3(corner1.x, corner1.y + lineStep * i, corner1.z));
