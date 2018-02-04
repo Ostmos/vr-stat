@@ -23,7 +23,7 @@ AFRAME.registerComponent('bar-chart', {
             testData.yValues[i] = Math.floor(Math.random() * 10);
         }
 
-        // Bar dimensions
+            // Bar dimensions
         const barSize = 1;
         var outerPlaneWidth = barSize * testData.xLabels.length + data.offset * 2;
         var outerPlaneHeight = barSize * testData.yLabels.length + data.offset * 2;
@@ -65,11 +65,9 @@ AFRAME.registerComponent('bar-chart', {
         }
 
         // Lines
-        const lengthToCorners = testData.outerPlaneSize / 2;
-
-        var corner1 = new THREE.Vector3(-lengthToCorners, 0, lengthToCorners);
-        var corner2 = new THREE.Vector3(-lengthToCorners, 0, -lengthToCorners);
-        var corner3 = new THREE.Vector3(lengthToCorners, 0, -lengthToCorners);
+        var corner1 = new THREE.Vector3(-outerPlaneWidth / 2, 0, outerPlaneHeight / 2);
+        var corner2 = new THREE.Vector3(-outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
+        var corner3 = new THREE.Vector3(outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
 
         var material = new THREE.LineBasicMaterial({color: 0x2A363B});
         var geometry = new THREE.Geometry();
