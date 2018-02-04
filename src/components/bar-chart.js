@@ -16,6 +16,23 @@ AFRAME.registerComponent('bar-chart', {
         outerPlaneGeometry.rotateX(Math.PI / 2);
         var outerPlaneMaterial = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
         var outerPlane = new THREE.Mesh(outerPlaneGeometry, outerPlaneMaterial);
+                
+        //adding canvas element to mesh and pushes it to the outerPlane as a child
+        var c = document.createElement('canvas');
+        var ctx = c.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World",10,10); 
+
+        var texture = new THREE.Texture(c);
+
+        texture.needsUpdate = true; 
+
+        var material = new THREE.MeshBasicMaterial({
+            map : texture
+        });
+
+        var mesh = new THREE.Mesh(new THREE.PlaneGeometry(c.width, c.height), material);
+        outerPlane.add(mesh);
         
         object.add(outerPlane);
 
