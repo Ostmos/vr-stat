@@ -39,10 +39,11 @@ Provade bara att få in en asset i miljön. Lånar golvet tillfälligt.-->
     </script>
   </head>
   <body>
-      <a-scene>
+      <a-scene>2
         <a-asset>
             <a-asset-item id="floor-gltf" src="wooden_floor_-_blacksmiths_workshop_assets/scene.gltf"></a-asset-item>
             <a-mixin id="giant" scale="5 5 5"></a-mixin>
+            <img id="sky" src="equi.png">
         </a-asset>
         <a-camera position="8 3 15"> </a-camera>
         <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
@@ -57,7 +58,7 @@ Provade bara att få in en asset i miljön. Lånar golvet tillfälligt.-->
         </a-entity>
         <a-entity position="8 0 10" mixin="giant" gltf-model="#floor-gltf"></a-entity>
         <a-box class="box" position="8 3 0" spin color="#AFAFAF"></a-box>
-        <a-sky color="#FFFFFF"></a-sky>
+        <a-sky src="#sky"></a-sky>
       </a-scene>
   </body>
 </html>
