@@ -5,6 +5,7 @@
     <title>title</title>
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="components/bar-chart.js"></script>
+    <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script>
     <script>
         AFRAME.registerComponent('spin', {
             init: function(){
@@ -35,11 +36,11 @@
             }
         });
     </script>
-  </head>
+  </head> 
   <body>
       <a-scene>
         <a-camera position="8 3 15"> </a-camera>
-        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
+        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15" teleport-controls="button:trigger"></a-entity>
         <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"></a-entity>
 
         <a-entity class="ent" rotation="0 0 0">
