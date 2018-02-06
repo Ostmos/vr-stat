@@ -25,10 +25,10 @@ AFRAME.registerComponent('bar-chart', {
                 var newItemY = json.data[i].key[0];
                 var newItemX = json.data[i].key[1];
                 if (testData.yLabels.indexOf(newItemY) === -1) {
-                    testData.yLabels.unshift(newItemY);
+                    testData.yLabels.push(newItemY);
                 }
                 if (testData.xLabels.indexOf(newItemX) === -1) {
-                    testData.xLabels.unshift(newItemX);
+                    testData.xLabels.push(newItemX);
                 }
                 testData.yValues[i] = parseInt(json.data[i].values[0]);
             }
