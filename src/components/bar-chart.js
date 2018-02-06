@@ -1,7 +1,7 @@
 AFRAME.registerComponent('bar-chart', {
     schema: {
-    offset: {type: 'number', default: 1},
-    color: {type: 'color', default: '#FFF'}
+        offset: {type: 'number', default: 1},
+        color: {type: 'color', default: '#FFF'}
     },
 
     init: function() {
