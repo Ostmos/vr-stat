@@ -16,7 +16,7 @@ AFRAME.registerComponent('bar-chart', {
                 "Content-type" : "application/x-www-form-urlencoded; charset=UTF-8"
             },
             // For more stats use jsonObj2 instead of jsonObj
-            body: JSON.stringify(jsonObj) 
+            body: JSON.stringify(jsonObj2) 
         })
         .then(response => response.json())
         .then(function(json){
