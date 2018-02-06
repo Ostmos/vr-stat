@@ -25,10 +25,10 @@ AFRAME.registerComponent('bar-chart', {
                 var newItemY = json.data[i].key[0];
                 var newItemX = json.data[i].key[1];
                 if (testData.yLabels.indexOf(newItemY) === -1) {
-                    testData.yLabels.push(newItemY);
+                    testData.yLabels.unshift(newItemY);
                 }
                 if (testData.xLabels.indexOf(newItemX) === -1) {
-                    testData.xLabels.push(newItemX);
+                    testData.xLabels.unshift(newItemX);
                 }
                 testData.yValues[i] = parseInt(json.data[i].values[0]);
             }
@@ -42,9 +42,10 @@ AFRAME.registerComponent('bar-chart', {
         // Bar dimensions
         function callback() {
         const BAR_SIZE = 0.2;
+        const BAR_SPACE = BAR_SIZE + 0.2;
         const BIAS = 0.01;
-        var outerPlaneWidth = BAR_SIZE * testData.xLabels.length + data.offset * 2;
-        var outerPlaneHeight = BAR_SIZE * testData.yLabels.length + data.offset * 2;
+        var outerPlaneWidth = BAR_SPACE * testData.xLabels.length + data.offset * 2;
+        var outerPlaneHeight = BAR_SPACE * testData.yLabels.length + data.offset * 2;
         
         // Outer plane
         var outerPlaneGeometry = new THREE.PlaneGeometry(outerPlaneWidth, outerPlaneHeight);
@@ -63,25 +64,30 @@ AFRAME.registerComponent('bar-chart', {
             innerPlaneHeight / 2 - BAR_SIZE / 2,
         );
 
+        var colors = [];
+        for (var i = 0; i < 8; i++) {
+            colors[i] = new THREE.Color(Math.random() * 0xFF0000);
+        }
+        var color = colors[0];
+
         var maxHeight = 0;
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
             if (i % testData.xLabels.length == 0 && i != 0) {
                 j++;   
+                color = colors[j];
             }
             if (testData.yValues[i] != 0) {
-                var color = new THREE.Color(Math.random() * 0xFF0000);
                 var material = new THREE.MeshBasicMaterial({color: color});
                 var height = testData.yValues[i] / 50000.0;
                 if (height > maxHeight) {
                     maxHeight = height;
                 }
-                console.log(height);
                 var geometry = new THREE.BoxGeometry(BAR_SIZE, height, BAR_SIZE);
                 var cube = new THREE.Mesh(geometry, material);
 
-                cube.translateX(barPos.x + BAR_SIZE * (i % testData.xLabels.length));
+                cube.translateX(barPos.x + BAR_SPACE * (i % testData.xLabels.length));
                 cube.translateY(height / 2 + BIAS);
-                cube.translateZ(barPos.z - BAR_SIZE * j);
+                cube.translateZ(barPos.z - BAR_SPACE * j);
 
                 object.add(cube);
             }
@@ -111,7 +117,7 @@ AFRAME.registerComponent('bar-chart', {
 
     tick: function(time, timeDelta) {
         // This should be replaced with the value from the controllers
-        const swipeLength = 0.001;
+        const swipeLength = 0;
         
         this.el.object3D.rotateX(swipeLength);
         this.el.object3D.rotateY(swipeLength);
@@ -164,19 +170,19 @@ var jsonObj2 = {
             "25-29",
             "30-34",
             "35-39",
-            "40-44",
-            "45-49",
-            "50-54",
-            "55-59",
-            "60-64",
-            "65-69",
-            "70-74",
-            "75-79",
-            "80-84",
-            "85-89",
-            "90-94",
-            "95-99",
-            "100+"
+            //"40-44",
+            //"45-49",
+            //"50-54",
+            //"55-59",
+            //"60-64",
+            //"65-69",
+            //"70-74",
+            //"75-79",
+            //"80-84",
+            //"85-89",
+            //"90-94",
+            //"95-99",
+            //"100+"
           ]
         }
       }
