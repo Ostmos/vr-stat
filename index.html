@@ -23,6 +23,12 @@
         <!--Camera-->
         <a-camera position="20 30 40"></a-camera> <!-- 8 3 15-->
 
+        <!-- Light -->
+        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>        
+
         <!--Controllers-->
         <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15" teleport-controls="button:trigger"></a-entity>
         <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"></a-entity>

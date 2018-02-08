@@ -3,9 +3,9 @@
         {
             "bufferView" : 0, 
             "componentType" : 5121, 
-            "count" : 6, 
+            "count" : 24, 
             "max" : [
-                3
+                7
             ], 
             "min" : [
                 0
@@ -15,7 +15,7 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 4, 
+            "count" : 8, 
             "max" : [
                 1.0, 
                 0.0, 
@@ -31,7 +31,7 @@
         {
             "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 4, 
+            "count" : 8, 
             "max" : [
                 0.0, 
                 1.0, 
@@ -47,9 +47,9 @@
         {
             "bufferView" : 3, 
             "componentType" : 5121, 
-            "count" : 24, 
+            "count" : 6, 
             "max" : [
-                7
+                3
             ], 
             "min" : [
                 0
@@ -59,7 +59,7 @@
         {
             "bufferView" : 4, 
             "componentType" : 5126, 
-            "count" : 8, 
+            "count" : 4, 
             "max" : [
                 1.0, 
                 0.0, 
@@ -75,7 +75,7 @@
         {
             "bufferView" : 5, 
             "componentType" : 5126, 
-            "count" : 8, 
+            "count" : 4, 
             "max" : [
                 0.0, 
                 1.0, 
@@ -184,38 +184,38 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 6, 
+            "byteLength" : 24, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 48, 
-            "byteOffset" : 8, 
+            "byteLength" : 96, 
+            "byteOffset" : 24, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 48, 
-            "byteOffset" : 56, 
+            "byteLength" : 96, 
+            "byteOffset" : 120, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 24, 
-            "byteOffset" : 104, 
+            "byteLength" : 6, 
+            "byteOffset" : 216, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 96, 
-            "byteOffset" : 128, 
+            "byteLength" : 48, 
+            "byteOffset" : 224, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 96, 
-            "byteOffset" : 224, 
+            "byteLength" : 48, 
+            "byteOffset" : 272, 
             "target" : 34962
         }, 
         {
@@ -278,9 +278,9 @@
             "name" : "Material.005", 
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
-                    0.41236348766630115, 
-                    0.42671919504879696, 
-                    0.640000066757203, 
+                    0.23395691266591712, 
+                    0.2911764903541876, 
+                    0.3621974999039992, 
                     1.0
                 ], 
                 "metallicFactor" : 0.0
@@ -289,7 +289,7 @@
     ], 
     "meshes" : [
         {
-            "name" : "Plane.007", 
+            "name" : "Plane.010", 
             "primitives" : [
                 {
                     "attributes" : {
@@ -297,19 +297,20 @@
                         "POSITION" : 1
                     }, 
                     "indices" : 0, 
-                    "material" : 0
+                    "material" : 1
                 }
             ]
         }, 
         {
-            "name" : "Plane.010", 
+            "name" : "Plane.009", 
             "primitives" : [
                 {
                     "attributes" : {
                         "NORMAL" : 5, 
                         "POSITION" : 4
                     }, 
-                    "indices" : 3
+                    "indices" : 3, 
+                    "material" : 1
                 }
             ]
         }, 
@@ -327,14 +328,15 @@
             ]
         }, 
         {
-            "name" : "Plane.009", 
+            "name" : "Plane.007", 
             "primitives" : [
                 {
                     "attributes" : {
                         "NORMAL" : 11, 
                         "POSITION" : 10
                     }, 
-                    "indices" : 9
+                    "indices" : 9, 
+                    "material" : 0
                 }
             ]
         }
@@ -374,7 +376,7 @@
             ]
         }, 
         {
-            "mesh" : 0, 
+            "mesh" : 3, 
             "name" : "Plane", 
             "scale" : [
                 2.5, 
@@ -403,7 +405,7 @@
             ]
         }, 
         {
-            "mesh" : 3, 
+            "mesh" : 1, 
             "name" : "Plane.002", 
             "rotation" : [
                 0.0, 
@@ -423,7 +425,7 @@
             ]
         }, 
         {
-            "mesh" : 1, 
+            "mesh" : 0, 
             "name" : "Plane.003", 
             "rotation" : [
                 0.5, 
@@ -434,7 +436,7 @@
             "scale" : [
                 1.0, 
                 1.0, 
-                2.5
+                2.5999999046325684
             ], 
             "translation" : [
                 0.0, 
