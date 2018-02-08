@@ -1,56 +1,41 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="scbwrapper.js"></script>
-        <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-        <script src="box.js"></script>
-    </head>
-    <body>
-        <a-scene>
-            <a-entity box="size: 0.2; color: blue"; position="-1 2.5 -5"></a-entity>
-            <a-entity box="size: 0.5; height: 8.0; depth: 1; color: green"; position="-0.5 4 -5"></a-entity>
-            <a-entity box="size: 5; height: 11.0; depth: 1; color: yellow"; position="0 5.5 -5"></a-entity>
-            <a-entity box="size: 2; height: 3.0; depth: 1; color: red"; position="1 1.5 -5"></a-entity>
-            <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10as" color="#0b7c7c"></a-plane>
-            <a-sky color="#fef5ee"></a-sky>
-            <script>
-                var heights = getY();
-                var length = heights.length;
-                for(var i = 0; i < length; i++) {
-                    var scene = document.querySelector('a-scene');
-                    var cylinder = document.createElement('a-cylinder');
-                    cylinder.setAttribute('color', '#FF9500');
-                    cylinder.setAttribute('height', heights[i]);
-                    cylinder.setAttribute('radius', '0.75');
-                    cylinder.setAttribute('position', heights[i] + ' 5.5 ' + '-5');
-                    scene.appendChild(cylinder);
-                }
-            </script>
-            <a-entity rotation="0 45 0" position="1 0 -2">
-                
-                <a-plane id="wall2" position="0.5 0.5 -0.5" width="1" height="1" rotation="0 270 0" opacity="0.25"><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 -0.5 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 -0.4 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 -0.3 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 -0.19999999999999996 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 -0.09999999999999998 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 0.10000000000000009 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 0.20000000000000007 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 0.30000000000000004 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 0.4 0"></a-entity><a-entity line="opacity:0.4;start:-0.5 0 0;end:0.5 0 0;color:black" position="0 0.5 0"></a-entity></a-plane>
-                
-                <a-plane id="wall4" position="0 0.5 -1" width="1" height="1" opacity="0.25">
-                        <a-text value="Y-Axis" ;="" opacity="0.4" position="-0.4 0 0" rotation="0 0 90" color="black" text="align:right;baseline:bottom;width:1.8099999999999998"></a-text>
-                <a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 -0.5 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 -0.4 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 -0.3 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 -0.19999999999999996 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 -0.09999999999999998 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 0.10000000000000009 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 0.20000000000000007 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 0.30000000000000004 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 0.4 0"></a-entity><a-entity line="opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black" position="0 0.5 0"></a-entity></a-plane>
-                <script>
-                    var plane2=document.querySelector('#wall2');
-                    var plane4=document.querySelector('#wall4');
-                    for (var i = 0; i<11; i++){
-                        var line2 = document.createElement('a-entity');
-                        var line4 = document.createElement('a-entity');
+  <head>
+    <meta charset="UTF-8">
+    <title>VR-Stat</title>
+    <script src="https://rawgit.com/aframevr/aframe/a3aedbf/dist/aframe-master.min.js"></script>
+    <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script>
+    <!--Components-->
+    <script src="src/components/bar-chart.js"></script>
+    <script src="src/components/network-diagram.js"></script>
+    <script src="src/components/pie-chart.js"></script>
+  </head> 
+  <body>
+      <a-scene>
 
-                        line2.setAttribute('line','opacity:0.4; start:-0.5 0 0; end:0.5 0 0; color:black');
-                        line2.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
-                        line2.setAttribute('rotation', '0 0 0');
 
-                        line4.setAttribute('line','opacity:0.4;start:-0.3 0 0;end:0.5 0 0;color:black');
-                        line4.setAttribute('position','0 ' + (-0.5+0.1*i) + ' 0');
-                        line4.setAttribute('rotation', '0 0 0');
-                        plane2.appendChild(line2);
-                        plane4.appendChild(line4);
-                    }
-                </script>
-            </a-entity>
-        </a-scene>
-    </body>
+        <!--Assets-->
+        <a-asset>
+            <a-asset-item id="room-gltf" src="src/assets/testroom.gltf"></a-asset-item>
+            <a-mixin id="giant" scale="30 20 20"></a-mixin>
+            <img id="sky" src="src/assets/equi.png">
+        </a-asset>
+        <!--Camera-->
+        <a-camera position="20 30 40"></a-camera> <!-- 8 3 15-->
+
+        <!--Controllers-->
+        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15" teleport-controls="button:trigger"></a-entity>
+        <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"></a-entity>
+
+        <!--World-->
+        <a-entity position="0 -10 0" mixin="giant" gltf-model="#room-gltf"></a-entity>
+        <a-sky src="#sky"></a-sky>
+
+        <!--Diagrams and Charts-->
+        <a-entity class="bar" bar-chart="offset:0.4"; rotation="0 -45 0" position="20 -2 -10"></a-entity>
+        <a-entity network-diagram position="0 0 -5"></a-entity>
+        <a-entity pie-chart position="-15 0 -5"; rotation="0 20 0"></a-entity>
+
+      </a-scene>
+  </body>
 </html>
