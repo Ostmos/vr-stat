@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- Wooden floor texture taken courtesy of Kyan0s (https://sketchfab.com/kyan0s) 
+Provade bara att få in en asset i miljön. Lånar golvet tillfälligt.-->
+
+<!-- test -->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="components/bar-chart.js"></script>
+    <script>
+        AFRAME.registerComponent('spin', {
+            init: function(){
+                var sceneEl = document.querySelector('a-scene');
+                var entEl = sceneEl.querySelector('.ent');
+                var barEl = entEl.querySelector('.bar');
+                var boxEl = sceneEl.querySelector('.box');
+                isOff = true;
+
+                boxEl.addEventListener('click', function (){
+                    if(isOff){
+                        isOff= !isOff;
+                        var b = entEl.querySelector('a-entity').getAttribute('rotation').y;
+                        entEl.querySelector('a-animation').setAttribute('rotation', {x: 0, y: b, z: 0});
+                        entEl.querySelector('a-animation').setAttribute('dur', 10000);
+                    }else{
+                        isOff= !isOff;
+                        console.log("off");
+                        var b = entEl.getAttribute('rotation').y;
+                        console.log(b);
+                        console.log(entEl.getAttribute('rotation'));
+                        console.log(entEl.querySelector('a-animation').getAttribute('rotation'));                          
+                        entEl.querySelector('a-entity').setAttribute('rotation', {x: 0, y: b, z: 0});
+                        entEl.querySelector('a-animation').setAttribute('dur', 0);
+
+                    };
+                });
+            }
+        });
+    </script>
+  </head>
+  <body>
+      <a-scene>2
+        <a-asset>
+            <a-asset-item id="floor-gltf" src="wooden_floor_-_blacksmiths_workshop_assets/scene.gltf"></a-asset-item>
+            <a-mixin id="giant" scale="5 5 5"></a-mixin>
+            <img id="sky" src="equi.png">
+        </a-asset>
+        <a-camera position="8 3 15"> </a-camera>
+        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
+        <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"></a-entity>
+
+        <a-entity class="ent"  position="0 5 0" rotation="0 0 0">
+            <a-animation class="animation" attribute="rotation" dur="0" from="0 0 0" to="0 360 0" repeat="indefinite"></a-animation>
+            <a-entity class="bar" 
+                      bar-chart="color:#7ec0ee; offset:0.4";
+                      rotation="0 0 0" position="5 0 5">
+            </a-entity>
+        </a-entity>
+        <a-entity position="8 0 10" mixin="giant" gltf-model="#floor-gltf"></a-entity>
+        <a-box class="box" position="8 3 0" spin color="#AFAFAF"></a-box>
+        <a-sky src="#sky"></a-sky>
+      </a-scene>
+  </body>
+</html>
