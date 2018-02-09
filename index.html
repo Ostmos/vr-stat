@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>VR-Stat</title>
     <script src="https://rawgit.com/aframevr/aframe/a3aedbf/dist/aframe-master.min.js"></script>
-    <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script>
+    <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script> <!--Teleport-->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.1/dist/aframe-physics-system.min.js"></script><!--Physics-->
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script> <!--Dragable, stretchable properties-->
     <!--Components-->
     <script src="src/components/bar-chart.js"></script>
     <script src="src/components/network-diagram.js"></script>
@@ -37,10 +39,17 @@
         <a-entity position="0 -10 0" mixin="giant" gltf-model="#room-gltf"></a-entity>
         <a-sky src="#sky"></a-sky>
 
+        <!--Rotation-->
+        <script>
+        function rotationRight(event){
+          el.object3D.rotation.y += Math.PI;
+        }
+        </script>
+
         <!--Diagrams and Charts-->
-        <a-entity class="bar" bar-chart="offset:0.4"; rotation="0 -45 0" position="20 -2 -10"></a-entity>
-        <a-entity network-diagram position="0 0 -5"></a-entity>
-        <a-entity pie-chart position="-15 0 -5"; rotation="0 20 0"></a-entity>
+        <a-entity class="bar" bar-chart="offset:0.4" ;="" rotation="0 -45 0" position="20 -2 -10" draggable="startButtons:abuttondown;endButtons:abuttonup" on-drag-right="rotationRight"></a-entity>
+        <a-entity network-diagram position="0 0 -5" stretchable="endButtons:xbuttonup;startButtons:xbuttondown" ></a-entity>
+        <a-entity pie-chart position="-15 0 -5"; rotation="0 20 0" stretchable="endButtons:xbuttonup;startButtons:xbuttondown"></a-entity>
 
       </a-scene>
   </body>
