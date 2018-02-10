@@ -7,6 +7,16 @@ AFRAME.registerComponent('bar-chart', {
     init: function() {
         var data = this.data;
         var object = this.el.object3D
+  
+        var text = document.createElement("a-entity");
+        text.setAttribute("text", {
+            color: "#000",
+            side: "double",
+            value: "Hello",
+            width: "200",
+            align: "center"
+        });
+        this.el.appendChild(text);
 
         let testData = new DataObject();
         // http://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0101__BE0101A/BefolkningR1860/table/tableViewLayout1/?rxid=c8454c80-d379-481b-bf82-369f75815d3a
