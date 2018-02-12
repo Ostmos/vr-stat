@@ -1,7 +1,8 @@
 AFRAME.registerComponent('bar-chart', {
     schema: {
         offset: {type: 'number', default: 1},
-        color: {type: 'color', default: '#FFF'}
+        color: {type: 'color', default: '#FFF'},
+        textColor: {type: 'color', default: '#000'}
     },
 
     init: function() {
@@ -78,14 +79,14 @@ AFRAME.registerComponent('bar-chart', {
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
             if(i == 0){
                 for(var k = 0; k < testData.xLabels.length; k++){
-                	writeText(testData.xLabels[k], "#000", textWidth ,{x: -90, y:90, z:180}, {x: barPos.x + 0.4*k,  y: 0, z: barPos.z + (textWidth/2) + 0.2}, e);
+                	writeText(testData.xLabels[k], data.textColor, textWidth ,{x: -90, y:90, z:180}, {x: barPos.x + BAR_SPACE * k,  y: 0, z: barPos.z + (textWidth/2) + 0.2}, e);
                 }
-                writeText(testData.yLabels[0], "#000", textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
+                writeText(testData.yLabels[0], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
             }
             if (i % testData.xLabels.length == 0 && i != 0) {
                 j++;  
                 color = colors[j];
-                writeText(testData.yLabels[j], "#000", textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
+                writeText(testData.yLabels[j], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
             }
             if (testData.yValues[i] != 0) {
                 var material = new THREE.MeshBasicMaterial({color: color});
@@ -114,14 +115,14 @@ AFRAME.registerComponent('bar-chart', {
         console.log(this.el);
         const numberOfLines = 10;
         var lineStep = maxHeight / numberOfLines;
-        textWidth *= 3;
+        textWidth *= 2;
         for (var i = 1, a = e; i <= 10; i++) {
             geometry.vertices.push(new THREE.Vector3(corner1.x, corner1.y + lineStep * i, corner1.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner3.x, corner3.y + lineStep * i, corner3.z));
             
-            writeText(i * lineStep, "#000", textWidth, {x:0}, {x: corner3.x + textWidth/2,  y: i * lineStep, z: corner3.z}, e);
+            writeText(i * lineStep, data.textColor, textWidth, {x:0}, {x: corner3.x + textWidth/2,  y: i*lineStep, z: corner3.z}, e);
         }
         var line = new THREE.LineSegments( geometry, material );
         object.add( line );
@@ -221,9 +222,9 @@ function writeText(value, color, width, rotation, position, parent){
             side: "double",
             value: value,
             width: width,
+            font: 'roboto'
         });
-            console.log(value);
-            text.setAttribute('rotation', rotation)
-            text.setAttribute('position', position); 
+            text.setAttribute('rotation', rotation);
+            text.setAttribute('position', position);
             parent.appendChild(text);
     }
