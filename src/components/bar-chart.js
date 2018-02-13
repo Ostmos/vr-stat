@@ -1,14 +1,17 @@
 AFRAME.registerComponent('bar-chart', {
     schema: {
         offset: {type: 'number', default: 1},
-        color: {type: 'color', default: '#FFF'}
+        color: {type: 'color', default: '#FFF'},
+        textColor: {type: 'color', default: '#000'}
     },
 
     init: function() {
         var data = this.data;
         var object = this.el.object3D
-
-        let testData = new DataObject();
+        var e = this.el; 
+        console.log(this.el);
+        
+		let testData = new DataObject();
         // http://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0101__BE0101A/BefolkningR1860/table/tableViewLayout1/?rxid=c8454c80-d379-481b-bf82-369f75815d3a
         fetch('http://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101A/BefolkningR1860', {
             method: 'post',
@@ -41,6 +44,7 @@ AFRAME.registerComponent('bar-chart', {
 
         // Bar dimensions
         function callback() {
+        console.log(e);
         const BAR_SIZE = 0.2;
         const BAR_SPACE = BAR_SIZE + 0.2;
         const BIAS = 0.01;
@@ -71,10 +75,18 @@ AFRAME.registerComponent('bar-chart', {
         var color = colors[0];
 
         var maxHeight = 0;
+        var textWidth = 8.0;
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
+            if(i == 0){
+                for(var k = 0; k < testData.xLabels.length; k++){
+                	writeText(testData.xLabels[k], data.textColor, textWidth ,{x: -90, y:90, z:180}, {x: barPos.x + BAR_SPACE * k,  y: 0, z: barPos.z + (textWidth/2) + 0.2}, e);
+                }
+                writeText(testData.yLabels[0], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
+            }
             if (i % testData.xLabels.length == 0 && i != 0) {
-                j++;   
+                j++;  
                 color = colors[j];
+                writeText(testData.yLabels[j], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
             }
             if (testData.yValues[i] != 0) {
                 var material = new THREE.MeshBasicMaterial({color: color});
@@ -88,11 +100,11 @@ AFRAME.registerComponent('bar-chart', {
                 cube.translateX(barPos.x + BAR_SPACE * (i % testData.xLabels.length));
                 cube.translateY(height / 2 + BIAS);
                 cube.translateZ(barPos.z - BAR_SPACE * j);
-
+                console.log(i);
                 object.add(cube);
             }
         }
-
+        console.log(testData.xLabels.length);
         // Lines
         var corner1 = new THREE.Vector3(-outerPlaneWidth / 2, 0, outerPlaneHeight / 2);
         var corner2 = new THREE.Vector3(-outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
@@ -100,21 +112,23 @@ AFRAME.registerComponent('bar-chart', {
 
         var material = new THREE.LineBasicMaterial({color: 0x2A363B});
         var geometry = new THREE.Geometry();
-        
+        console.log(this.el);
         const numberOfLines = 10;
         var lineStep = maxHeight / numberOfLines;
-
-        for (var i = 1; i <= 10; i++) {
+        textWidth *= 2;
+        for (var i = 1, a = e; i <= 10; i++) {
             geometry.vertices.push(new THREE.Vector3(corner1.x, corner1.y + lineStep * i, corner1.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner3.x, corner3.y + lineStep * i, corner3.z));
+            
+            writeText(i * lineStep, data.textColor, textWidth, {x:0}, {x: corner3.x + textWidth/2,  y: i*lineStep, z: corner3.z}, e);
         }
         var line = new THREE.LineSegments( geometry, material );
         object.add( line );
     }    
     },
-
+    
     tick: function(time, timeDelta) {
         // This should be replaced with the value from the controllers
         const swipeLength = 0;
@@ -126,33 +140,33 @@ AFRAME.registerComponent('bar-chart', {
 
 // This should be moved somewhere
 var jsonObj = {
-	"query": [
-	  {
-		"code": "Alder",
-		"selection": {
-		  "filter": "agg:Ålder10år",
-		  "values": [
-			"25-34",
-			"35-44"
-		  ]
-		}
-	  },
-	  {
-		"code": "Tid",
-		"selection": {
-		  "filter": "item",
-		  "values": [
-			"2013",
-			"2014",
-			"2015",
-			"2016"
-		  ]
-		}
-	  }
-	],
-	"response": {
-	  "format": "json"
-	}
+    "query": [
+      {
+        "code": "Alder",
+        "selection": {
+          "filter": "agg:Ålder10år",
+          "values": [
+            "25-34",
+            "35-44"
+          ]
+        }
+      },
+      {
+        "code": "Tid",
+        "selection": {
+          "filter": "item",
+          "values": [
+            "2013",
+            "2014",
+            "2015",
+            "2016"
+          ]
+        }
+      }
+    ],
+    "response": {
+      "format": "json"
+    }
   }
 
 var jsonObj2 = {
@@ -195,8 +209,22 @@ var jsonObj2 = {
 function DataObject() {
     this.yLabels = [];
     this.xLabels = [];
+    this.zLabels = [];
     this.yValues = []; 
     this.getSize = function() {
         return this.xLabels.length * this.yLabels.length;
     }
 }
+function writeText(value, color, width, rotation, position, parent){
+            var text = document.createElement("a-entity");
+            text.setAttribute("text", {
+            color: color,
+            side: "double",
+            value: value,
+            width: width,
+            font: 'roboto'
+        });
+            text.setAttribute('rotation', rotation);
+            text.setAttribute('position', position);
+            parent.appendChild(text);
+    }
