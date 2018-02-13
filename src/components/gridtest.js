@@ -1,4 +1,4 @@
-AFRAME.registerComponent('scatter-plot1', {
+AFRAME.registerComponent('scatter-plot-grid-test', {
     schema: {
         offset: {type: 'number', default: 1},
         color: {type: 'color', default: '#FFF'},
