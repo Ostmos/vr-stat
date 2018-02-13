@@ -140,7 +140,7 @@ AFRAME.registerComponent('scatter-plot-grid-test', {
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y + (maxHeight - minHeight), corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner2.z));
-            geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner1.z-data.offset));
+            geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner1.z - data.offset));
 
         }
         var line = new THREE.LineSegments( geometry, material );
