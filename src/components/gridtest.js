@@ -128,12 +128,12 @@ AFRAME.registerComponent('scatter-plot1', {
             
             writeText(i * lineStep, data.textColor, textWidth, {x:0}, {x: corner3.x + textWidth/2,  y: i*lineStep, z: corner3.z}, e);
         }
-        //Vertical lines z-wall
+        //Vertical lines z-wall and floor
         for(var i = 0; i <= testData.yLabels.length; i++){
-            geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y, corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + (maxHeight - minHeight), corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
+            geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y, corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
         }
-        //Vertical lines x-wall
+        //Vertical lines x-wall and floor
         for(var i = 0; i <= testData.xLabels.length; i++){
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y + (maxHeight - minHeight), corner2.z));
