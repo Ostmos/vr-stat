@@ -114,7 +114,7 @@ AFRAME.registerComponent('scatter-plot-grid-test', {
         var corner2 = new THREE.Vector3(-outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
         var corner3 = new THREE.Vector3(outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
 
-        var material = new THREE.LineBasicMaterial({color: 0x2A363B});
+        var material = new THREE.LineBasicMaterial({color: 0xEDAFCB}); //0x2A363B
         var geometry = new THREE.Geometry();
         console.log(this.el);
         const numberOfLines = 10;
@@ -132,11 +132,16 @@ AFRAME.registerComponent('scatter-plot-grid-test', {
         for(var i = 0; i <= testData.yLabels.length; i++){
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + (maxHeight - minHeight), corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
             geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y, corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
+            geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + BIAS, corner2.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
+            geometry.vertices.push(new THREE.Vector3(corner3.x, corner3.y + BIAS, corner3.z + data.offset + (BAR_SIZE + BAR_SPACE/2) * i));
         }
         //Vertical lines x-wall and floor
         for(var i = 0; i <= testData.xLabels.length; i++){
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner2.z));
             geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y + (maxHeight - minHeight), corner2.z));
+            geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner2.z));
+            geometry.vertices.push(new THREE.Vector3(corner2.x + data.offset + (BAR_SIZE + BAR_SPACE/2) * i, corner2.y, corner1.z-data.offset));
+
         }
         var line = new THREE.LineSegments( geometry, material );
         object.add( line );
