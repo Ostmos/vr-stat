@@ -75,6 +75,7 @@ AFRAME.registerComponent('scatter-plot', {
         var color = colors[0];
 
         var maxHeight = 0;
+        var minHeight = Number.MAX_SAFE_INTEGER;
         var textWidth = 8.0;
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
             if(i == 0){
@@ -94,11 +95,14 @@ AFRAME.registerComponent('scatter-plot', {
                 if (height > maxHeight) {
                     maxHeight = height;
                 }
+                if (height < minHeight){
+                    minHeight = height;
+                }
                 var geometry = new THREE.SphereGeometry(BAR_SIZE);
                 var cube = new THREE.Mesh(geometry, material);
 
                 cube.translateX(barPos.x + BAR_SPACE * (i % testData.xLabels.length));
-                cube.translateY(height - BAR_SIZE + BIAS);
+                cube.translateY(height + BAR_SIZE + BIAS-minHeight);
                 cube.translateZ(barPos.z - BAR_SPACE * j);
                 console.log(i);
                 object.add(cube);
@@ -114,7 +118,7 @@ AFRAME.registerComponent('scatter-plot', {
         var geometry = new THREE.Geometry();
         console.log(this.el);
         const numberOfLines = 10;
-        var lineStep = maxHeight / numberOfLines;
+        var lineStep = (maxHeight-minHeight) / numberOfLines;
         textWidth *= 2;
         for (var i = 1, a = e; i <= 10; i++) {
             geometry.vertices.push(new THREE.Vector3(corner1.x, corner1.y + lineStep * i, corner1.z));
