@@ -24,15 +24,16 @@ AFRAME.registerComponent('data-label', {
         bar.setAttribute("width", "1");
         bar.setAttribute("height", "5");
         bar.setAttribute("color", "#2A363B");
+        bar.setAttribute("dynamic-body", "");
         bar.appendChild(panel);
         scene.appendChild(bar);
 
-        scene.addEventListener('mouseenter', function () {
+        scene.addEventListener('hover-start', function () {
             bar.setAttribute("color", "#8A363B");
             panel.setAttribute('visible', true);
         });
 
-        scene.addEventListener('mouseleave', function () {
+        scene.addEventListener('hover-end', function () {
             panel.setAttribute('visible', false);
             bar.setAttribute("color", "#2A363B");
         });
