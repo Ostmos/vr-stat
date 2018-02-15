@@ -33,10 +33,13 @@
         </a-camera>
 
         <!-- Light -->
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>        
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow: true" position="20 10 15"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="-10 10 15"></a-entity>
+        <a-entity id="lightSphere" geometry="primitive: sphere; radius: 0.2" material="shader: flat" light="type: point; color: #FFF" position="26 21 -18"></a-entity>
+        
+        <!--<a-entity light="type: directional; color: white; intensity: 0.6; angle=270" light-shadow position="26 21 -18"></a-entity>-->
+        <!-- <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="10 10 -20"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="-10 10 -20"></a-entity> -->
 
         <!--Controllers-->
         <a-entity progressive-controls="objects: a-box"></a-entity>
