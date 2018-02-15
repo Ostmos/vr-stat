@@ -17,7 +17,6 @@
     <a-scene>
 
     <!--Camera-->
-    <a-camera position="0 0 10"></a-camera>
 
     <a-asset>
         <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
@@ -36,8 +35,9 @@
       <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
       <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity> 
       <!--Teleport-->
-      <a-entity teleport-controls="button: trigger; collision-entities: #floor" hand-controls="left"></a-entity>
-      <a-entity teleport-controls="button: trigger; collision-entities: #floor" hand-controls="right"></a-entity>
+    <a-camera position="0 0 10"></a-camera>
+    <a-entity position="0 0 10" teleport-controls="button: trigger; collision-entities: #floor" hand-controls="left"></a-entity>
+    <a-entity position="0 0 10" teleport-controls="button: trigger; collision-entities: #floor" hand-controls="right"></a-entity>
     </a-scene>
   </body>
 </html>
