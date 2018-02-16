@@ -73,7 +73,10 @@ AFRAME.registerComponent('bar-chart', {
             colors[i] = new THREE.Color(Math.random() * 0xFF0000);
         }
         var color = colors[0];
-
+        
+        //Text
+        var titleOfDiagram = "Population by year and ages in Sweden";
+        writeText(titleOfDiagram, data.textColor, 50,{x: 0, y: 0, z: 0}, {x: barPos.x+40, y: barPos.y+20, z: barPos.z}, e);
         var maxHeight = 0;
         var textWidth = 8.0;
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
