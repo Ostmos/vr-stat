@@ -5,45 +5,72 @@
     <title>VR-Stat</title>
     <script src="https://rawgit.com/aframevr/aframe/a3aedbf/dist/aframe-master.min.js"></script>
     <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script> <!--Teleport-->
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.1/dist/aframe-physics-system.min.js"></script><!--Physics-->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.0/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
     <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script> <!--Dragable, stretchable properties-->
     <!--Components-->
     <script src="src/components/bar-chart.js"></script>
     <script src="src/components/network-diagram.js"></script>
     <script src="src/components/pie-chart.js"></script>
+    <script src="src/components/scatter-plot.js"></script>
+    <script src="src/components/gridtest.js"></script>
+    <script src="src/components/data-label.js"></script>
   </head> 
   <body>
-      <a-scene>
+      <a-scene stats physics="debug: true">
 
 
         <!--Assets-->
         <a-asset>
-            <a-asset-item id="room-gltf" src="src/assets/testroom.gltf"></a-asset-item>
-            <a-mixin id="giant" scale="30 20 20"></a-mixin>
-            <img id="sky" src="src/assets/equi.png">
+            <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
+            <a-mixin id="giant" scale="10 10 10"></a-mixin>
+            <img id="sky" src="src/assets/images/equi.png"></img>
+            <img id="board" src="src/assets/images/museum_board.png"></img>
         </a-asset>
         <!--Camera-->
-        <a-camera position="20 30 40"></a-camera> <!-- 8 3 15-->
+        <a-camera position="0 0 10">
+          <a-cursor></a-cursor>
+        </a-camera>
 
         <!-- Light -->
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
-        <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>        
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow: true" position="20 10 15"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="-10 10 15"></a-entity>
+        <a-entity id="lightSphere" geometry="primitive: sphere; radius: 0.2" material="shader: flat" light="type: point; color: #FFF" position="26 21 -18"></a-entity>
+        
+        <!--<a-entity light="type: directional; color: white; intensity: 0.6; angle=270" light-shadow position="26 21 -18"></a-entity>-->
+        <!-- <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="10 10 -20"></a-entity>
+        <a-entity light="type: point; color: #FFF; intensity: 0.6; castShadow:true" position="-10 10 -20"></a-entity> -->
 
         <!--Controllers-->
-        <a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
-        <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"teleport-controls="button:trigger"></a-entity>
+        <a-entity progressive-controls="objects: a-box"></a-entity>
+        
+        <!--Laser
+        a-entity laser-controls="hand: right" line="color: red; opacity: 0.75" position="8 3 15"></a-entity>
+        <a-entity laser-controls="hand: left" line="color: green; opacity: 0.75" position="8 3 15"teleport-controls="button:trigger"></a-entity>-->
 
         <!--World-->
         <a-entity position="0 -10 0" mixin="giant" gltf-model="#room-gltf"></a-entity>
+        <a-entity position="-3 0 6" rotation="0 90 0">
+          <a-image src="#board" position="0 0 0" width="2" height="1"></a-image>
+        </a-entity>
         <a-sky src="#sky"></a-sky>
 
-        <!--Diagrams and Charts-->
+        <!--Diagrams and Charts
         <a-entity class="bar" bar-chart="offset:0.4" ;="" rotation="0 -45 0" position="20 -2 -10" draggable="startButtons:abuttondown;endButtons:abuttonup"></a-entity>
         <a-entity network-diagram position="0 0 -5" stretchable="endButtons:xbuttonup;startButtons:xbuttondown"draggable="startButtons:abuttondown;endButtons:abuttonup" ></a-entity>
         <a-entity pie-chart position="-15 0 -5"; rotation="0 20 0" stretchable="endButtons:xbuttonup;startButtons:xbuttondown"draggable="startButtons:abuttondown;endButtons:abuttonup"></a-entity>
-
+        <a-entity scatter-plot-grid-test position="2 0 0" rotation="0 -45 0"></a-entity>-->
+        
+        <!--Static test-->
+        <!--<a-entity data-label hoverable grabbable stretchable draggable droppable rotatable position="15 0 0"></a-entity>-->
+        <!--Dynamic test-->
+        <!--<a-entity data-label dynamic-body="shape: hull; mass: 10" hoverable grabbable stretchable draggable droppable rotatable position="15 0 0"></a-entity>-->
+        <a-entity data-label hoverable grabbable stretchable draggable droppable rotatable position="15 0 0"></a-entity>
+        <a-box dynamic-body hoverable grabbable stretchable draggable droppable rotatable position="0 10 -10" width="10" height="10">
+          <a-box hoverable grabbable stretchable draggable droppable rotatable position="0 10 -10" width="1" height="1"></a-box>
+        </a-box>
+        
+        <a-plane static-body width="200" height="200" position="0 -10 0" rotation="90"></a-entity>
       </a-scene>
   </body>
 </html>

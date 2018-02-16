@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>VR-Stat</title>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+
+    <!--Components-->
+    <script src="src/components/bar-chart.js"></script>
+    <script src="src/components/network-diagram.js"></script>
+    <script src="src/components/pie-chart.js"></script>
+    <script src="src/components/scatter-plot.js"></script>
+    <script src="src/components/gridtest.js"></script>
+    <script src="src/components/data-label.js"></script>
+  </head> 
+  <body>
+    <a-scene>
+    <a-asset>
+        <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
+        <img id="sky" src="src/assets/images/equi.png">
+        <img id="board" src="src/assets/images/museum_board.png">
+        <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                 hoverable grabbable stretchable draggable droppable
+                 rotatable 
+                 shadow
+                 event-set="_event: drag-drop; geometry.primitive: sphere; geometry.radius: 0.25"></a-mixin>
+        <a-mixin id="cube-hovered" material="opacity: 0.7; transparent: true">
+        </a-mixin>
+        <a-mixin id="cube-dragover" material="wireframe: true;"></a-mixin>
+    </a-asset>
+
+    <!--World-->
+    <a-entity id="#floor" position="0 0 0" scale="2 1.5 2" gltf-model="#room-gltf"></a-entity>
+    <a-sky src="#sky"></a-sky>
+    <a-entity position="-3.56 0 6" rotation="0 90 0">
+      <a-image src="#board" position="-0.5 2 0" width="2" height="1"></a-image>
+    </a-entity>
+
+    <!-- Light -->
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity> 
+
+    <!--Teleport-->
+    <!--<a-camera position="0 0 10"></a-camera>
+    <a-entity position="0 0 10" progressive-controls="maxLevel: point;"></a-entity>-->
+    <a-entity progressive-controls="objects: .cube, a-link; maxLevel: point" >
+      <a-entity id="rhand" class="right-controller" super-hands="stretchEndButtons: gripup; stretchStartButtons: gripdown; grabStartButton: triggerdown; grabEndButton: triggerup"></a-entity>
+      <a-entity id="lhand" teleport-controls="button: trigger; collision-entities: #floor" class="left-controller"super-hands="dragDropEndButtons: none; grabStartButtons: none; grabEndButtons: none; dragDropStartButtons: none; stretchStartButtons: gripdown; stretchEndButtons: gripup;"></a-entity>
+    </a-entity>     
+
+    <!--<a-entity position="0 0 10" teleport-controls="button: trigger; collision-entities: #floor" hand-controls="left"></a-entity>
+    <a-entity position="0 0 10" laser-controls="hand: right" line="color: red; opacity: 0.75"></a-entity>-->
+
+    <!--Models-->
+    <a-entity data-label position="7.5 0 2"></a-entity>
+    <a-entity class="cube" mixin="cube" position="5 1 -1.25" material="color: red"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0 1 -1.25" material="color: blue"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-5 1 -1.25" material="color: green"></a-entity>
+
+
+    </a-scene>
+  </body>
+</html>
