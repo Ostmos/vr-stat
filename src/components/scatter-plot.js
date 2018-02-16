@@ -52,10 +52,12 @@ AFRAME.registerComponent('scatter-plot', {
         var outerPlaneHeight = BAR_SPACE * testData.yLabels.length + data.offset * 2;
         
         // Outer plane
-        var outerPlaneGeometry = new THREE.PlaneGeometry(outerPlaneWidth, outerPlaneHeight);
+        var outerPlaneGeometry = new THREE.BoxGeometry(outerPlaneWidth, outerPlaneHeight, outerPlaneThickness);
         outerPlaneGeometry.rotateX(Math.PI / 2);
         var outerPlaneMaterial = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
         var outerPlane = new THREE.Mesh(outerPlaneGeometry, outerPlaneMaterial);
+        outerPlane.translateY(-outerPlaneThickness/2);
+        var outerPlaneThickness = 0.2;
 
         object.add(outerPlane);
 
