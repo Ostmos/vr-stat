@@ -28,6 +28,10 @@ AFRAME.registerComponent('data-label', {
         bar.appendChild(panel);
         scene.appendChild(bar);
 
+        scene.addEventListener('thumbstickchanged', function(e) {
+            console.log(e)
+        });
+
         scene.addEventListener('hover-start', function () {
             bar.setAttribute("color", "#8A363B");
             panel.setAttribute('visible', true);
