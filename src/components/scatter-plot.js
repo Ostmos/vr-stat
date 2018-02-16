@@ -74,9 +74,12 @@ AFRAME.registerComponent('scatter-plot', {
         }
         var color = colors[0];
 
+        //Text
         var maxHeight = 0;
         var minHeight = Number.MAX_SAFE_INTEGER;
         var textWidth = 8.0;
+        var titleOfDiagram = "Population by year and ages in Sweden";
+        writeText(titleOfDiagram, data.textColor, 50,{x: 0, y: 0, z: 0}, {x: barPos.x+40, y: barPos.y+20, z: barPos.z}, e);
         for (var i = 0, j = 0; i < testData.getSize(); i++) {
             if(i == 0){
                 for(var k = 0; k < testData.xLabels.length; k++){
