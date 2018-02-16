@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>VR-Stat</title>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+  </head> 
+  <body>
+    <a-scene avatar-recorder> <!--avatar-replayer-->
+    <a-asset>
+        <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
+        <img id="sky" src="src/assets/images/equi.png">
+        <img id="board" src="src/assets/images/museum_board.png">
+    </a-asset>
+
+    <!--World-->
+    <a-entity id="#floor" position="0 0 0" scale="2 1.5 2" gltf-model="#room-gltf"></a-entity>
+    <a-sky src="#sky"></a-sky>
+    <a-entity position="-3.56 0 6" rotation="0 90 0">
+      <a-image src="#board" position="-0.5 2 0" width="2" height="1"></a-image>
+    </a-entity>
+
+    <!-- Light -->
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity> 
+
+    <!--Teleport-->
+    <a-entity teleport-controls="button: trigger; collision-entities: #floor" oculus-touch-controls></a-entity>
+    <a-entity laser-controls="hand: right"></a-entity>
+
+    <a-camera></a-camera>
+
+    </a-scene>
+  </body>
+</html>
