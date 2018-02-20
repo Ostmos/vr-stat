@@ -15,6 +15,7 @@ AFRAME.registerComponent('bar-chart-2', {
 
         var z = ['2013', '2014', '2015', '2016'];
         var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5'];
+        var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         var values = [];
         for (var i = 0; i < x.length * z.length; i++) {
             values[i] = (Math.random());
@@ -31,7 +32,7 @@ AFRAME.registerComponent('bar-chart-2', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createLevelLines(WIDTH, DEPTH, panelBox);
+        createLevelLines(WIDTH, DEPTH, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
@@ -44,8 +45,6 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     panelBox.setAttribute('width', width + padding);
     panelBox.setAttribute('depth', depth + padding);
     panelBox.setAttribute('color', "#2A363B");
-
-    console.log("nu är jag här!!!");
 
     for (var i = 0; i < zLabels.length; i++) {
         var label = document.createElement("a-text");
@@ -75,16 +74,16 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 };
 
 
-function createLevelLines(width, depth, panelBox) {
+function createLevelLines(width, depth, panelBox, textColor, yLabels, barSize) {
     var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
     const maxHeight = 1
     var lineStep = maxHeight / numberOfLines;
-    var lines = document.createElement("a-entity")
+    var lines = document.createElement("a-entity");
     for (var i = 1; i <= 10; i++) {
-        var line = document.createElement("a-entity")
+        var line = document.createElement("a-entity");
         var c1 = corner1.x + ", " + corner1.y + lineStep * i + ", " + corner1.z + ";";
         var c2 = corner2.x + ", " + corner2.y + lineStep * i + ", " + corner2.z + ";";
         var c3 = corner3.x + ", " + corner3.y + lineStep * i + ", " + corner3.z + ";";
@@ -94,6 +93,16 @@ function createLevelLines(width, depth, panelBox) {
         line.setAttribute("line__1", lineAtribute_1);
         line.setAttribute("line__2", lineAtribute_2);
         lines.appendChild(line);
+
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        label.setAttribute("value", yLabels[i-1]);
+        label.setAttribute("rotation", "0 90 0");
+        label.setAttribute("color", textColor);
+        label.setAttribute("position", {
+            x: corner1.x, y: (corner1.y + lineStep * i), z: (corner1.z + 0.1)
+        });
+        lines.appendChild(label);
     }
     panelBox.appendChild(lines);
 }
@@ -156,8 +165,6 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         label.setAttribute("visible", "false");
         
         bar.appendChild(label);
-
-
 
         panelBox.appendChild(bar);
     }
