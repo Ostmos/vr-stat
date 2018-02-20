@@ -8,13 +8,9 @@ AFRAME.registerComponent('controller-listener', {
             children[0].setAttribute("visible", "true");
         });
 
-        el.addEventListener('raycaster-intersected-cleared', function() {
+        el.addEventListener('hover-end', function() {
             var children = el.childNodes;
             children[0].setAttribute("visible", "false");
-        });
-
-        el.addEventListener('axismove', function (evt) {
-            console.log(evt.detail.axis[0]);
         });
     }
 })
