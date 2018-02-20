@@ -1,17 +1,20 @@
 AFRAME.registerComponent('controller-listener', {
-    dependencies: ['raycaster'],
     
     init: function() {
         var el = this.el;
 
-        el.addEventListener('raycaster-intersected', function() {
-            console.log('Hover');
-            el.setAttribute('visible', 'true');
+        el.addEventListener('hover-start', function() {
+            console.log('hover start');
+            el.setAttribute("visible", "false");
         });
 
-        el.addEventListener('raycaster-intersected-cleared', function() {
-            console.log('Not hover');
-            el.setAttribute('visible', 'false');
+        el.addEventListener('hover-end', function() {
+            console.log('hover end');
+            el.setAttribute("visible", "true");
+        });
+
+        el.addEventListener('grab-start', function() {
+            console.log('grab ----');
         });
 
         el.addEventListener('touchstart', function(event) {
