@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="UTF-8">
     <title>VR-Stat</title>
@@ -9,7 +10,30 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
     <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
+      <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
 
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>VR-Stat</title>
+  <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+  <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+  <!-- <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script> broken link -->
+  <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+  <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
+
+  <script src="src/components/controllers/controller-listener.js"></script>
+  <script src="src/components/controllers/rotation-controller.js"></script>
+  <script src="src/components/components/bar-chart-2.js"></script>
+  <script src="src/components/components/bar-chart.js"></script>
+</head>
+
+<body>
+  <a-scene avatar-recorder>
+    <!--avatar-replayer="src: src/assets/recordings/hover+trigger.json">-->
     <script src="src/components/controllers/controller-listener.js"></script>
     <script src="src/components/controllers/rotation-controller.js"></script>
     <script src="src/components/components/bar-chart-2.js"></script>
@@ -18,9 +42,9 @@
   <body>
     <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/test-everything.json">
     <a-asset>
-        <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
-        <img id="sky" src="src/assets/images/equi.png">
-        <img id="board" src="src/assets/images/museum_board.png">
+      <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
+      <img id="sky" src="src/assets/images/equi.png">
+      <img id="board" src="src/assets/images/museum_board.png">
     </a-asset>
 
     <!--World-->
@@ -35,21 +59,25 @@
 
     <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="0 1 -3"></a-entity>
     <a-entity id="bc2" class="cube" grabbable draggable bar-chart-2 position="2 1 -3"></a-entity>
+    
+    <!--<a-entity controller-display slice9="width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png" position="3 2 2"></a-entity>-->
 
+    <!--<a-entity controller-display position="0 2 0"></a-entity>-->
+    
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity> 
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>
 
     <!--Controllers-->
-    <a-entity progressive-controls="objects: .cube; maxLevel: point" >
-      <a-entity id="controller1" class="right-controller" 
-      super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;" rotation-controller></a-entity>
-      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor"
-      raycaster="objects: .a; showLine: false;"></a-entity>
+    <a-entity progressive-controls="objects: .cube; maxLevel: point">
+      <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
+        rotation-controller></a-entity>
+      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
     </a-entity>
 
-    </a-scene>
-  </body>
+  </a-scene>
+</body>
+
 </html>
