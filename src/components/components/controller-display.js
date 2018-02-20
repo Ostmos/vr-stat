@@ -26,10 +26,4 @@ AFRAME.registerComponent('controller-display', {
         object.add(plane);
     }
 });
-/*
-            var contDisp =  document.getElementsByClassName('cont-disp')[0];
-            console.log(panel.getAttribute('text').value);
-            contDisp.setAttribute("text", {
-                value: panel.getAttribute('text').value
-            });
-*/
+
