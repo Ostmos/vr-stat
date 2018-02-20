@@ -30,7 +30,8 @@ AFRAME.registerComponent('bar-chart-2', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
 });
 
@@ -41,23 +42,25 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     panelBox.setAttribute('depth', depth + padding);
     panelBox.setAttribute('color', "#2A363B");
 
+    console.log("nu är jag här!!!");
+
     for (var i = 0; i < zLabels.length; i++) {
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
         label.setAttribute("value", zLabels[i]);
-        label.setAttribute("rotation", "-90 0 0")
+        label.setAttribute("rotation", "-90 0 0");
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
             x: width / 2, y: 0.00, z: ((depth / 2) - barTotalSize / 2) - barTotalSize * i
         });
-        panelBox.appendChild(label)
+        panelBox.appendChild(label);
     }
 
     for (var i = 0; i < xLabels.length; i++) {
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
         label.setAttribute("value", xLabels[i]);
-        label.setAttribute("rotation", "-90 90 0")
+        label.setAttribute("rotation", "-90 90 0");
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
             x: ((width / 2) - barTotalSize / 2) - barTotalSize * i, y: 0.00, z: width / 2 + barTotalSize / 1.2
@@ -68,18 +71,32 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     return panelBox;
 };
 
-function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize, barTotalSize, panelBox, textColor) {
+function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
     const OFFSET = barTotalSize / 2;
     var pos = {x: 0, y: 0, z: 0}; 
-
+    var z = 0;
+    var labX, labY, labZ;
     for (var i = 0; i < values.length; i++) {
         var bar = document.createElement("a-box");
+
+
         bar.setAttribute("width", barSize);
         bar.setAttribute("depth", barSize);
         bar.setAttribute("height", values[i]);
         bar.setAttribute("color", "#F9D423");
         bar.setAttribute("transparent", "true");
         bar.setAttribute("opacity", "0.9");
+
+        labY = Math.floor(values[i] * 100);
+        labX = xLabels[i % xLabels.length];
+        if(i % xLabels.length == 0 && i != 0){
+            ++z;
+        }  
+        labZ = zLabels[z]; 
+
+        bar.setAttribute("labelX", labX);
+        bar.setAttribute("labelY", labY);
+        bar.setAttribute("labelZ", labZ);
 
         bar.setAttribute("hoverable","");
         bar.setAttribute("controller-listener","");
@@ -88,7 +105,8 @@ function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize,
 
         pos.y = values[i] / 2;
 
-        if (i % xLabelsLength == 0) {
+
+        if (i % xLabels.length == 0) {
             pos.z += barTotalSize;
         }
 
@@ -109,7 +127,10 @@ function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize,
             x: 0, y: values[i] / 2 + barSize / 2, z: 0
         });
         label.setAttribute("visible", "false");
+        
         bar.appendChild(label);
+
+
 
         panelBox.appendChild(bar);
     }
