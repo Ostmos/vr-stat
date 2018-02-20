@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>VR-Stat</title>
-    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
-    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
-    <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script>
-    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
-    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
-    <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
 
-    <script src="src/components/controllers/controller-listener.js"></script>
-    <script src="src/components/controllers/rotation-controller.js"></script>
-    <script src="src/components/components/bar-chart-2.js"></script>
-    <script src="src/components/components/bar-chart.js"></script>
-    <script src="src/components/components/controller-display.js"></script>
-  </head> 
-  <body>
-    <a-scene avatar-recorder><!--avatar-replayer="src: src/assets/recordings/hover+trigger.json">-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>VR-Stat</title>
+  <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+  <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+  <!-- <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script> broken link -->
+  <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+  <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
+
+  <script src="src/components/controllers/controller-listener.js"></script>
+  <script src="src/components/controllers/rotation-controller.js"></script>
+  <script src="src/components/components/bar-chart-2.js"></script>
+  <script src="src/components/components/bar-chart.js"></script>
+</head>
+
+<body>
+  <a-scene avatar-recorder>
+    <!--avatar-replayer="src: src/assets/recordings/hover+trigger.json">-->
+
     <a-asset>
-        <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
-        <img id="sky" src="src/assets/images/equi.png">
-        <img id="board" src="src/assets/images/museum_board.png">
-        <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
-                 grabbable draggable droppable shadow
-                 event-set="_event: drag-drop; geometry.primitive: sphere; geometry.radius: 1"></a-mixin>
-        <a-mixin id="cube-hovered" material="opacity: 0.7; transparent: true">
-        </a-mixin>
-        <a-mixin id="cube-dragover" material="wireframe: true;"></a-mixin>
+      <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
+      <img id="sky" src="src/assets/images/equi.png">
+      <img id="board" src="src/assets/images/museum_board.png">
+      <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5" grabbable draggable droppable shadow event-set="_event: drag-drop; geometry.primitive: sphere; geometry.radius: 1"></a-mixin>
+      <a-mixin id="cube-hovered" material="opacity: 0.7; transparent: true">
+      </a-mixin>
+      <a-mixin id="cube-dragover" material="wireframe: true;"></a-mixin>
     </a-asset>
 
     <!--World-->
@@ -50,25 +52,26 @@
                   event-set="_event: drag-drop; geometry.primitive: sphere; geometry.radius: 0.25" position="0 0 0">
       </a-box>
     </a-box>-->
+
+    <!-- Graphs -->
     <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="0 1 -3" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"></a-entity>
-    
+
     <a-entity controller-display position="0 2 0"></a-entity>
-
-
+    
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 -10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity> 
+    <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>
 
     <!--Controllers-->
-    <a-entity progressive-controls="objects: .cube; maxLevel: point" >
-      <a-entity id="controller1" class="right-controller" 
-      super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;" rotation-controller></a-entity>
-      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor"
-      raycaster="objects: .a; showLine: false;"></a-entity>
+    <a-entity progressive-controls="objects: .cube; maxLevel: point">
+      <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
+        rotation-controller></a-entity>
+      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
     </a-entity>
 
-    </a-scene>
-  </body>
+  </a-scene>
+</body>
+
 </html>
