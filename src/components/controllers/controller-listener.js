@@ -4,13 +4,14 @@ AFRAME.registerComponent('controller-listener', {
         var el = this.el;
 
         el.addEventListener('hover-start', function() {
-            console.log('hover start');
-            el.setAttribute("visible", "false");
+            var children = el.childNodes;
+            children[0].setAttribute("visible", "true");
         });
 
-        el.addEventListener('hover-end', function() {
-            console.log('hover end');
-            el.setAttribute("visible", "true");
+        el.addEventListener('raycaster-intersected-cleared', function() {
+            var children = el.childNodes;
+            console.log(el.parentNode);
+            children[0].setAttribute("visible", "false");
         });
 
         el.addEventListener('grab-start', function() {

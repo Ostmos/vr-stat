@@ -16,7 +16,7 @@ AFRAME.registerComponent('bar-chart-2', {
         var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5'];
         var values = [];
         for (var i = 0; i < x.length * z.length; i++) {
-            values[i] = (Math.random() * 100) / 10; 
+            values[i] = (Math.random()); 
         }
 
         const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
@@ -27,7 +27,7 @@ AFRAME.registerComponent('bar-chart-2', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox);
+        createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
 });
 
@@ -65,7 +65,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     return panelBox;
 };
 
-function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize, barTotalSize, panelBox) {
+function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize, barTotalSize, panelBox, textColor) {
     const OFFSET = barTotalSize / 2;
     var pos = {x: 0, y: 0, z: 0}; 
 
@@ -93,6 +93,19 @@ function createBars(width, depth, xLabelsLength, zLabelsLength, values, barSize,
         });
 
         bar.setAttribute("controller-listener","");
+
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        var val = values[i] * 100;
+        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("rotation", "0 0 0")
+        label.setAttribute("color", textColor);
+        label.setAttribute("align", "center");
+        label.setAttribute("position", {
+            x: 0, y: values[i] / 2 + barSize / 2, z: 0
+        });
+        label.setAttribute("visible", "false");
+        bar.appendChild(label);
 
         panelBox.appendChild(bar);
     }
