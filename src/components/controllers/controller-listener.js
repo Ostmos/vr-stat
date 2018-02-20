@@ -10,16 +10,11 @@ AFRAME.registerComponent('controller-listener', {
 
         el.addEventListener('raycaster-intersected-cleared', function() {
             var children = el.childNodes;
-            console.log(el.parentNode);
             children[0].setAttribute("visible", "false");
         });
 
-        el.addEventListener('grab-start', function() {
-            console.log('grab ----');
-        });
-
-        el.addEventListener('touchstart', function(event) {
-            console.log(event);
+        el.addEventListener('axismove', function (evt) {
+            console.log(evt.detail.axis[0]);
         });
     }
 })

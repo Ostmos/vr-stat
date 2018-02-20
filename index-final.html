@@ -15,7 +15,7 @@
     <script src="src/components/components/bar-chart.js"></script>
   </head> 
   <body>
-    <a-scene stats avatar-recorder avatar-replayer="src: src/assets/recordings/hover+trigger.json">
+    <a-scene avatar-recorder><!--avatar-replayer="src: src/assets/recordings/hover+trigger.json">-->
     <a-asset>
         <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
         <img id="sky" src="src/assets/images/equi.png">
@@ -48,7 +48,7 @@
                   event-set="_event: drag-drop; geometry.primitive: sphere; geometry.radius: 0.25" position="0 0 0">
       </a-box>
     </a-box>-->
-    <a-entity class="cube" grabbable draggable bar-chart-2 position="0 1 -1"></a-entity>
+    <a-entity class="cube" grabbable draggable bar-chart-2 position="0 1 -3"></a-entity>
 
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
@@ -58,8 +58,10 @@
 
     <!--Controllers-->
     <a-entity progressive-controls="objects: .cube; maxLevel: point" >
-      <a-entity id="controller1" class="right-controller" tracked-controls></a-entity>
-      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor"></a-entity>
+      <a-entity id="controller1" class="right-controller" 
+      super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"></a-entity>
+      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor"
+      raycaster="objects: .a; showLine: false;"></a-entity>
     </a-entity>
 
     </a-scene>
