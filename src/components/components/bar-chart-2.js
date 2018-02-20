@@ -31,6 +31,8 @@ AFRAME.registerComponent('bar-chart-2', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
+        createLevelLines(WIDTH, DEPTH, panelBox);
+
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
@@ -93,7 +95,6 @@ function createLevelLines(width, depth, panelBox) {
         line.setAttribute("line__2", lineAtribute_2);
         lines.appendChild(line);
     }
-
     panelBox.appendChild(lines);
 }
 
