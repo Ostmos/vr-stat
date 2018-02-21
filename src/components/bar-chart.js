@@ -20,6 +20,7 @@ AFRAME.registerComponent('bar-chart-2', {
         for (var i = 0; i < x.length * z.length; i++) {
             values[i] = (Math.random());
         }
+        var maxValue = Math.max(...values);
 
         const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
         const WIDTH = BAR_TOT_SIZE * x.length;
@@ -32,7 +33,7 @@ AFRAME.registerComponent('bar-chart-2', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createLevelLines(WIDTH, DEPTH, panelBox, data.textColor, y, data.barSize);
+        createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
@@ -75,12 +76,12 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 };
 
 
-function createLevelLines(width, depth, panelBox, textColor, yLabels, barSize) {
+function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, barSize) {
     var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
-    const maxHeight = 1
+    const maxHeight = maxValue;
     var lineStep = maxHeight / numberOfLines;
     var lines = document.createElement("a-entity");
     for (var i = 1; i <= 10; i++) {
