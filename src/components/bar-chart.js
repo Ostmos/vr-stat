@@ -78,8 +78,9 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
-    const maxHeight = maxValue;
+    const maxHeight = maxValue; //Scale this
     var lineStep = maxHeight / numberOfLines;
+    var labelStep = maxValue / numberOfLines                 
     var lines = document.createElement("a-entity");
     for (var i = 1; i <= 10; i++) {
         var line = document.createElement("a-entity");
@@ -95,7 +96,7 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", yLabels[i-1]);
+        label.setAttribute("value", (labelStep * i).toFixed(2));
         label.setAttribute("rotation", "0 90 0");
         label.setAttribute("align", "right")
         label.setAttribute("color", textColor);
