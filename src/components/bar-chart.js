@@ -1,4 +1,4 @@
-AFRAME.registerComponent('bar-chart-2', {
+AFRAME.registerComponent('bar-chart', {
     schema: {
         offset: { type: 'number', default: 1 },
         barSize: { type: 'number', default: 0.05 },
