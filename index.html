@@ -11,13 +11,14 @@
     <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
     <!--<script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>-->
 
-    <script src="src/components/controller-listener.js"></script>
+    <script src="src/components/bar-listener.js"></script>
+    <script src="src/components/bar-chart-listener.js"></script>
     <script src="src/components/rotation-controller.js"></script>
     <script src="src/components/bar-chart.js"></script>
 </head>
 
 <body>
-  <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/test-everything.json">
+  <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/rotation.json">
     <a-asset>
       <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
       <img id="sky" src="src/assets/images/equi.png">
@@ -32,8 +33,8 @@
     </a-entity>
 
     <!--Models-->
-    <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="1 1 -3"></a-entity>
-    <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="-1 1 -3"></a-entity>
+    <a-entity class="cube rotate" grabbable draggable bar-chart-2 bar-chart-listener position="-1 1 -3"></a-entity>
+    <a-entity class="cube rotate" grabbable draggable bar-chart-2 bar-chart-listener position="0 1 -3"></a-entity>
     
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>
