@@ -1,239 +1,202 @@
 AFRAME.registerComponent('scatter-plot', {
     schema: {
-        offset: {type: 'number', default: 1},
-        color: {type: 'color', default: '#FFF'},
-        textColor: {type: 'color', default: '#000'}
+        offset: { type: 'number', default: 1 },
+        barSize: { type: 'number', default: 0.05 },
+        barPadding: { type: 'number', default: 0.05 },
+        panelBoxPadding: { type: 'number', default: 0 },
+        color: { type: 'color', default: '#FFF' },
+        textColor: { type: 'color', default: '#000000' }
     },
 
-    init: function() {
+    init: function () {
         var data = this.data;
+        var entity = this.el;
         var object = this.el.object3D
-        var e = this.el; 
-        console.log(this.el);
-        
-		let testData = new DataObject();
-        // http://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0101__BE0101A/BefolkningR1860/table/tableViewLayout1/?rxid=c8454c80-d379-481b-bf82-369f75815d3a
-        fetch('http://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101A/BefolkningR1860', {
-            method: 'post',
-            headers: {
-                "Content-type" : "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            // For more stats use jsonObj2 instead of jsonObj
-            body: JSON.stringify(jsonObj2) 
-        })
-        .then(response => response.json())
-        .then(function(json){
-            for(var i = 0; i < json.data.length; i++) {
-                // This is really ineffective, will change
-                var newItemY = json.data[i].key[0];
-                var newItemX = json.data[i].key[1];
-                if (testData.yLabels.indexOf(newItemY) === -1) {
-                    testData.yLabels.push(newItemY);
-                }
-                if (testData.xLabels.indexOf(newItemX) === -1) {
-                    testData.xLabels.push(newItemX);
-                }
-                testData.yValues[i] = parseInt(json.data[i].values[0]);
-            }
-            console.log(testData);
-            callback();
-        })
-        .catch(function(error) {
-            console.log('Request failed', error);
-        })
 
-        // Bar dimensions
-        function callback() {
-        console.log(e);
-        const BAR_SIZE = 0.2;
-        const BAR_SPACE = BAR_SIZE + 0.2;
-        const BIAS = 0.01;
-        var outerPlaneWidth = BAR_SPACE * testData.xLabels.length + data.offset * 2;
-        var outerPlaneHeight = BAR_SPACE * testData.yLabels.length + data.offset * 2;
-        
-        // Outer plane
-        var outerPlaneGeometry = new THREE.BoxGeometry(outerPlaneWidth, outerPlaneHeight, outerPlaneThickness);
-        outerPlaneGeometry.rotateX(Math.PI / 2);
-        var outerPlaneMaterial = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
-        var outerPlane = new THREE.Mesh(outerPlaneGeometry, outerPlaneMaterial);
-        outerPlane.translateY(-outerPlaneThickness/2);
-        var outerPlaneThickness = 0.2;
-
-        object.add(outerPlane);
-
-        var innerPlaneWidth = outerPlaneWidth - data.offset * 2;
-        var innerPlaneHeight = outerPlaneHeight - data.offset * 2;
-
-        var barPos = new THREE.Vector3(
-            -innerPlaneWidth / 2 + BAR_SIZE / 2,
-            0, 
-            innerPlaneHeight / 2 - BAR_SIZE / 2,
-        );
-
-        var colors = [];
-        for (var i = 0; i < 8; i++) {
-            colors[i] = new THREE.Color(Math.random() * 0xFF0000);
+        var z = ['2013', '2014', '2015', '2016'];
+        var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5'];
+        var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        var values = [];
+        for (var i = 0; i < x.length * z.length; i++) {
+            values[i] = (Math.random());
         }
-        var color = colors[0];
+        var maxValue = Math.max(...values);
 
-        //Text
-        var maxHeight = 0;
-        var minHeight = Number.MAX_SAFE_INTEGER;
-        var textWidth = 8.0;
-        var titleOfDiagram = "Population by year and ages in Sweden";
-        writeText(titleOfDiagram, data.textColor, 50,{x: 0, y: 0, z: 0}, {x: barPos.x+40, y: barPos.y+20, z: barPos.z}, e);
-        for (var i = 0, j = 0; i < testData.getSize(); i++) {
-            if(i == 0){
-                for(var k = 0; k < testData.xLabels.length; k++){
-                	writeText(testData.xLabels[k], data.textColor, textWidth ,{x: -90, y:90, z:180}, {x: barPos.x + BAR_SPACE * k,  y: 0, z: barPos.z + (textWidth/2) + 0.2}, e);
-                }
-                writeText(testData.yLabels[0], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
-            }
-            if (i % testData.xLabels.length == 0 && i != 0) {
-                j++;  
-                color = colors[j];
-                writeText(testData.yLabels[j], data.textColor, textWidth, {x:-90}, {x: barPos.x + (textWidth/2) + innerPlaneWidth,  y: 0.00, z: barPos.z - BAR_SPACE * j}, e);
-            }
-            if (testData.yValues[i] != 0) {
-                var material = new THREE.MeshBasicMaterial({color: color});
-                var height = testData.yValues[i] / 50000.0;
-                if (height > maxHeight) {
-                    maxHeight = height;
-                }
-                if (height < minHeight){
-                    minHeight = height;
-                }
-                var geometry = new THREE.SphereGeometry(BAR_SIZE);
-                var cube = new THREE.Mesh(geometry, material);
+        const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
+        const WIDTH = BAR_TOT_SIZE * x.length;
+        const DEPTH = BAR_TOT_SIZE * z.length;
 
-                cube.translateX(barPos.x + BAR_SPACE * (i % testData.xLabels.length));
-                cube.translateY(height + BAR_SIZE + BIAS-minHeight);
-                cube.translateZ(barPos.z - BAR_SPACE * j);
-                console.log(i);
-                object.add(cube);
-            }
-        }
-        console.log(testData.xLabels.length);
-        // Lines
-        var corner1 = new THREE.Vector3(-outerPlaneWidth / 2, 0, outerPlaneHeight / 2);
-        var corner2 = new THREE.Vector3(-outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
-        var corner3 = new THREE.Vector3(outerPlaneWidth / 2, 0, -outerPlaneHeight / 2);
+        var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
+            BAR_TOT_SIZE, data.textColor, x, z);
+        entity.appendChild(panelBox);
 
-        var material = new THREE.LineBasicMaterial({color: 0x2A363B});
-        var geometry = new THREE.Geometry();
-        console.log(this.el);
-        const numberOfLines = 10;
-        var lineStep = (maxHeight-minHeight) / numberOfLines;
-        textWidth *= 2;
-        for (var i = 1, a = e; i <= 10; i++) {
-            geometry.vertices.push(new THREE.Vector3(corner1.x, corner1.y + lineStep * i, corner1.z));
-            geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
-            geometry.vertices.push(new THREE.Vector3(corner2.x, corner2.y + lineStep * i, corner2.z));
-            geometry.vertices.push(new THREE.Vector3(corner3.x, corner3.y + lineStep * i, corner3.z));
-            
-            writeText(i * lineStep, data.textColor, textWidth, {x:0}, {x: corner3.x + textWidth/2,  y: i*lineStep, z: corner3.z}, e);
-        }
-        var line = new THREE.LineSegments( geometry, material );
-        object.add( line );
-    }    
+        createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
+
+        createSpheres(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        // createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
-    
-    tick: function(time, timeDelta) {
-        // This should be replaced with the value from the controllers
-        const swipeLength = 0;
-        
-        this.el.object3D.rotateX(swipeLength);
-        this.el.object3D.rotateY(swipeLength);
-    }
 });
 
-// This should be moved somewhere
-var jsonObj = {
-    "query": [
-      {
-        "code": "Alder",
-        "selection": {
-          "filter": "agg:Ålder10år",
-          "values": [
-            "25-34",
-            "35-44"
-          ]
-        }
-      },
-      {
-        "code": "Tid",
-        "selection": {
-          "filter": "item",
-          "values": [
-            "2013",
-            "2014",
-            "2015",
-            "2016"
-          ]
-        }
-      }
-    ],
-    "response": {
-      "format": "json"
-    }
-  }
+function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor, xLabels, zLabels) {
+    var panelBox = document.createElement("a-box");
+    panelBox.setAttribute('height', '0.03');
+    panelBox.setAttribute('width', width + padding);
+    panelBox.setAttribute('depth', depth + padding);
+    panelBox.setAttribute('color', "#2A363B");
 
-var jsonObj2 = {
-    "query": [
-      {
-        "code": "Alder",
-        "selection": {
-          "filter": "agg:Ålder5år",
-          "values": [
-            "-4",
-            "5-9",
-            "10-14",
-            "15-19",
-            "20-24",
-            "25-29",
-            "30-34",
-            "35-39",
-            //"40-44",
-            //"45-49",
-            //"50-54",
-            //"55-59",
-            //"60-64",
-            //"65-69",
-            //"70-74",
-            //"75-79",
-            //"80-84",
-            //"85-89",
-            //"90-94",
-            //"95-99",
-            //"100+"
-          ]
-        }
-      }
-    ],
-    "response": {
-      "format": "json"
-    }
-  }
-
-function DataObject() {
-    this.yLabels = [];
-    this.xLabels = [];
-    this.zLabels = [];
-    this.yValues = []; 
-    this.getSize = function() {
-        return this.xLabels.length * this.yLabels.length;
-    }
-}
-function writeText(value, color, width, rotation, position, parent){
-            var text = document.createElement("a-entity");
-            text.setAttribute("text", {
-            color: color,
-            side: "double",
-            value: value,
-            width: width,
-            font: 'roboto'
+    for (var i = 0; i < zLabels.length; i++) {
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        label.setAttribute("value", zLabels[i]);
+        label.setAttribute("rotation", "-90 0 0");
+        label.setAttribute("color", textColor);
+        label.setAttribute("position", {
+            x: width / 2 + barSize / 1.3, y: 0.00, z: depth / 2 - barTotalSize / 2 - barTotalSize * i
         });
-            text.setAttribute('rotation', rotation);
-            text.setAttribute('position', position);
-            parent.appendChild(text);
+        panelBox.appendChild(label);
     }
+
+    for (var i = 0; i < xLabels.length; i++) {
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        label.setAttribute("value", xLabels[i]);
+        label.setAttribute("rotation", "-90 90 0");
+        label.setAttribute("color", textColor);
+        label.setAttribute("align", "right")
+        label.setAttribute("position", {
+            x: width / 2 - barTotalSize / 2 - barTotalSize * i, y: 0.00, z: width / 2 - barTotalSize / 1.3
+        });
+        panelBox.appendChild(label);
+    }
+
+    return panelBox;
+};
+
+
+
+function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
+    const OFFSET = barTotalSize / 2;
+    const sphereRadius = barTotalSize / 8;
+
+    var pos = {x: 0, y: 0, z: 0}; 
+    var z = 0;
+    var labX, labY, labZ;
+
+    for (var i = 0; i < values.length; i++) {
+        var bar = document.createElement("a-sphere");
+
+        bar.setAttribute("radius", sphereRadius);
+        bar.setAttribute("color", "#F9D423");
+        bar.setAttribute("transparent", "true");
+        bar.setAttribute("opacity", "0.9");
+
+        labY = Math.floor(values[i] * 100);
+        labX = xLabels[i % xLabels.length];
+        if(i % xLabels.length == 0 && i != 0){
+            ++z;
+        }  
+        labZ = zLabels[z]; 
+
+        bar.setAttribute("labelX", labX);
+        bar.setAttribute("labelY", labY);
+        bar.setAttribute("labelZ", labZ);
+
+        bar.setAttribute("hoverable","");
+        bar.setAttribute("bar-listener","");
+
+        pos.x = (pos.x + barTotalSize) % width;
+
+        pos.y = values[i];
+
+        if (i % xLabels.length == 0) {
+            pos.z += barTotalSize;
+        }
+
+        bar.setAttribute("position", {
+            x: (pos.x - width / 2) + OFFSET,
+            y: pos.y,
+            z: (pos.z - depth / 2) - OFFSET
+        });
+
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        var val = values[i] * 100;
+        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("rotation", "0 0 0")
+        label.setAttribute("color", textColor)
+        label.setAttribute("align", "center");
+        label.setAttribute("position", {
+            x: 0, y: sphereRadius * 2, z: 0
+        });
+        label.setAttribute("visible", "false");
+        
+        bar.appendChild(label);
+
+        panelBox.appendChild(bar);
+    }
+};
+
+function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
+    const OFFSET = barTotalSize / 2;
+    var pos = {x: 0, y: 0, z: 0}; 
+    var z = 0;
+    var labX, labY, labZ;
+    for (var i = 0; i < values.length; i++) {
+        var bar = document.createElement("a-box");
+
+
+        bar.setAttribute("width", barSize);
+        bar.setAttribute("depth", barSize);
+        bar.setAttribute("height", values[i]);
+        bar.setAttribute("color", "#F9D423");
+        bar.setAttribute("transparent", "true");
+        bar.setAttribute("opacity", "0.9");
+
+        labY = Math.floor(values[i] * 100);
+        labX = xLabels[i % xLabels.length];
+        if(i % xLabels.length == 0 && i != 0){
+            ++z;
+        }  
+        labZ = zLabels[z]; 
+
+        bar.setAttribute("labelX", labX);
+        bar.setAttribute("labelY", labY);
+        bar.setAttribute("labelZ", labZ);
+
+        bar.setAttribute("hoverable","");
+        bar.setAttribute("bar-listener","");
+
+        pos.x = (pos.x + barTotalSize) % width;
+
+        pos.y = values[i] / 2;
+
+
+        if (i % xLabels.length == 0) {
+            pos.z += barTotalSize;
+        }
+
+        bar.setAttribute("position", {
+            x: (pos.x - width / 2) + OFFSET,
+            y: pos.y,
+            z: (pos.z - depth / 2) - OFFSET
+        });
+
+        var label = document.createElement("a-text");
+        label.setAttribute("width", barSize * 25);
+        var val = values[i] * 100;
+        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("rotation", "0 0 0")
+        label.setAttribute("color", textColor);
+        label.setAttribute("align", "center");
+        label.setAttribute("position", {
+            x: 0, y: values[i] / 2 + barSize / 2, z: 0
+        });
+        label.setAttribute("visible", "false");
+        
+        bar.appendChild(label);
+
+        panelBox.appendChild(bar);
+    }
+};
+
+

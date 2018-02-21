@@ -14,11 +14,13 @@ AFRAME.registerComponent('rotation-controller', {
         window.addEventListener('keydown', function (evt) {
             if (evt.code == 'r' || evt.keyCode == '82')
             var rotateElements = el.sceneEl.querySelectorAll('.rotate');
-            rotateElements.forEach(element => {
-                if (element.getAttribute('rotatable')){
-                    element.setAttribute('rotation', {x: Math.random() * 20, y: Math.random() * 180, z:0});
-                }
-            });
+            if (typeof rotateElements != 'undefined') {
+                rotateElements.forEach(element => {
+                    if (element.getAttribute('rotatable')){
+                        element.setAttribute('rotation', {x: Math.random() * 20, y: Math.random() * 180, z:0});
+                    }
+                });
+            }
         });
     }
 });
