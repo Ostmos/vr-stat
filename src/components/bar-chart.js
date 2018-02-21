@@ -133,7 +133,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         else colour = c[4];
         bar.setAttribute("color", colour);
 
-        labY = Math.floor(val);
+        labY = Math.floor(values[i]);
         labX = xLabels[i % xLabels.length];
         if(i % xLabels.length == 0 && i != 0){
             ++z;
@@ -164,12 +164,12 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("value", Math.floor(values[i]));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor);
         label.setAttribute("align", "center");
         label.setAttribute("position", {
-            x: 0, y: values[i] / 2 + barSize / 2, z: 0
+            x: 0, y: val / 2 + barSize / 2, z: 0
         });
         label.setAttribute("visible", "false");
         
