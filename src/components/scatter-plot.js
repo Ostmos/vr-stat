@@ -101,7 +101,7 @@ function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotal
         else colour = c[4];
         bar.setAttribute("color", colour);
 
-        labY = Math.floor(val * 100);
+        labY = Math.floor(values[i]);
         labX = xLabels[i % xLabels.length];
         if(i % xLabels.length == 0 && i != 0){
             ++z;
@@ -131,7 +131,7 @@ function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotal
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", Math.floor(val * 100));
+        label.setAttribute("value", Math.floor(values[i]));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor)
         label.setAttribute("align", "center");
