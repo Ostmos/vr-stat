@@ -25,9 +25,6 @@ AFRAME.registerComponent('bar-chart-2', {
         const WIDTH = BAR_TOT_SIZE * x.length;
         const DEPTH = BAR_TOT_SIZE * z.length;
 
-        //  geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5
-        entity.parentNode.setAttribute("geometry", "primitive: box; width: 0.5; height: 0.5; depth: 0.5");
-
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
@@ -137,7 +134,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         bar.setAttribute("labelZ", labZ);
 
         bar.setAttribute("hoverable","");
-        bar.setAttribute("controller-listener","");
+        bar.setAttribute("bar-listener","");
 
         pos.x = (pos.x + barTotalSize) % width;
 
