@@ -9,15 +9,16 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
     <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
-    <!--<script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>-->
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
 
     <script src="src/components/controller-listener.js"></script>
     <script src="src/components/rotation-controller.js"></script>
     <script src="src/components/bar-chart.js"></script>
+     <script src="src/components/controller-display.js"></script>
 </head>
 
 <body>
-  <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/test-everything.json">
+  <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/hover+trigger.json">
     <a-asset>
       <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
       <img id="sky" src="src/assets/images/equi.png">
@@ -32,7 +33,7 @@
     </a-entity>
 
     <!--Models-->
-    <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="1 1 -3"></a-entity>
+    <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="1 0 -3"></a-entity>
     <a-entity id="bc" class="cube" grabbable draggable bar-chart-2 position="-1 1 -3"></a-entity>
     
     <!-- Light -->
@@ -42,12 +43,10 @@
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="-5 10 -10"></a-entity>
 
     <!--Controllers-->
-    <!--<a-entity controller-display slice9="width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png" position="3 2 2"></a-entity>
-    <a-entity controller-display position="0 2 0"></a-entity>-->
     <a-entity progressive-controls="objects: .cube; maxLevel: point">
       <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
-        rotation-controller></a-entity>
-      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
+        rotation-controller> <a-entity controller-display></a-entity></a-entity>
+      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"> </a-entity>
     </a-entity>
 
   </a-scene>
