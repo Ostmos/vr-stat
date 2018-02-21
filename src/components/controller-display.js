@@ -11,9 +11,9 @@ AFRAME.registerComponent('controller-display', {
         text.setAttribute("position", "0 0.02 0.12");
         text.setAttribute("rotation", "-90 0 0");
         text.setAttribute("text", {
-            color: "#000",
+            color: "#0050",
             side: "double",
-            value: "value: ",
+            value: "Press a bar \n to see value",
             align: "center",
             width: 1,
             font: 'roboto'
