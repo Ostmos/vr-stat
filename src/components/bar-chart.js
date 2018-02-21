@@ -12,6 +12,8 @@ AFRAME.registerComponent('bar-chart-2', {
         var data = this.data;
         var entity = this.el;
         var object = this.el.object3D
+        var jsonFilePath_1 = "src/assets/json/rentprivatesector.json";
+        getData(jsonFilePath_1);
 
         var z = ['2013', '2014', '2015', '2016'];
         var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5'];
@@ -36,6 +38,27 @@ AFRAME.registerComponent('bar-chart-2', {
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
 });
+
+function getData(jsonPath) {
+    try{
+        var jsonFile = new File(jsonPath);
+        var jsonCode = "";
+        txtFile.open("r");
+        while (!txtFile.eof) {
+            // read each line of text
+            str += txtFile.readln() + "\n";
+        }
+        return str;
+            var obj = JSON.parse(jsonCode);
+    }
+    catch(error){
+        console.log("Error with JSON file: " + error);
+    }
+    //FIX THIS
+    //check out http://api.jquery.com/jQuery.getJSON/ for better solution
+    //var x = obj.dataset.dimension.lagenhetstyp.label;
+    //console.log(x);
+}
 
 function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor, xLabels, zLabels) {
     var panelBox = document.createElement("a-box");
