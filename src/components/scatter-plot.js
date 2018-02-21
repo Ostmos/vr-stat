@@ -27,8 +27,8 @@ AFRAME.registerComponent('scatter-plot', {
         const DEPTH        = BAR_TOT_SIZE * z.length;
         const MAX_HEIGHT   = 1;
 
-        setTitle(this.el, data.title, MAX_HEIGHT);
-        
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
+
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);

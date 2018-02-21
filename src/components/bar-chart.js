@@ -30,7 +30,7 @@ AFRAME.registerComponent('bar-chart', {
         const DEPTH = BAR_TOT_SIZE * z.length;
         const MAX_HEIGHT = 1;
 
-        setTitle(this.el, data.title, MAX_HEIGHT);
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
 
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
@@ -186,11 +186,11 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         panelBox.appendChild(bar);
     }
 };
-function setTitle(el, title, height){
+function setTitle(el, title, height, depth){
     var titleText = document.createElement('a-text');
     titleText.setAttribute("width", 2);
     titleText.setAttribute("align", "center");
     titleText.setAttribute("value", title);
-    titleText.setAttribute("position", {y:height});
+    titleText.setAttribute("position", {y:height, z:-depth/2});
     el.appendChild(titleText);
 };
