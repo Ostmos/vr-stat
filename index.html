@@ -15,10 +15,11 @@
     <script src="src/components/bar-chart-listener.js"></script>
     <script src="src/components/rotation-controller.js"></script>
     <script src="src/components/bar-chart.js"></script>
+    <script src="src/components/scatter-plot-2.js"></script>
 </head>
 
 <body>
-  <a-scene avatar-recorder avatar-replayer="src: src/assets/recordings/rotation.json">
+  <a-scene avatar-recorder><!--avatar-replayer="src: src/assets/recordings/rotation.json">-->
     <a-asset>
       <a-asset-item id="room-gltf" src="src/assets/models/testroom.gltf"></a-asset-item>
       <img id="sky" src="src/assets/images/equi.png">
@@ -35,6 +36,7 @@
     <!--Models-->
     <a-entity class="cube rotate" grabbable draggable bar-chart-2 bar-chart-listener position="-1 1 -3"></a-entity>
     <a-entity class="cube rotate" grabbable draggable bar-chart-2 bar-chart-listener position="0.4 1 -3"></a-entity>
+    <a-entity class="cube rotate" grabbable draggable scatter-plot-2 position="2 1 -3"></a-entity>
     
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.6" position="5 10 10"></a-entity>

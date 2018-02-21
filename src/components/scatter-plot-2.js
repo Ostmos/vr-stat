@@ -1,4 +1,4 @@
-AFRAME.registerComponent('bar-chart-2', {
+AFRAME.registerComponent('scatter-plot-2', {
     schema: {
         offset: { type: 'number', default: 1 },
         barSize: { type: 'number', default: 0.05 },
@@ -32,8 +32,8 @@ AFRAME.registerComponent('bar-chart-2', {
 
         createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
 
-        //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
-        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        createSpheres(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        // createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
 });
 
@@ -73,40 +73,68 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 };
 
 
-function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, barSize) {
-    var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
-    var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
-    var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
-    const numberOfLines = 10;
-    const maxHeight = maxValue; //Scale this
-    var lineStep = maxHeight / numberOfLines;
-    var labelStep = maxValue / numberOfLines
-    var lines = document.createElement("a-entity");
-    for (var i = 1; i <= 10; i++) {
-        var line = document.createElement("a-entity");
-        var c1 = corner1.x + ", " + corner1.y + lineStep * i + ", " + corner1.z + ";";
-        var c2 = corner2.x + ", " + corner2.y + lineStep * i + ", " + corner2.z + ";";
-        var c3 = corner3.x + ", " + corner3.y + lineStep * i + ", " + corner3.z + ";";
-        var color = "color: red"; 
-        var lineAtribute_1 = "start :" + c1 + "end: "+ c2 + color;
-        var lineAtribute_2 = "start :" + c3 + "end: "+ c2 + color;
-        line.setAttribute("line__1", lineAtribute_1);
-        line.setAttribute("line__2", lineAtribute_2);
-        lines.appendChild(line);
+
+function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
+    const OFFSET = barTotalSize / 2;
+    const sphereRadius = barTotalSize / 8;
+
+    var pos = {x: 0, y: 0, z: 0}; 
+    var z = 0;
+    var labX, labY, labZ;
+
+    for (var i = 0; i < values.length; i++) {
+        var bar = document.createElement("a-sphere");
+
+        bar.setAttribute("radius", sphereRadius);
+        bar.setAttribute("color", "#F9D423");
+        bar.setAttribute("transparent", "true");
+        bar.setAttribute("opacity", "0.9");
+
+        labY = Math.floor(values[i] * 100);
+        labX = xLabels[i % xLabels.length];
+        if(i % xLabels.length == 0 && i != 0){
+            ++z;
+        }  
+        labZ = zLabels[z]; 
+
+        bar.setAttribute("labelX", labX);
+        bar.setAttribute("labelY", labY);
+        bar.setAttribute("labelZ", labZ);
+
+        bar.setAttribute("hoverable","");
+        bar.setAttribute("bar-listener","");
+
+        pos.x = (pos.x + barTotalSize) % width;
+
+        pos.y = values[i];
+
+        if (i % xLabels.length == 0) {
+            pos.z += barTotalSize;
+        }
+
+        bar.setAttribute("position", {
+            x: (pos.x - width / 2) + OFFSET,
+            y: pos.y,
+            z: (pos.z - depth / 2) - OFFSET
+        });
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", (labelStep * i).toFixed(2));
-        label.setAttribute("rotation", "0 90 0");
-        label.setAttribute("align", "right")
-        label.setAttribute("color", textColor);
+        var val = values[i] * 100;
+        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("rotation", "0 0 0")
+        label.setAttribute("color", textColor)
+        label.setAttribute("align", "center");
         label.setAttribute("position", {
-            x: corner1.x, y: corner1.y + lineStep * i, z: corner1.z + 0.01
+            x: 0, y: sphereRadius * 2, z: 0
         });
-        lines.appendChild(label);
+        label.setAttribute("visible", "false");
+        
+        bar.appendChild(label);
+
+        panelBox.appendChild(bar);
     }
-    panelBox.appendChild(lines);
-}
+};
 
 function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
     const OFFSET = barTotalSize / 2;
@@ -170,4 +198,5 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         panelBox.appendChild(bar);
     }
 };
+
 
