@@ -18,7 +18,7 @@ AFRAME.registerComponent('bar-chart', {
         var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         var values = [];
         for (var i = 0; i < x.length * z.length; i++) {
-            values[i] = (Math.random());
+            values[i] = (Math.random() * 1000);
         }
         var maxValue = Math.max(...values);
 
@@ -33,7 +33,7 @@ AFRAME.registerComponent('bar-chart', {
         createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
-        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
     },
 });
 
@@ -78,7 +78,7 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
-    const maxHeight = maxValue; //Scale this
+    const maxHeight = 1; //Scale this
     var lineStep = maxHeight / numberOfLines;
     var labelStep = maxValue / numberOfLines
     var lines = document.createElement("a-entity");
@@ -87,7 +87,7 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
         var c1 = corner1.x + ", " + corner1.y + lineStep * i + ", " + corner1.z + ";";
         var c2 = corner2.x + ", " + corner2.y + lineStep * i + ", " + corner2.z + ";";
         var c3 = corner3.x + ", " + corner3.y + lineStep * i + ", " + corner3.z + ";";
-        var color = "color: red"; 
+        var color = "color: black"; 
         var lineAtribute_1 = "start :" + c1 + "end: "+ c2 + color;
         var lineAtribute_2 = "start :" + c3 + "end: "+ c2 + color;
         line.setAttribute("line__1", lineAtribute_1);
@@ -96,7 +96,7 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", (labelStep * i).toFixed(2));
+        label.setAttribute("value", Math.floor(labelStep * i));
         label.setAttribute("rotation", "0 90 0");
         label.setAttribute("align", "right")
         label.setAttribute("color", textColor);
@@ -108,23 +108,32 @@ function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, 
     panelBox.appendChild(lines);
 }
 
-function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
+function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor, maxValue) {
     const OFFSET = barTotalSize / 2;
+    var color_1 = ["#E1F5C4", "#ECE473", "#F9D423", "#F6903D", "#F05053"]
+    var c = color_1;
     var pos = {x: 0, y: 0, z: 0}; 
     var z = 0;
     var labX, labY, labZ;
     for (var i = 0; i < values.length; i++) {
+        var val = (values[i] / maxValue);
         var bar = document.createElement("a-box");
-
 
         bar.setAttribute("width", barSize);
         bar.setAttribute("depth", barSize);
-        bar.setAttribute("height", values[i]);
-        bar.setAttribute("color", "#F9D423");
+        bar.setAttribute("height", val);
         bar.setAttribute("transparent", "true");
         bar.setAttribute("opacity", "0.9");
+        
+        var colour;
+        if (val <= 0.2) colour = c[0];
+        else if(val <= 0.4) colour = c[1];
+        else if(val <= 0.6) colour = c[2];
+        else if(val <= 0.8) colour = c[3];
+        else colour = c[4];
+        bar.setAttribute("color", colour);
 
-        labY = Math.floor(values[i] * 100);
+        labY = Math.floor(val);
         labX = xLabels[i % xLabels.length];
         if(i % xLabels.length == 0 && i != 0){
             ++z;
@@ -140,7 +149,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
 
         pos.x = (pos.x + barTotalSize) % width;
 
-        pos.y = values[i] / 2;
+        pos.y = val / 2;
 
 
         if (i % xLabels.length == 0) {
@@ -155,7 +164,6 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        var val = values[i] * 100;
         label.setAttribute("value", Math.floor(val));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor);

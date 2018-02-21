@@ -18,7 +18,7 @@ AFRAME.registerComponent('scatter-plot', {
         var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         var values = [];
         for (var i = 0; i < x.length * z.length; i++) {
-            values[i] = (Math.random());
+            values[i] = (Math.random() * 1000);
         }
         var maxValue = Math.max(...values);
 
@@ -32,7 +32,7 @@ AFRAME.registerComponent('scatter-plot', {
 
         createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
 
-        createSpheres(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
+        createSpheres(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
         // createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
     },
 });
@@ -74,23 +74,34 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 
 
 
-function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
+function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor, maxValue) {
     const OFFSET = barTotalSize / 2;
     const sphereRadius = barTotalSize / 8;
+    var color_1 = ["#E1F5C4", "#ECE473", "#F9D423", "#F6903D", "#F05053"]
+    var c = color_1;
+
 
     var pos = {x: 0, y: 0, z: 0}; 
     var z = 0;
     var labX, labY, labZ;
 
     for (var i = 0; i < values.length; i++) {
+        var val = values[i] / maxValue;
         var bar = document.createElement("a-sphere");
 
         bar.setAttribute("radius", sphereRadius);
-        bar.setAttribute("color", "#F9D423");
         bar.setAttribute("transparent", "true");
         bar.setAttribute("opacity", "0.9");
 
-        labY = Math.floor(values[i] * 100);
+        var colour;
+        if (val <= 0.2) colour = c[0];
+        else if(val <= 0.4) colour = c[1];
+        else if(val <= 0.6) colour = c[2];
+        else if(val <= 0.8) colour = c[3];
+        else colour = c[4];
+        bar.setAttribute("color", colour);
+
+        labY = Math.floor(val * 100);
         labX = xLabels[i % xLabels.length];
         if(i % xLabels.length == 0 && i != 0){
             ++z;
@@ -106,7 +117,7 @@ function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotal
 
         pos.x = (pos.x + barTotalSize) % width;
 
-        pos.y = values[i];
+        pos.y = val;
 
         if (i % xLabels.length == 0) {
             pos.z += barTotalSize;
@@ -120,76 +131,12 @@ function createSpheres(width, depth, xLabels, zLabels, values, barSize, barTotal
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        var val = values[i] * 100;
-        label.setAttribute("value", Math.floor(val));
+        label.setAttribute("value", Math.floor(val * 100));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor)
         label.setAttribute("align", "center");
         label.setAttribute("position", {
             x: 0, y: sphereRadius * 2, z: 0
-        });
-        label.setAttribute("visible", "false");
-        
-        bar.appendChild(label);
-
-        panelBox.appendChild(bar);
-    }
-};
-
-function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor) {
-    const OFFSET = barTotalSize / 2;
-    var pos = {x: 0, y: 0, z: 0}; 
-    var z = 0;
-    var labX, labY, labZ;
-    for (var i = 0; i < values.length; i++) {
-        var bar = document.createElement("a-box");
-
-
-        bar.setAttribute("width", barSize);
-        bar.setAttribute("depth", barSize);
-        bar.setAttribute("height", values[i]);
-        bar.setAttribute("color", "#F9D423");
-        bar.setAttribute("transparent", "true");
-        bar.setAttribute("opacity", "0.9");
-
-        labY = Math.floor(values[i] * 100);
-        labX = xLabels[i % xLabels.length];
-        if(i % xLabels.length == 0 && i != 0){
-            ++z;
-        }  
-        labZ = zLabels[z]; 
-
-        bar.setAttribute("labelX", labX);
-        bar.setAttribute("labelY", labY);
-        bar.setAttribute("labelZ", labZ);
-
-        bar.setAttribute("hoverable","");
-        bar.setAttribute("bar-listener","");
-
-        pos.x = (pos.x + barTotalSize) % width;
-
-        pos.y = values[i] / 2;
-
-
-        if (i % xLabels.length == 0) {
-            pos.z += barTotalSize;
-        }
-
-        bar.setAttribute("position", {
-            x: (pos.x - width / 2) + OFFSET,
-            y: pos.y,
-            z: (pos.z - depth / 2) - OFFSET
-        });
-
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
-        var val = values[i] * 100;
-        label.setAttribute("value", Math.floor(val));
-        label.setAttribute("rotation", "0 0 0")
-        label.setAttribute("color", textColor);
-        label.setAttribute("align", "center");
-        label.setAttribute("position", {
-            x: 0, y: values[i] / 2 + barSize / 2, z: 0
         });
         label.setAttribute("visible", "false");
         
