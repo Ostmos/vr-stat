@@ -50,7 +50,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
         label.setAttribute("rotation", "-90 0 0");
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
-            x: width / 2, y: 0.00, z: ((depth / 2) - barTotalSize / 2) - barTotalSize * i
+            x: width / 2 + barSize / 1.3, y: 0.00, z: depth / 2 - barTotalSize / 2 - barTotalSize * i
         });
         panelBox.appendChild(label);
     }
@@ -61,8 +61,9 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
         label.setAttribute("value", xLabels[i]);
         label.setAttribute("rotation", "-90 90 0");
         label.setAttribute("color", textColor);
+        label.setAttribute("align", "right")
         label.setAttribute("position", {
-            x: ((width / 2) - barTotalSize / 2) - barTotalSize * i, y: 0.00, z: width / 2 + barTotalSize / 1.2
+            x: width / 2 - barTotalSize / 2 - barTotalSize * i, y: 0.00, z: width / 2 - barTotalSize / 1.3
         });
         panelBox.appendChild(label);
     }
@@ -95,9 +96,10 @@ function createLevelLines(width, depth, panelBox, textColor, yLabels, barSize) {
         label.setAttribute("width", barSize * 25);
         label.setAttribute("value", yLabels[i-1]);
         label.setAttribute("rotation", "0 90 0");
+        label.setAttribute("align", "right")
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
-            x: corner1.x, y: (corner1.y + lineStep * i), z: (corner1.z + 0.1)
+            x: corner1.x, y: corner1.y + lineStep * i, z: corner1.z + 0.01
         });
         lines.appendChild(label);
     }
