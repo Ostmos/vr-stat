@@ -1,6 +1,6 @@
 AFRAME.registerComponent('scatter-plot-2', {
     schema: {
-        size: { type: 'number', default: 1 },
+        size: { type: 'number', default: 3 },
         radius: { type: 'number', default: 0.015 },
         color: { type: 'color', default: '#FFF' },
         textColor: { type: 'color', default: '#000000' },
@@ -76,16 +76,16 @@ AFRAME.registerComponent('scatter-plot-2', {
         var lineStep = this.data.size / NBR_OF_LINES;
 
         var lines = document.createElement('a-entity');
-        this.createRow(blb, brb, NBR_OF_LINES, 0.1, 'y', lines, count);
-        this.createRow(brb, trb, NBR_OF_LINES, -0.1, 'x', lines, count);
-        this.createRow(blb, blt, NBR_OF_LINES, 0.1, 'y', lines, count);
-        this.createRow(blb, tlb, NBR_OF_LINES, 0.1, 'z', lines, count);
-        this.createRow(blb, blt, NBR_OF_LINES, 0.1, 'x', lines, count);
-        this.createRow(blb, brb, NBR_OF_LINES, 0.1, 'z', lines, count);
+        this.createRow(blb, brb, NBR_OF_LINES, lineStep, 'y', lines, count);
+        this.createRow(brb, trb, NBR_OF_LINES, -lineStep, 'x', lines, count);
+        this.createRow(blb, blt, NBR_OF_LINES, lineStep, 'y', lines, count);
+        this.createRow(blb, tlb, NBR_OF_LINES, lineStep, 'z', lines, count);
+        this.createRow(blb, blt, NBR_OF_LINES, lineStep, 'x', lines, count);
+        this.createRow(blb, brb, NBR_OF_LINES, lineStep, 'z', lines, count);
 
-        this.createAxisLabels(brt, "-90 90 0", 10, xMin, xMax, 'x', 'right', -0.1, lines);
-        this.createAxisLabels(brt, "-90 0 0", 10, zMin, zMax, 'z', 'left', -0.1, lines);
-        this.createAxisLabels(blt, "0 90 0", 10, yMin, yMax, 'y', 'right', 0.1, lines);
+        this.createAxisLabels(brt, "-90 90 0", NBR_OF_LINES, xMin, xMax, 'x', 'right', -lineStep, lines);
+        this.createAxisLabels(brt, "-90 0 0", NBR_OF_LINES, zMin, zMax, 'z', 'left', -lineStep, lines);
+        this.createAxisLabels(blt, "0 90 0", NBR_OF_LINES, yMin, yMax, 'y', 'right', lineStep, lines);
 
         this.el.childNodes[0].appendChild(lines);
     },
@@ -187,7 +187,7 @@ AFRAME.registerComponent('scatter-plot-2', {
         const DIVIDER = this.data.size / MAX;
 
         for (var i = 0; i < values.length; i++) {
-            values[i] = values[i] * DIVIDER;
+            values[i] = (values[i] * DIVIDER);
         }
     },
 });
