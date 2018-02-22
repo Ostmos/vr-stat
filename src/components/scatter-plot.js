@@ -27,14 +27,21 @@ AFRAME.registerComponent('scatter-plot', {
         var maxValue = Math.max(...values);
 
         const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
-        const WIDTH = BAR_TOT_SIZE * x.length;
-        const DEPTH = BAR_TOT_SIZE * z.length;
+        const WIDTH        = BAR_TOT_SIZE * x.length;
+        const DEPTH        = BAR_TOT_SIZE * z.length;
+        const MAX_HEIGHT   = 1;
+
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
 
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
+
         //createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
+
+        //createLevelLines(WIDTH, DEPTH, maxValue, MAX_HEIGHT, panelBox, data.textColor, y, data.barSize);
+
 
         createSpheres(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
         // createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
