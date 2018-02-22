@@ -1,0 +1,79 @@
+# Blender MTL File: 'museum_final.blend'
+# Material Count: 7
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.108696 0.108696 0.108696
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/MirandaAldrin/Documents/Universitetet/Chalmers/Kandidatprojektet/bakedfloor.png
+
+newmtl Material.002
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/MirandaAldrin/Documents/Universitetet/Chalmers/Kandidatprojektet/wallbake.png
+
+newmtl Material.003
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.465171 0.465171 0.465171
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl floor_texture
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.178261 0.178261 0.178261
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.500000 -s 3.000000 3.000000 1.000000 /Users/MirandaAldrin/Downloads/floor_texture.jpg
+map_Kd -s 3.000000 3.000000 1.000000 /Users/MirandaAldrin/Downloads/floor_texture.jpg
+
+newmtl walls
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.098684 0.098684 0.098684
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.015000 -s 10.000000 10.000000 1.000000 /Users/MirandaAldrin/Downloads/wall-texture.jpg
+map_Kd -s 10.000000 10.000000 1.000000 /Users/MirandaAldrin/Downloads/wall-texture.jpg
+
+newmtl windows
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.439057 0.439057 0.439057
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl windows_wall-e
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.439057 0.439057 0.439057
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/MirandaAldrin/Documents/Universitetet/Chalmers/Kandidatprojektet/wallbake.png

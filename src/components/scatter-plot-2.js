@@ -48,10 +48,10 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createLabel(pos, "Population", "0 90 90", "center", base, "true");
 
         var pos2 = {x: 0, y: 0, z: this.data.size / 1.4};
-        this.createLabel(pos2, "Salary", "-90 -90 90", "center", base, "true");
+        this.createLabel(pos2, "Median salary per year (/1000SEK)", "-90 -90 90", "center", base, "true");
 
         var pos3 = {x: this.data.size / 1.3, y: 0, z: 0};
-        this.createLabel(pos3, "Apartment cost", "-90 90 0", "center", base, "true");
+        this.createLabel(pos3, "Median rent (SEK)", "-90 90 0", "center", base, "true");
 
         this.el.appendChild(base);
     },
