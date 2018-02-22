@@ -5,7 +5,8 @@ AFRAME.registerComponent('bar-chart', {
         barPadding: { type: 'number', default: 0.05 },
         panelBoxPadding: { type: 'number', default: 0 },
         color: { type: 'color', default: '#FFF' },
-        textColor: { type: 'color', default: '#000000' }
+        textColor: { type: 'color', default: '#000000' },
+        title: { type: 'string', default: '' }
     },
 
     init: function () {
@@ -22,15 +23,22 @@ AFRAME.registerComponent('bar-chart', {
         }
         var maxValue = Math.max(...values);
 
+
+
         const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
         const WIDTH = BAR_TOT_SIZE * x.length;
         const DEPTH = BAR_TOT_SIZE * z.length;
+        const MAX_HEIGHT = 1;
+
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
 
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
+
+
+        createLevelLines(WIDTH, DEPTH, maxValue, MAX_HEIGHT, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
@@ -73,12 +81,12 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 };
 
 
-function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, barSize) {
+function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor, yLabels, barSize) {
     var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
-    const maxHeight = 1; //Scale this
+
     var lineStep = maxHeight / numberOfLines;
     var labelStep = maxValue / numberOfLines
     var lines = document.createElement("a-entity");
@@ -178,4 +186,11 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         panelBox.appendChild(bar);
     }
 };
-
+function setTitle(el, title, height, depth){
+    var titleText = document.createElement('a-text');
+    titleText.setAttribute("width", 2);
+    titleText.setAttribute("align", "center");
+    titleText.setAttribute("value", title);
+    titleText.setAttribute("position", {y:height, z:-depth/2});
+    el.appendChild(titleText);
+};
