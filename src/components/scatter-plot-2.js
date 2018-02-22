@@ -39,7 +39,20 @@ AFRAME.registerComponent('scatter-plot-2', {
         base.setAttribute('color', '#355C7D');
         base.setAttribute('transparent', 'true');
         base.setAttribute('opacity', '0.5');
+
+        var pos = {x: -this.data.size / 2, y: this.data.size / 2, z: this.data.size / 1.4};
+        this.createLabel(pos, "Population", "0 90 90", "center", base, "true");
+
+        var pos2 = {x: 0, y: 0, z: this.data.size / 1.4};
+        this.createLabel(pos2, "Salary", "-90 -90 90", "center", base, "true");
+
+        var pos3 = {x: this.data.size / 1.3, y: 0, z: 0};
+        this.createLabel(pos3, "Apartment cost", "-90 90 0", "center", base, "true");
+
         this.el.appendChild(base);
+
+//        createLabel: function(position, value, rotation, align, parent, visible) {
+
     },
 
     createGrid: function(xMin, yMin, zMin, xMax, yMax, zMax) {
@@ -115,11 +128,14 @@ AFRAME.registerComponent('scatter-plot-2', {
         }
     },
 
-    createLabel: function(position, value, rotation, align, lines, visible) {
+    createLabel: function(position, value, rotation, align, parent, visible) {
         var label = document.createElement("a-text");
         label.setAttribute("width", 1);
-        label.setAttribute("value", value);
-        //label.setAttribute("value", Math.abs(Math.floor(value)));
+        if (typeof value === 'string' || value instanceof String) {
+            label.setAttribute("value", value);
+        } else {
+            label.setAttribute("value", Math.abs(Math.floor(value)));
+        }
         label.setAttribute("rotation", rotation);
         label.setAttribute("align", align)
         label.setAttribute("color", "#000000");
@@ -129,7 +145,7 @@ AFRAME.registerComponent('scatter-plot-2', {
         });
         label.setAttribute("visible", visible);
         
-        lines.appendChild(label);
+        parent.appendChild(label);
     },
 
     createSphere: function(x, y, z, value) {
