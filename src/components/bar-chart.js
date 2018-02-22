@@ -143,7 +143,6 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
     var labX, labY, labZ;
     for (var i = 0; i < values.length; i++) {
         var val = (values[i] / maxValue);
-        console.log(values);
         var bar = document.createElement("a-box");
 
         bar.setAttribute("width", barSize);
