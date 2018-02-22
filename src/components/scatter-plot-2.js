@@ -1,7 +1,7 @@
 AFRAME.registerComponent('scatter-plot-2', {
     schema: {
         size: { type: 'number', default: 3 },
-        radius: { type: 'number', default: 0.015 },
+        radius: { type: 'number', default: 0.02 },
         color: { type: 'color', default: '#FFF' },
         textColor: { type: 'color', default: '#000000' },
         title: {type: 'string', default: 'no name'}
@@ -25,11 +25,11 @@ AFRAME.registerComponent('scatter-plot-2', {
         const Y_MIN_VALUE = Math.min(...population);
         const Z_MIN_VALUE = Math.min(...apartment_cost);
 
-        console.log(Z_MIN_VALUE);
-        console.log(Z_MAX_VALUE);
-
         this.createBase();
-        this.createSpheres(salary, population, apartment_cost, cities);
+        
+        var offsets = [X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE];
+
+        this.createSpheres(salary, population, apartment_cost, cities, offsets);
         this.createGrid(X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE, X_MAX_VALUE, Y_MAX_VALUE, Z_MAX_VALUE); 
 
         setTitle(this.el, data.title, data.size, data.size);
@@ -40,9 +40,9 @@ AFRAME.registerComponent('scatter-plot-2', {
         base.setAttribute('width', this.data.size);
         base.setAttribute('height', 0.0001);
         base.setAttribute('depth', this.data.size);
-        base.setAttribute('color', '#355C7D');
+        base.setAttribute('color', '#0000FF');
         base.setAttribute('transparent', 'true');
-        base.setAttribute('opacity', '0.5');
+        base.setAttribute('opacity', '0.1');
 
         var pos = {x: -this.data.size / 2, y: this.data.size / 2, z: this.data.size / 1.4};
         this.createLabel(pos, "Population", "0 90 90", "center", base, "true");
@@ -117,7 +117,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createAxisLabels: function(v1, rotation, iterations, startValue, endValue, axis, align, lineStep, lines) {
         var t1 = new THREE.Vector3(v1.x, v1.y, v1.z);
-        var valueStep = endValue / iterations;
+        var valueStep = (endValue - startValue) / iterations;
         for (var i = 0; i <= iterations; i++) {
             this.createLabel(t1, valueStep * i, rotation, align, lines, "true");
             if (axis === 'x') {
@@ -132,7 +132,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createLabel: function(position, value, rotation, align, parent, visible) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", 1);
+        label.setAttribute("width", this.data.size / 1.5);
         if (typeof value === 'string' || value instanceof String) {
             label.setAttribute("value", value);
         } else {
@@ -154,7 +154,9 @@ AFRAME.registerComponent('scatter-plot-2', {
         var sphere = document.createElement("a-sphere");
         sphere.setAttribute('radius', this.data.radius);
 
-        sphere.setAttribute('color', '#00a5ff');
+        var colors = ["#F6903D", "#F6903D", "#F6903D", "#F05053", "#F05053"]
+
+        sphere.setAttribute('color', colors[Math.floor(y / this.data.size * 5)]);
 
         sphere.setAttribute("hoverable","");
         sphere.setAttribute("bar-listener","");
@@ -169,12 +171,15 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.el.childNodes[0].appendChild(sphere);
     },
 
-    createSpheres: function(xArr, yArr, zArr, nameArr) {
+    createSpheres: function(xArr, yArr, zArr, nameArr, offsets) {
         const NBR_OF_DATA_POINTS = xArr.length;
 
         this.scaleValues(1.0, xArr);
         this.scaleValues(1.0, yArr);
         this.scaleValues(1.0, zArr);
+        this.scaleValues(1.0, offsets);
+
+        var scale = 3;
 
         for (var i = 0; i < NBR_OF_DATA_POINTS; i++) {
             // Reversing x- and z values
