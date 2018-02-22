@@ -198,18 +198,20 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         label.setAttribute("position", {
             x: 0, y: val / 2 + barSize / 2, z: 0
         });
-        label.setAttribute("visible", "true");
+        label.setAttribute("visible", "false");
         
         bar.appendChild(label);
 
         panelBox.appendChild(bar);
     }
 };
+
 function setTitle(el, title, height, depth){
     var titleText = document.createElement('a-text');
     titleText.setAttribute("width", 2);
     titleText.setAttribute("align", "center");
     titleText.setAttribute("value", title);
-    titleText.setAttribute("position", {y:height, z:-depth/2});
+    titleText.setAttribute("position", {y:height * 1.2, z:-depth/2});
+    titleText.setAttribute("color", "#000");
     el.appendChild(titleText);
 };

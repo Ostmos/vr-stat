@@ -3,7 +3,8 @@ AFRAME.registerComponent('scatter-plot-2', {
         size: { type: 'number', default: 1 },
         radius: { type: 'number', default: 0.015 },
         color: { type: 'color', default: '#FFF' },
-        textColor: { type: 'color', default: '#000000' }
+        textColor: { type: 'color', default: '#000000' },
+        title: {type: 'string', default: 'no name'}
     },
 
     init: function () {
@@ -29,9 +30,9 @@ AFRAME.registerComponent('scatter-plot-2', {
 
         this.createBase();
         this.createSpheres(salary, population, apartment_cost, cities);
-
-        // this.createGrid(MAX_VALUE, MAX_VALUE_SCALED);
         this.createGrid(X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE, X_MAX_VALUE, Y_MAX_VALUE, Z_MAX_VALUE); 
+
+        setTitle(this.el, data.title, data.size, data.size);
     },
 
     createBase: function() {
