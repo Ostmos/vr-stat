@@ -1,7 +1,7 @@
 AFRAME.registerComponent('scatter-plot-2', {
     schema: {
         size: { type: 'number', default: 1 },
-        radius: { type: 'number', default: 0.02 },
+        radius: { type: 'number', default: 0.015 },
         color: { type: 'color', default: '#FFF' },
         textColor: { type: 'color', default: '#000000' }
     },
@@ -23,6 +23,9 @@ AFRAME.registerComponent('scatter-plot-2', {
         const X_MIN_VALUE = Math.min(...salary);
         const Y_MIN_VALUE = Math.min(...population);
         const Z_MIN_VALUE = Math.min(...apartment_cost);
+
+        console.log(Z_MIN_VALUE);
+        console.log(Z_MAX_VALUE);
 
         this.createBase();
         this.createSpheres(salary, population, apartment_cost, cities);
@@ -50,9 +53,6 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createLabel(pos3, "Apartment cost", "-90 90 0", "center", base, "true");
 
         this.el.appendChild(base);
-
-//        createLabel: function(position, value, rotation, align, parent, visible) {
-
     },
 
     createGrid: function(xMin, yMin, zMin, xMax, yMax, zMax) {
@@ -83,8 +83,8 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createRow(blb, brb, NBR_OF_LINES, 0.1, 'z', lines, count);
 
         this.createAxisLabels(brt, "-90 90 0", 10, xMin, xMax, 'x', 'right', -0.1, lines);
-        this.createAxisLabels(brt, "-90 0 0", 10, yMin, yMax, 'z', 'left', -0.1, lines);
-        this.createAxisLabels(blt, "0 90 0", 10, zMin, zMax, 'y', 'right', 0.1, lines);
+        this.createAxisLabels(brt, "-90 0 0", 10, zMin, zMax, 'z', 'left', -0.1, lines);
+        this.createAxisLabels(blt, "0 90 0", 10, yMin, yMax, 'y', 'right', 0.1, lines);
 
         this.el.childNodes[0].appendChild(lines);
     },
@@ -116,8 +116,9 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createAxisLabels: function(v1, rotation, iterations, startValue, endValue, axis, align, lineStep, lines) {
         var t1 = new THREE.Vector3(v1.x, v1.y, v1.z);
+        var valueStep = endValue / iterations;
         for (var i = 0; i <= iterations; i++) {
-            this.createLabel(t1, ((endValue - startValue) / lineStep) * i, rotation, align, lines, "true");
+            this.createLabel(t1, valueStep * i, rotation, align, lines, "true");
             if (axis === 'x') {
                 t1.x += lineStep; 
             } else if (axis === 'y') {
@@ -151,7 +152,8 @@ AFRAME.registerComponent('scatter-plot-2', {
     createSphere: function(x, y, z, value) {
         var sphere = document.createElement("a-sphere");
         sphere.setAttribute('radius', this.data.radius);
-        sphere.setAttribute('color', '#FFAAAFF');
+
+        sphere.setAttribute('color', '#00a5ff');
 
         sphere.setAttribute("hoverable","");
         sphere.setAttribute("bar-listener","");
