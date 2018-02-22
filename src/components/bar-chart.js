@@ -17,8 +17,8 @@ AFRAME.registerComponent('bar-chart', {
         //var z = ['2013', '2014', '2015', '2016', '2017'];
         //var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5', 'Omrdae8', 'Omrdae9'];
         var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        var x = ['Sydsverige', 'Smaland med oarna', 'Norra mellansverige', 'Vastsverige', 'Ostra mellansverige', 'Stockholms lan', 'Ovre Norrland', 'Mellersta Norrland'];
-        var z = ['2017K4', '2016K4', '2017K3', '2016K1', '2016K3', '2017K2', '2016K2', '2017K1'];
+        var z = ['Stockholms lan', 'Ostra mellansverige', 'Smaland med oarna', 'Sydsverige', 'Vastsverige', 'Norra mellansverige', 'Mellersta Norrland', 'Ovre Norrland'];
+        var x = ['2016K1','2016K2','2016K3','2016K4','2017K1','2017K2','2017K3','2017K4']
         var values =  [142, 543, 475, 369, 159, 544, 455, 373, 206, 694, 661, 407, 201, 639, 705, 436, 176, 425, 480, 314, 184, 396, 480, 337, 197, 416, 455, 352, 192, 398, 424, 397, 237, 666, 652, 454, 250, 685, 619, 456, 261, 493, 576, 450, 251, 507, 586, 427, 123, 240, 280, 191, 135, 197, 266, 224, 84, 224, 303, 176, 77, 192, 329, 166];
         
         //var values = [];
@@ -134,6 +134,7 @@ function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor
 }
 
 function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor, maxValue) {
+    values.reverse();
     const OFFSET = barTotalSize / 2;
     var color_1 = ["#E1F5C4", "#ECE473", "#F9D423", "#F6903D", "#F05053"]
     var c = color_1;
@@ -142,6 +143,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
     var labX, labY, labZ;
     for (var i = 0; i < values.length; i++) {
         var val = (values[i] / maxValue);
+        console.log(values);
         var bar = document.createElement("a-box");
 
         bar.setAttribute("width", barSize);
@@ -172,7 +174,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         bar.setAttribute("hoverable","");
         bar.setAttribute("bar-listener","");
 
-        pos.x = (pos.x + barTotalSize) % width;
+        pos.x = ((pos.x % width)+ barTotalSize);
 
         pos.y = val / 2;
 
@@ -182,7 +184,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         }
 
         bar.setAttribute("position", {
-            x: (pos.x - width / 2) + OFFSET,
+            x: (pos.x - width / 2) + OFFSET - barTotalSize,
             y: pos.y,
             z: (pos.z - depth / 2) - OFFSET
         });
@@ -196,7 +198,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         label.setAttribute("position", {
             x: 0, y: val / 2 + barSize / 2, z: 0
         });
-        label.setAttribute("visible", "false");
+        label.setAttribute("visible", "true");
         
         bar.appendChild(label);
 
