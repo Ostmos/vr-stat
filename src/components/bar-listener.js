@@ -1,12 +1,11 @@
-AFRAME.registerComponent('controller-listener', {
+AFRAME.registerComponent('bar-listener', {
     
     init: function() {
         var el = this.el;
 
-        el.addEventListener('hover-start', function(evt) {
+        el.addEventListener('hover-start', function() {
             var children = el.childNodes;
             children[0].setAttribute("visible", "true");
-            console.log(evt);
         });
 
         el.addEventListener('hover-end', function() {
@@ -14,7 +13,7 @@ AFRAME.registerComponent('controller-listener', {
             children[0].setAttribute("visible", "false");
         });
     }
-})
+});
 
 //el.addEventListener('click', function() {
 //    var children = el.childNodes;

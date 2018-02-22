@@ -1,4 +1,4 @@
-AFRAME.registerComponent('bar-chart-2', {
+AFRAME.registerComponent('bar-chart', {
     schema: {
         offset: { type: 'number', default: 1 },
         barSize: { type: 'number', default: 0.05 },
@@ -20,19 +20,17 @@ AFRAME.registerComponent('bar-chart-2', {
         for (var i = 0; i < x.length * z.length; i++) {
             values[i] = (Math.random());
         }
+        var maxValue = Math.max(...values);
 
         const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
         const WIDTH = BAR_TOT_SIZE * x.length;
         const DEPTH = BAR_TOT_SIZE * z.length;
 
-        //  geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5
-        entity.parentNode.setAttribute("geometry", "primitive: box; width: 0.5; height: 0.5; depth: 0.5");
-
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-        createLevelLines(WIDTH, DEPTH, panelBox, data.textColor, y, data.barSize);
+        createLevelLines(WIDTH, DEPTH, maxValue, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
         createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
@@ -53,7 +51,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
         label.setAttribute("rotation", "-90 0 0");
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
-            x: width / 2, y: 0.00, z: ((depth / 2) - barTotalSize / 2) - barTotalSize * i
+            x: width / 2 + barSize / 1.3, y: 0.00, z: depth / 2 - barTotalSize / 2 - barTotalSize * i
         });
         panelBox.appendChild(label);
     }
@@ -64,8 +62,9 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
         label.setAttribute("value", xLabels[i]);
         label.setAttribute("rotation", "-90 90 0");
         label.setAttribute("color", textColor);
+        label.setAttribute("align", "right")
         label.setAttribute("position", {
-            x: ((width / 2) - barTotalSize / 2) - barTotalSize * i, y: 0.00, z: width / 2 + barTotalSize / 1.2
+            x: width / 2 - barTotalSize / 2 - barTotalSize * i, y: 0.00, z: width / 2 - barTotalSize / 1.3
         });
         panelBox.appendChild(label);
     }
@@ -74,13 +73,14 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 };
 
 
-function createLevelLines(width, depth, panelBox, textColor, yLabels, barSize) {
+function createLevelLines(width, depth, maxValue, panelBox, textColor, yLabels, barSize) {
     var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
     var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
     var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
     const numberOfLines = 10;
-    const maxHeight = 1
+    const maxHeight = maxValue; //Scale this
     var lineStep = maxHeight / numberOfLines;
+    var labelStep = maxValue / numberOfLines
     var lines = document.createElement("a-entity");
     for (var i = 1; i <= 10; i++) {
         var line = document.createElement("a-entity");
@@ -96,11 +96,12 @@ function createLevelLines(width, depth, panelBox, textColor, yLabels, barSize) {
 
         var label = document.createElement("a-text");
         label.setAttribute("width", barSize * 25);
-        label.setAttribute("value", yLabels[i-1]);
+        label.setAttribute("value", (labelStep * i).toFixed(2));
         label.setAttribute("rotation", "0 90 0");
+        label.setAttribute("align", "right")
         label.setAttribute("color", textColor);
         label.setAttribute("position", {
-            x: corner1.x, y: (corner1.y + lineStep * i), z: (corner1.z + 0.1)
+            x: corner1.x, y: corner1.y + lineStep * i, z: corner1.z + 0.01
         });
         lines.appendChild(label);
     }
@@ -135,7 +136,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         bar.setAttribute("labelZ", labZ);
 
         bar.setAttribute("hoverable","");
-        bar.setAttribute("controller-listener","");
+        bar.setAttribute("bar-listener","");
 
         pos.x = (pos.x + barTotalSize) % width;
 
