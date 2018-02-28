@@ -132,7 +132,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createLabel: function(position, value, rotation, align, parent, visible) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", this.data.size / 1.5);
+        label.setAttribute("width", this.data.size / 1.2);
         if (typeof value === 'string' || value instanceof String) {
             label.setAttribute("value", value);
         } else {

@@ -61,7 +61,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 
     for (var i = 0; i < zLabels.length; i++) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", zLabels[i]);
         label.setAttribute("rotation", "-90 0 0");
         label.setAttribute("color", textColor);
@@ -85,13 +85,13 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     }
 
     var label = document.createElement("a-text");
-    label.setAttribute("width", barSize * 25);
+    label.setAttribute("width", barSize * 35);
     label.setAttribute("value", "Number of sold vacation properties");
     label.setAttribute("rotation", "0 90 90");
     label.setAttribute("color", textColor);
-    label.setAttribute("align", "right")
+    label.setAttribute("align", "left")
     label.setAttribute("position", {
-        x: -width / 2, y: width / 1.2, z: width / 2 + barTotalSize * 2
+        x: -width / 2, y: 0.05, z: width / 2 + barTotalSize * 2
     });
     panelBox.appendChild(label);
 
@@ -121,7 +121,7 @@ function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor
         lines.appendChild(line);
 
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", Math.floor(labelStep * i));
         label.setAttribute("rotation", "0 90 0");
         label.setAttribute("align", "right")
@@ -190,7 +190,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         });
 
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", Math.floor(values[i]));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor);
