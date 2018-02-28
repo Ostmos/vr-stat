@@ -155,8 +155,8 @@ AFRAME.registerComponent('scatter-plot-2', {
         sphere.setAttribute('radius', this.data.radius);
 
         var colors = ["#F6903D", "#F6903D", "#F6903D", "#F05053", "#F05053"]
-
-        sphere.setAttribute('color', colors[Math.floor(y / this.data.size * 5)]);
+        //colors[Math.floor(y / this.data.size * 5)]
+        sphere.setAttribute('color', "#F05053");
 
         sphere.setAttribute("hoverable","");
         sphere.setAttribute("bar-listener","");
