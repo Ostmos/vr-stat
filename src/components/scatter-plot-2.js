@@ -32,7 +32,7 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createSpheres(salary, population, apartment_cost, cities, offsets);
         this.createGrid(X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE, X_MAX_VALUE, Y_MAX_VALUE, Z_MAX_VALUE); 
 
-        setTitle(this.el, data.title, data.size, data.size);
+        setTitle(this.el, data.title, data.size, data.size, data.size);
     },
 
     createBase: function() {
@@ -132,7 +132,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createLabel: function(position, value, rotation, align, parent, visible) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", this.data.size / 1.5);
+        label.setAttribute("width", this.data.size / 1.2);
         if (typeof value === 'string' || value instanceof String) {
             label.setAttribute("value", value);
         } else {
