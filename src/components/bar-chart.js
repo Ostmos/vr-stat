@@ -1,5 +1,6 @@
 AFRAME.registerComponent('bar-chart', {
     schema: {
+        size: { type: 'number', default: 2 },
         offset: { type: 'number', default: 1 },
         barSize: { type: 'number', default: 0.05 },
         barPadding: { type: 'number', default: 0.05 },
@@ -34,7 +35,7 @@ AFRAME.registerComponent('bar-chart', {
         const DEPTH = BAR_TOT_SIZE * z.length;
         const MAX_HEIGHT = 1;
 
-        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH, data.size);
 
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
@@ -72,7 +73,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 
     for (var i = 0; i < xLabels.length; i++) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", xLabels[i]);
         label.setAttribute("rotation", "-90 90 0");
         label.setAttribute("color", textColor);
@@ -205,9 +206,10 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
     }
 };
 
-function setTitle(el, title, height, depth){
-    var titleText = document.createElement('a-text');
-    titleText.setAttribute("width", 2);
+function setTitle(el, title, height, depth, size){
+    var titleText = document.createElement('a-text'); 
+    titleText.setAttribute("wrap-pixels", 750);
+    titleText.setAttribute("width", size);
     titleText.setAttribute("align", "center");
     titleText.setAttribute("value", title);
     titleText.setAttribute("position", {y:height * 1.2, z:-depth/2});
