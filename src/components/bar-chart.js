@@ -158,7 +158,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         else if(val <= 0.6) colour = c[2];
         else if(val <= 0.8) colour = c[3];
         else colour = c[4];
-        bar.setAttribute("color", colour);
+        bar.setAttribute("color", "#355C7D");
 
         labY = Math.floor(values[i]);
         labX = xLabels[i % xLabels.length];
