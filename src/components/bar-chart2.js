@@ -2,11 +2,12 @@ AFRAME.registerComponent("bar-chart2", {
 
     schema: {
         src: {type: "asset", default: "empty"},
-        chartPadding: {type: "number", default: 0.01},
+        chartPadding: {type: "number", default: 0.05},
         chartHeight: {type: "number", default: 1},
         barSize: {type: "number", default: 0.1},
-        barPadding: {type: "number", default: 0.05},
-        scale: {type: "number", default: 1}
+        barPadding: {type: "number", default: 1},
+        scale: {type: "number", default: 1},
+        fontSize: {type: "number", default: 2} 
     },
  
     init: function () {
@@ -16,7 +17,12 @@ AFRAME.registerComponent("bar-chart2", {
         const twitterData = JSON.parse(`{
             "stats": {
                 "lengths": {"x": 4, "y": 3},
-                "xLabels": [{"0": "Trump"}, {"1": "Hillary"}, {"2": "Mark"}, {"3": "Cruz"}],
+                "xLabels": [
+                    {"index": "0", "value": "Trump"},
+                    {"index": "1", "value": "HillarySomethingsLong"},
+                    {"index": "2", "value": "Mark"},
+                    {"index": "3", "value": "Cruz"}
+                ],
                 "zLabels": [{"0": "2015"}, {"1": "2016"}, {"2": "2017"}],
                 "maxValue": 1231,
                 "values": [
@@ -45,12 +51,15 @@ AFRAME.registerComponent("bar-chart2", {
         let gridWidth = stats.lengths.x * gridBoxSize; 
         let gridHeight = stats.lengths.y * gridBoxSize;
 
+        let totalGridWidth = gridWidth + data.chartPadding * 2;
+        let totalGridHeight = gridHeight + data.chartPadding * 2;
+
         // Chart plane
         let planeGeometry = new THREE.PlaneGeometry(
-            gridWidth + data.chartPadding * 2, 
-            gridHeight + data.chartPadding * 2
+            totalGridWidth,
+            totalGridHeight
         );
-        let planeMaterial = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+        let planeMaterial = new THREE.MeshBasicMaterial({color: 0xFF0000, side: THREE.DoubleSide});
         let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
         planeMesh.rotation.x = Math.PI / 2;
         this.el.setObject3D("planeMesh", planeMesh);
@@ -58,6 +67,7 @@ AFRAME.registerComponent("bar-chart2", {
         // Bars
         let gridStartPosition = new THREE.Vector2(-gridWidth / 2 + gridBoxSize / 2, gridHeight / 2 - gridBoxSize / 2);
         let heightRatio = 1 / stats.maxValue;
+        var barId = 0;
         for (let dataPoint of stats.values) {
             let barHeight = data.chartHeight * heightRatio * dataPoint.value;
             if (barHeight > 0.0001) {
@@ -70,11 +80,28 @@ AFRAME.registerComponent("bar-chart2", {
                     barHeight / 2,
                     gridStartPosition.y - gridBoxSize * dataPoint.y
                 );
-                
-                this.el.object3D.add(mesh);
+                this.el.setObject3D("bar" + barId++ , mesh);
             }
         }
 
+        let index = 0;
+        for (let indexValuePair of stats.xLabels) {
+            var label = this.createLabel(indexValuePair.value);
+            label.setAttribute("rotation", {x: -90, y: 90, z: 0});
+            label.setAttribute("align", "right");
+            label.setAttribute("position", {x: 0, y: 0, z: totalGridWidth / 2});
+            this.el.appendChild(label);
+        }
+    },
+
+    createLabel: function(text) {
+        var label = document.createElement("a-text");
+        label.setAttribute("width", this.data.fontSize);
+        label.setAttribute("value", text),
+        label.setAttribute("color", "#000000");
+        label.setAttribute("align", "left");
+        label.setAttribute("side", "double");
+        return label;
     }
 
     
