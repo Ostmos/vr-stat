@@ -1,5 +1,6 @@
 AFRAME.registerComponent('bar-chart', {
     schema: {
+        size: { type: 'number', default: 2 },
         offset: { type: 'number', default: 1 },
         barSize: { type: 'number', default: 0.05 },
         barPadding: { type: 'number', default: 0.05 },
@@ -34,7 +35,7 @@ AFRAME.registerComponent('bar-chart', {
         const DEPTH = BAR_TOT_SIZE * z.length;
         const MAX_HEIGHT = 1;
 
-        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH);
+        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH, data.size);
 
         var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
             BAR_TOT_SIZE, data.textColor, x, z);
@@ -60,7 +61,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 
     for (var i = 0; i < zLabels.length; i++) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", zLabels[i]);
         label.setAttribute("rotation", "-90 0 0");
         label.setAttribute("color", textColor);
@@ -72,7 +73,7 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
 
     for (var i = 0; i < xLabels.length; i++) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", xLabels[i]);
         label.setAttribute("rotation", "-90 90 0");
         label.setAttribute("color", textColor);
@@ -84,13 +85,13 @@ function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor,
     }
 
     var label = document.createElement("a-text");
-    label.setAttribute("width", barSize * 25);
+    label.setAttribute("width", barSize * 35);
     label.setAttribute("value", "Number of sold vacation properties");
     label.setAttribute("rotation", "0 90 90");
     label.setAttribute("color", textColor);
-    label.setAttribute("align", "right")
+    label.setAttribute("align", "left")
     label.setAttribute("position", {
-        x: -width / 2, y: width / 1.2, z: width / 2 + barTotalSize * 2
+        x: -width / 2, y: 0.05, z: width / 2 + barTotalSize * 2
     });
     panelBox.appendChild(label);
 
@@ -120,7 +121,7 @@ function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor
         lines.appendChild(line);
 
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", Math.floor(labelStep * i));
         label.setAttribute("rotation", "0 90 0");
         label.setAttribute("align", "right")
@@ -157,7 +158,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         else if(val <= 0.6) colour = c[2];
         else if(val <= 0.8) colour = c[3];
         else colour = c[4];
-        bar.setAttribute("color", colour);
+        bar.setAttribute("color", "#355C7D");
 
         labY = Math.floor(values[i]);
         labX = xLabels[i % xLabels.length];
@@ -189,7 +190,7 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
         });
 
         var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 25);
+        label.setAttribute("width", barSize * 40);
         label.setAttribute("value", Math.floor(values[i]));
         label.setAttribute("rotation", "0 0 0")
         label.setAttribute("color", textColor);
@@ -205,9 +206,10 @@ function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSiz
     }
 };
 
-function setTitle(el, title, height, depth){
-    var titleText = document.createElement('a-text');
-    titleText.setAttribute("width", 2);
+function setTitle(el, title, height, depth, size){
+    var titleText = document.createElement('a-text'); 
+    titleText.setAttribute("wrap-pixels", 750);
+    titleText.setAttribute("width", size);
     titleText.setAttribute("align", "center");
     titleText.setAttribute("value", title);
     titleText.setAttribute("position", {y:height * 1.2, z:-depth/2});

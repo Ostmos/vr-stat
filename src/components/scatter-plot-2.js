@@ -28,11 +28,13 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createBase();
         
         var offsets = [X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE];
+        var maxValues = [X_MAX_VALUE, Y_MAX_VALUE, Z_MAX_VALUE];
 
-        this.createSpheres(salary, population, apartment_cost, cities, offsets);
+
+        this.createSpheres(salary, population, apartment_cost, cities, offsets, maxValues);
         this.createGrid(X_MIN_VALUE, Y_MIN_VALUE, Z_MIN_VALUE, X_MAX_VALUE, Y_MAX_VALUE, Z_MAX_VALUE); 
 
-        setTitle(this.el, data.title, data.size, data.size);
+        setTitle(this.el, data.title, data.size, data.size, data.size);
     },
 
     createBase: function() {
@@ -48,10 +50,10 @@ AFRAME.registerComponent('scatter-plot-2', {
         this.createLabel(pos, "Population", "0 90 90", "center", base, "true");
 
         var pos2 = {x: 0, y: 0, z: this.data.size / 1.4};
-        this.createLabel(pos2, "Salary", "-90 -90 90", "center", base, "true");
+        this.createLabel(pos2, "Median salary per year (/1000SEK)", "-90 -90 90", "center", base, "true");
 
         var pos3 = {x: this.data.size / 1.3, y: 0, z: 0};
-        this.createLabel(pos3, "Apartment cost", "-90 90 0", "center", base, "true");
+        this.createLabel(pos3, "Median rent (SEK)", "-90 90 0", "center", base, "true");
 
         this.el.appendChild(base);
     },
@@ -132,7 +134,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
     createLabel: function(position, value, rotation, align, parent, visible) {
         var label = document.createElement("a-text");
-        label.setAttribute("width", this.data.size / 1.5);
+        label.setAttribute("width", this.data.size / 1.2);
         if (typeof value === 'string' || value instanceof String) {
             label.setAttribute("value", value);
         } else {
@@ -150,13 +152,13 @@ AFRAME.registerComponent('scatter-plot-2', {
         parent.appendChild(label);
     },
 
-    createSphere: function(x, y, z, value) {
+    createSphere: function(x, y, z, value, maxValues) {
         var sphere = document.createElement("a-sphere");
         sphere.setAttribute('radius', this.data.radius);
 
         var colors = ["#F6903D", "#F6903D", "#F6903D", "#F05053", "#F05053"]
-
-        sphere.setAttribute('color', colors[Math.floor(y / this.data.size * 5)]);
+        //colors[Math.floor(y / this.data.size * 5)]
+        sphere.setAttribute('color', "#F05053");
 
         sphere.setAttribute("hoverable","");
         sphere.setAttribute("bar-listener","");
@@ -165,13 +167,25 @@ AFRAME.registerComponent('scatter-plot-2', {
             x: x - this.data.size / 2, y: y, z: z - this.data.size / 2
         });
 
+        sphere.setAttribute("labelX",   Math.floor((x/this.data.size) * maxValues[0]));
+        sphere.setAttribute("labelY",   Math.floor((y/this.data.size) * maxValues[1]));
+        sphere.setAttribute("labelZ",   Math.floor((z/this.data.size) * maxValues[2]));
+        
+        if (typeof value === 'string') {
+            sphere.setAttribute("labelVal", value);
+        }
+        else{
+            sphere.setAttribute("labelVal", Math.floor(value));
+        }
+
+
         var textPos = new THREE.Vector3(0, this.data.radius * 2, 0);
         this.createLabel(textPos, value, "0 0 0", "center", sphere, "false");
 
         this.el.childNodes[0].appendChild(sphere);
     },
 
-    createSpheres: function(xArr, yArr, zArr, nameArr, offsets) {
+    createSpheres: function(xArr, yArr, zArr, nameArr, offsets, maxValues) {
         const NBR_OF_DATA_POINTS = xArr.length;
 
         this.scaleValues(1.0, xArr);
@@ -183,7 +197,7 @@ AFRAME.registerComponent('scatter-plot-2', {
 
         for (var i = 0; i < NBR_OF_DATA_POINTS; i++) {
             // Reversing x- and z values
-            this.createSphere(this.data.size - xArr[i], yArr[i], this.data.size - zArr[i], nameArr[i]);
+            this.createSphere(this.data.size - xArr[i], yArr[i], this.data.size - zArr[i], nameArr[i], maxValues);
         }
     },
 

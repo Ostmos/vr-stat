@@ -16,14 +16,25 @@ AFRAME.registerComponent('bar-listener', {
         el.addEventListener('click', function() {
             var contDisp = document.getElementsByClassName('cont-disp')[0];
             if(contDisp != undefined){
-                contDisp.setAttribute("text", {
-                    value: "x: " + el.getAttribute('labelX') + "\n " +
-                           "y: " + el.getAttribute('labelY') + "\n " +
-                           "z: " + el.getAttribute('labelZ'), 
-                    color: "#0050"
-                });
-        }
-
+                console.log(el.parentNode.parentNode.getAttribute('bar-chart') != null);
+                if(el.parentNode.parentNode.getAttribute('bar-chart')){
+                    contDisp.setAttribute("text", {
+                        value: "x: " + el.getAttribute('labelX') + "\n " +
+                               "y: " + el.getAttribute('labelY') + "\n " +
+                               "z: " + el.getAttribute('labelZ'), 
+                        color: "#0050"
+                    });
+                }else if(el.parentNode.parentNode.getAttribute('scatter-plot') != null){
+                    contDisp.setAttribute("text", {
+                        value: "x: " + el.getAttribute('labelX') + "\n " +
+                               "y: " + el.getAttribute('labelY') + "\n " +
+                               "z: " + el.getAttribute('labelZ'), 
+                        color: "#0050"
+                    });
+                }
+            }
         });
-    }
+    
+    }   
+
 });
