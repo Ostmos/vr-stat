@@ -160,13 +160,6 @@ AFRAME.registerComponent('scatter-plot-2', {
         //colors[Math.floor(y / this.data.size * 5)]
         sphere.setAttribute('color', "#F05053");
 
-        sphere.setAttribute("hoverable","");
-        sphere.setAttribute("bar-listener","");
-        
-        sphere.setAttribute('position', {
-            x: x - this.data.size / 2, y: y, z: z - this.data.size / 2
-        });
-
         sphere.setAttribute("labelX",   Math.floor((x/this.data.size) * maxValues[0]));
         sphere.setAttribute("labelY",   Math.floor((y/this.data.size) * maxValues[1]));
         sphere.setAttribute("labelZ",   Math.floor((z/this.data.size) * maxValues[2]));
@@ -177,6 +170,15 @@ AFRAME.registerComponent('scatter-plot-2', {
         else{
             sphere.setAttribute("labelVal", Math.floor(value));
         }
+
+        sphere.setAttribute("hoverable","");
+        sphere.setAttribute("bar-listener","");
+        
+        sphere.setAttribute('position', {
+            x: x - this.data.size / 2, y: y, z: z - this.data.size / 2
+        });
+
+
 
 
         var textPos = new THREE.Vector3(0, this.data.radius * 2, 0);

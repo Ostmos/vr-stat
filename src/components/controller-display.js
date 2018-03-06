@@ -4,7 +4,9 @@ AFRAME.registerComponent('controller-display', {
     },
 
     init: function() {
+        var el = this.el;
         var text = document.createElement("a-entity");
+        el.setAttribute('buttonDown', false);
         text.className = "cont-disp";
         text.setAttribute("slice9", "width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png");
         text.setAttribute("scale", "0.2 0.2");
@@ -18,6 +20,16 @@ AFRAME.registerComponent('controller-display', {
             width: 1,
             font: 'roboto'
         });
-        this.el.appendChild(text);
+        el.appendChild(text);
+
+        this.el.addEventListener('abuttondown', function(event) {
+            console.log("a-button down");
+            this.setAttribute('buttonDown', true);
+        });
+
+        this.el.addEventListener('abuttonup', function(event) {
+            console.log("a-button up");
+            this.setAttribute('buttonDown', false);
+        });
     }
 });
