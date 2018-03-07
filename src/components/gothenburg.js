@@ -34,7 +34,7 @@ AFRAME.registerComponent('gothenburg', {
         var lundby = createBar(data.barSize, barHeight, data.DEPTH/30, data.WIDTH/9, data.barPosZ, data.WIDTH, data.DEPTH, panel);
         createLabel("Lundby", data.labelSize, barHeight, data.barSize, lundby);
         var orgryte = createBar(data.barSize, barHeight, data.DEPTH/5, data.WIDTH/12, data.barPosZ, data.WIDTH, data.DEPTH, panel);
-        createLabel("Örgryte", data.labelSize, barHeight, data.barSize, orgryte);
+        createLabel("Orgryte", data.labelSize, barHeight, data.barSize, orgryte);
         var eastGothenburg = createBar(data.barSize, barHeight, data.DEPTH/4.5, data.WIDTH/5, data.barPosZ, data.WIDTH, data.DEPTH, panel);
         createLabel("East Gothenburg", data.labelSize, barHeight, data.barSize, eastGothenburg);
         var angered = createBar(data.barSize, barHeight, data.DEPTH/3, data.WIDTH/2.8, data.barPosZ, data.WIDTH, data.DEPTH, panel);
@@ -53,8 +53,8 @@ function createPanel(WIDTH, DEPTH){
     gbg.setAttribute('src', 'src/assets/images/gbg.png');
     gbg.setAttribute('width',WIDTH);
     gbg.setAttribute('height',DEPTH);
-    gbg.setAttribute('rotation','270');
-    gbg.setAttribute("position", {x: 0, y: 1, z: 0});
+    gbg.setAttribute('rotation',{x: 270, y: 0, z: 0});
+    gbg.setAttribute("position", {x: 0, y: .7, z: 0});
     return gbg;
 }
 
