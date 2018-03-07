@@ -25,35 +25,30 @@
 <body>
   <a-scene avatar-recorder> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
     <a-asset>
-      <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
-      <a-asset-item id="tutorial_room" src="src/assets/models/tutorial_room.gltf"></a-asset-item>
-      <a-asset-item id="teleport" src="src/assets/models/teleport_controller.gltf"></a-asset-item>
-      <a-asset-item id="circle" src="src/assets/models/circle.gltf"></a-asset-item>
+      <a-asset-item id="model:room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
+      <a-asset-item id="model:tutorial_room" src="src/assets/models/tutorial_room.gltf"></a-asset-item>
+      <a-asset-item id="model:teleport" src="src/assets/models/teleport_controller.gltf"></a-asset-item>
+      <a-asset-item id="model:circle" src="src/assets/models/circle.gltf"></a-asset-item>
       <!-- <a-asset-item id="room-obj" src="src/assets/models/museum.obj"></a-asset-item>
       <a-asset-item id="room-mtl" src="src/assets/models/museum.mtl"></a-asset-item> -->
-      <img id="sky" src="src/assets/images/equi.png">
-      <img id="board" src="src/assets/images/museum_board.png">
-      <img id="test" src="src/assets/images/testtutorialtext.png">
+      <img id="img:sky" src="src/assets/images/equi.png">
+      <img id="img:board" src="src/assets/images/museum_board.png">
+      <img id="img:teleport" src="src/assets/images/teleport_text.png">
     </a-asset>
 
     <!--World-->
     <!--<a-entity id="floor" position="0 0 -57.8" scale="2 1.5 2" gltf-model="#room-gltf" shadow></a-entity>-->
-    <a-entity id="tutorial" position="0 0 -15" scale="2 2.2 2" gltf-model="#tutorial_room" shadow></a-entity>
-    <a-entity id="circle_teleport" position="-1 0 -13" scale="2 2 2" gltf-model="#circle"></a-entity>
-    <a-entity link="href: index.html; title:Enter room; image: #board; color: black" position="0 1 -31" scale="2 2 2"></a-entity>
+    <a-entity id="model:tutorial" position="0 0 -15" scale="2 2.2 2" gltf-model="#model:tutorial_room" shadow></a-entity>
+    <a-entity id="model:circle_teleport" position="-1 0 -13" scale="2 2 2" gltf-model="#model:circle"></a-entity>
+    <a-entity link="href: index.html; title:Enter room; image: #img:board; color: black" position="0 1 -31" scale="2 2 2"></a-entity>
 
-    <a-entity id="teleport_controller" rotation="-15 130 0" position="0 1.2 -3" scale="0.01 0.01 0.01" gltf-model="#teleport"></a-entity>
+    <a-entity id="model:teleport_controller" rotation="-10 190 0" position="-1 1.6 -3.5" scale="0.012 0.012 0.012" gltf-model="#model:teleport" side="front"></a-entity>
     <!-- <a-entity id="#floor" position="0 0 0" scale="2 1.5 2" obj-model="obj: #room-obj; mtl: #room-mtl" shadow="receive=false"></a-entity> -->
-    <a-sky src="#sky"></a-sky>
-    <a-entity position="0 1.6 -11" rotation="0 0 0">
-        <a-image src="#test" width="3" height="1" side="front"></a-image>
+    <a-sky src="#img:sky"></a-sky>
+    <a-entity position="0 4 -3.5" rotation="0 0 0" scale="1.5 1.5 1.5">
+        <a-image src="#img:teleport" width="3" height="1" side="front"></a-image>
     </a-entity>
 
-    <!--Models-->
-    <!--<a-entity class="cube rotate" grabbable draggable bar-chart="title:Diagram1" bar-chart-listener position="-0.5 1 -3"></a-entity>
-    <a-entity class="cube rotate" grabbable draggable bar-chart="title:Diagram2" bar-chart-listener position="0.4 1 -3"></a-entity>-->
-    <!-- <a-entity class="cube rotate" grabbable draggable bar-chart="title:Number of Sold Vacation Properties by Region and Quarter" bar-chart-listener position="-4 1 -3"></a-entity>
-    <a-entity class="cube rotate" grabbable draggable scatter-plot-2="title:Relation between Swedish cities and Their Population, Average Salary and Average Apartment Cost" bar-chart-listener position="4 1 -3"></a-entity> -->
     <!-- Light -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
