@@ -5,7 +5,7 @@ AFRAME.registerComponent("bar-chart2", {
         chartPadding: {type: "number", default: 0.05},
         chartHeight: {type: "number", default: 1},
         barSize: {type: "number", default: 0.1},
-        barPadding: {type: "number", default: 1},
+        barPadding: {type: "number", default: 0.1},
         scale: {type: "number", default: 1},
         fontSize: {type: "number", default: 2} 
     },

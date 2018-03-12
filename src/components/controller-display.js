@@ -4,25 +4,20 @@ AFRAME.registerComponent('controller-display', {
     },
 
     init: function() {
-        var data = this.data;
-        var object = this.el.object3D;
-
-
-        var display = new THREE.PlaneGeometry(0.4, 0.2);
-        var material = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
-        var plane = new THREE.Mesh(display, material);
-
         var text = document.createElement("a-entity");
         text.className = "cont-disp";
+        text.setAttribute("slice9", "width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png");
+        text.setAttribute("scale", "0.2 0.2");
+        text.setAttribute("position", "0 0.02 0.12");
+        text.setAttribute("rotation", "-90 0 0");
         text.setAttribute("text", {
-            color: "#000",
+            color: "#0050",
             side: "double",
-            value: "value: ",
+            value: "Press a bar \n to see value",
             align: "center",
             width: 1,
             font: 'roboto'
         });
         this.el.appendChild(text);
-        object.add(plane);
     }
 });
