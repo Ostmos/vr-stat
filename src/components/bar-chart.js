@@ -41,8 +41,6 @@ AFRAME.registerComponent('bar-chart', {
             BAR_TOT_SIZE, data.textColor, x, z);
         entity.appendChild(panelBox);
 
-
-
         createLevelLines(WIDTH, DEPTH, maxValue, MAX_HEIGHT, panelBox, data.textColor, y, data.barSize);
 
         //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
