@@ -1,0 +1,25 @@
+{
+  "name": "vr-stat",
+  "version": "0.0.1",
+  "description": "Diagrams in VR",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ostmos/vr-stat.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ostmos/vr-stat/issues"
+  },
+  "homepage": "https://github.com/Ostmos/vr-stat#readme",
+  "dependencies": {
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
