@@ -1,4 +1,10 @@
 # VR-STAT :milky_way:
+## Install
+```
+npm init 
+npm start
+```
+
 ## Branching
 * Feature: feat-\*
 * Bugfix: fix-\*
