@@ -7,7 +7,8 @@ AFRAME.registerComponent("bar-chart", {
         xLabel: {type: "string", default: ""},
         yLabel: {type: "string", default: ""},
 
-        barWidth: {type: "number", default: 0.1},
+        scale: {type: "number", default: 1},
+        barWidth: {type: "number", default: 0.3},
         barPadding: {type: "number", default: 0.1},
         fontSize: {type: "number", default: 2}
     },
@@ -18,13 +19,36 @@ AFRAME.registerComponent("bar-chart", {
         fetch(this.data.src)
         .then((response) => response.json())
         .then(function(jsonData){
-            var x = this.data;
-            self.createChart(jsonData, self.data);
+            self.createChart(jsonData);
         });
     },
 
-    createChart: function(stats, data) {
+    createChart: function(bars) {
+        var data = this.data;
+
+        const BAR_TOTAL_SIZE = data.barWidth + data.barPadding * 2;
+
+        // Plane
+        const PANEL_WIDTH = bars.length * BAR_TOTAL_SIZE;
+        const PANEL_DEPTH = BAR_TOTAL_SIZE;
+
+        const PLANE_GEOMETRY = new THREE.PlaneGeometry(PANEL_WIDTH, PANEL_DEPTH);
+        const PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xACDBC9, side: THREE.DoubleSide});
+        let planeMesh = new THREE.Mesh(PLANE_GEOMETRY, PLANE_MATERIAL);
+        planeMesh.rotation.x = Math.PI / 2;
+
+        this.el.setObject3D("planeMesh", planeMesh);
         
+        // Bars
+        const PANEL_START_POS = -PANEL_WIDTH / 2 + BAR_TOTAL_SIZE / 2; 
+        for(let i = 0; i < bars.length; i++){
+            const BAR_GEOMETRY = new THREE.BoxBufferGeometry(data.barWidth, bars[i].popularity * data.scale, data.barWidth);
+            const BAR_MATERIAL = new THREE.MeshStandardMaterial({color: 0xF48B94});
+            let barMesh = new THREE.Mesh(BAR_GEOMETRY, BAR_MATERIAL);
+            barMesh.position.set(PANEL_START_POS + BAR_TOTAL_SIZE * i, bars[i].popularity / 2 * data.scale, 0);
+            this.el.setObject3D("bar" + i, barMesh);
+        }
+
     },
 
     /*createChart: function(stats, data) {
