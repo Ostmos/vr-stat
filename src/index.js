@@ -1,2 +1,2 @@
 // Components
-require("./components/bar-chart2");
+require("./components/bar-chart");

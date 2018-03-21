@@ -1,216 +1,108 @@
-AFRAME.registerComponent('bar-chart', {
+AFRAME.registerComponent("bar-chart", {
+
     schema: {
-        size: { type: 'number', default: 2 },
-        offset: { type: 'number', default: 1 },
-        barSize: { type: 'number', default: 0.05 },
-        barPadding: { type: 'number', default: 0.05 },
-        panelBoxPadding: { type: 'number', default: 0 },
-        color: { type: 'color', default: '#FFF' },
-        textColor: { type: 'color', default: '#000000' },
-        title: { type: 'string', default: '' }
-    },
+        src: {type: "asset", default: "empty"},
 
+        title: {type: "string", default: ""},
+        xLabel: {type: "string", default: ""},
+        yLabel: {type: "string", default: ""},
+
+        barWidth: {type: "number", default: 0.1},
+        barPadding: {type: "number", default: 0.1},
+        fontSize: {type: "number", default: 2}
+    },
+ 
     init: function () {
-        var data = this.data;
-        var entity = this.el;
-        var object = this.el.object3D
+        var self = this;
 
-        //var z = ['2013', '2014', '2015', '2016', '2017'];
-        //var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5', 'Omrdae8', 'Omrdae9'];
-        var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        var z = ['Stockholms lan', 'Ostra mellansverige', 'Smaland med oarna', 'Sydsverige', 'Vastsverige', 'Norra mellansverige', 'Mellersta Norrland', 'Ovre Norrland'];
-        var x = ['2016K1','2016K2','2016K3','2016K4','2017K1','2017K2','2017K3','2017K4']
-        var values =  [142, 543, 475, 369, 159, 544, 455, 373, 206, 694, 661, 407, 201, 639, 705, 436, 176, 425, 480, 314, 184, 396, 480, 337, 197, 416, 455, 352, 192, 398, 424, 397, 237, 666, 652, 454, 250, 685, 619, 456, 261, 493, 576, 450, 251, 507, 586, 427, 123, 240, 280, 191, 135, 197, 266, 224, 84, 224, 303, 176, 77, 192, 329, 166];
-        
-        //var values = [];
-        //for (var i = 0; i < x.length * z.length; i++) {
-        //    values[i] = (Math.random() * 1000);
-        //}
-        var maxValue = Math.max(...values);
-
-
-
-        const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
-        const WIDTH = BAR_TOT_SIZE * x.length;
-        const DEPTH = BAR_TOT_SIZE * z.length;
-        const MAX_HEIGHT = 1;
-
-        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH, data.size);
-
-        var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
-            BAR_TOT_SIZE, data.textColor, x, z);
-        entity.appendChild(panelBox);
-
-        createLevelLines(WIDTH, DEPTH, maxValue, MAX_HEIGHT, panelBox, data.textColor, y, data.barSize);
-
-        //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
-        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
+        fetch(this.data.src)
+        .then((response) => response.json())
+        .then(function(jsonData){
+            var x = this.data;
+            self.createChart(jsonData, self.data);
+        });
     },
-});
 
-function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor, xLabels, zLabels) {
-    var panelBox = document.createElement("a-box");
-    panelBox.setAttribute('height', '0.03');
-    panelBox.setAttribute('width', width + padding);
-    panelBox.setAttribute('depth', depth + padding);
-    panelBox.setAttribute('color', "#2A363B");
-    panelBox.setAttribute('transparent', 'true');
-    panelBox.setAttribute('opacity', '0.5');
-
-    for (var i = 0; i < zLabels.length; i++) {
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", zLabels[i]);
-        label.setAttribute("rotation", "-90 0 0");
-        label.setAttribute("color", textColor);
-        label.setAttribute("position", {
-            x: width / 2, y: 0.00, z: depth / 2 - barTotalSize / 2 - barTotalSize * i
-        });
-        panelBox.appendChild(label);
-    }
-
-    for (var i = 0; i < xLabels.length; i++) {
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", xLabels[i]);
-        label.setAttribute("rotation", "-90 90 0");
-        label.setAttribute("color", textColor);
-        label.setAttribute("align", "right")
-        label.setAttribute("position", {
-            x: width / 2 - barTotalSize / 2 - barTotalSize * i, y: 0.00, z: width / 2
-        });
-        panelBox.appendChild(label);
-    }
-
-    var label = document.createElement("a-text");
-    label.setAttribute("width", barSize * 35);
-    label.setAttribute("value", "Number of sold vacation properties");
-    label.setAttribute("rotation", "0 90 90");
-    label.setAttribute("color", textColor);
-    label.setAttribute("align", "left")
-    label.setAttribute("position", {
-        x: -width / 2, y: 0.05, z: width / 2 + barTotalSize * 2
-    });
-    panelBox.appendChild(label);
-
-    return panelBox;
-};
-
-
-function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor, yLabels, barSize) {
-    var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
-    var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
-    var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
-    const numberOfLines = 10;
-
-    var lineStep = maxHeight / numberOfLines;
-    var labelStep = maxValue / numberOfLines
-    var lines = document.createElement("a-entity");
-    for (var i = 1; i <= 10; i++) {
-        var line = document.createElement("a-entity");
-        var c1 = corner1.x + ", " + corner1.y + lineStep * i + ", " + corner1.z + ";";
-        var c2 = corner2.x + ", " + corner2.y + lineStep * i + ", " + corner2.z + ";";
-        var c3 = corner3.x + ", " + corner3.y + lineStep * i + ", " + corner3.z + ";";
-        var color = "color: black"; 
-        var lineAtribute_1 = "start :" + c1 + "end: "+ c2 + color;
-        var lineAtribute_2 = "start :" + c3 + "end: "+ c2 + color;
-        line.setAttribute("line__1", lineAtribute_1);
-        line.setAttribute("line__2", lineAtribute_2);
-        lines.appendChild(line);
-
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", Math.floor(labelStep * i));
-        label.setAttribute("rotation", "0 90 0");
-        label.setAttribute("align", "right")
-        label.setAttribute("color", textColor);
-        label.setAttribute("position", {
-            x: corner1.x, y: corner1.y + lineStep * i, z: corner1.z + 0.01
-        });
-        lines.appendChild(label);
-    }
-    panelBox.appendChild(lines);
-}
-
-function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor, maxValue) {
-    values.reverse();
-    const OFFSET = barTotalSize / 2;
-    var color_1 = ["#E1F5C4", "#ECE473", "#F9D423", "#F6903D", "#F05053"]
-    var c = color_1;
-    var pos = {x: 0, y: 0, z: 0}; 
-    var z = 0;
-    var labX, labY, labZ;
-    for (var i = 0; i < values.length; i++) {
-        var val = (values[i] / maxValue);
-        var bar = document.createElement("a-box");
-
-        bar.setAttribute("width", barSize);
-        bar.setAttribute("depth", barSize);
-        bar.setAttribute("height", val);
-        bar.setAttribute("transparent", "true");
-        bar.setAttribute("opacity", "0.9");
+    createChart: function(stats, data) {
         
-        var colour;
-        if (val <= 0.2) colour = c[0];
-        else if(val <= 0.4) colour = c[1];
-        else if(val <= 0.6) colour = c[2];
-        else if(val <= 0.8) colour = c[3];
-        else colour = c[4];
-        bar.setAttribute("color", "#355C7D");
+    },
 
-        labY = Math.floor(values[i]);
-        labX = xLabels[i % xLabels.length];
-        if(i % xLabels.length == 0 && i != 0){
-            ++z;
-        }  
-        labZ = zLabels[z]; 
+    /*createChart: function(stats, data) {
+        // The grid is basically a spreadsheet(columns x rows)
+        /*let gridBoxSize = data.barSize + data.barPadding * 2; 
+        let gridWidth = stats.lengths.x * gridBoxSize; 
+        let gridHeight = gridBoxSize;
 
-        bar.setAttribute("labelX", labX);
-        bar.setAttribute("labelY", labY);
-        bar.setAttribute("labelZ", labZ);
+        let totalGridWidth = gridWidth + data.chartPadding * 2;
+        let totalGridHeight = gridHeight + data.chartPadding * 2;
 
-        bar.setAttribute("hoverable","");
-        bar.setAttribute("bar-listener","");
+        // Chart plane
+        let planeGeometry = new THREE.PlaneGeometry(
+            totalGridWidth,
+            totalGridHeight
+        );
+        let planeMaterial = new THREE.MeshBasicMaterial({color: 0x2A363B, side: THREE.DoubleSide});
+        let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+        planeMesh.rotation.x = Math.PI / 2;
+        this.el.setObject3D("planeMesh", planeMesh);
 
-        pos.x = ((pos.x % width)+ barTotalSize);
-
-        pos.y = val / 2;
-
-
-        if (i % xLabels.length == 0) {
-            pos.z += barTotalSize;
+        // Bars
+        let gridStartPosition = new THREE.Vector2(-gridWidth / 2 + gridBoxSize / 2, 0);
+        let heightRatio = 1 / stats.maxValue;
+        var barId = 0;
+        for (let dataPoint of stats.values) {
+            let barHeight = data.chartHeight * heightRatio * dataPoint.value;
+            if (barHeight > 0.0001) {
+                var geometry = new THREE.BoxBufferGeometry(data.barSize, barHeight, this.data.barSize);
+                var material = new THREE.MeshStandardMaterial({color: 0xFF847C});
+                var mesh = new THREE.Mesh(geometry, material);
+                
+                mesh.position.set(
+                    gridStartPosition.x + gridBoxSize * dataPoint.x,
+                    barHeight / 2,
+                    gridStartPosition.y
+                );
+                this.el.setObject3D("bar" + barId++ , mesh);
+            }
         }
 
-        bar.setAttribute("position", {
-            x: (pos.x - width / 2) + OFFSET - barTotalSize,
-            y: pos.y,
-            z: (pos.z - depth / 2) - OFFSET
-        });
+        let index = 0;
+        for (let indexValuePair of stats.xLabels) {
+            var label = this.createLabel(
+                indexValuePair.value, {x: -90, y: 90, z: 0},
+                {x: (-totalGridWidth / 2 + gridBoxSize / 2) + (gridBoxSize * index++), y: 0, z: totalGridWidth / 2},
+                "right");
+            this.el.appendChild(label);
+        }
 
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", Math.floor(values[i]));
-        label.setAttribute("rotation", "0 0 0")
-        label.setAttribute("color", textColor);
-        label.setAttribute("align", "center");
-        label.setAttribute("position", {
-            x: 0, y: val / 2 + barSize / 2, z: 0
-        });
-        label.setAttribute("visible", "false");
+        let lineMaterial = new THREE.LineBasicMaterial({color: 0x2A363B});
+        var lineGeometry = new THREE.Geometry();
+
+        let leftCorner = new THREE.Vector3(-gridWidth / 2, 0, -gridHeight / 2);
+        let rightCorner = new THREE.Vector3(gridWidth / 2, 0, -gridHeight / 2);
+
+        let linestep = 0.1;
+        for (i = 0; i < 11; i++) {
+            lineGeometry.vertices.push(new THREE.Vector3(leftCorner.x, linestep * i, leftCorner.z));
+            lineGeometry.vertices.push(new THREE.Vector3(rightCorner.x, linestep * i, rightCorner.z));
+            var lineLabel = this.createLabel(i, {x: 0, y: 0, z: 0}, {x:leftCorner.x, y: linestep * i, z: rightCorner.z}, "right");
+            this.el.appendChild(lineLabel);
+        }
         
-        bar.appendChild(label);
+        let line = new THREE.LineSegments(lineGeometry, lineMaterial);
+        this.el.setObject3D("lines", line);
+    },*/
 
-        panelBox.appendChild(bar);
+    createLabel: function(text, rotation, position, alignment) {
+        var label = document.createElement("a-text");
+        label.setAttribute("width", this.data.fontSize);
+        label.setAttribute("value", text),
+        label.setAttribute("color", "#000000");
+        label.setAttribute("side", "double");
+        label.setAttribute("rotation", rotation);
+        label.setAttribute("position", position);
+        label.setAttribute("align", alignment);
+        return label;
     }
-};
-
-function setTitle(el, title, height, depth, size){
-    var titleText = document.createElement('a-text'); 
-    titleText.setAttribute("wrap-pixels", 750);
-    titleText.setAttribute("width", size);
-    titleText.setAttribute("align", "center");
-    titleText.setAttribute("value", title);
-    titleText.setAttribute("position", {y:height * 1.2, z:-depth/2});
-    titleText.setAttribute("color", "#000");
-    el.appendChild(titleText);
-};
+    
+});
