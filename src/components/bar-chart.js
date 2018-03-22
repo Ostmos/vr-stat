@@ -33,6 +33,7 @@ AFRAME.registerComponent("bar-chart", {
     createChart: function(bars) {
         var data = this.data;
 
+        // Values
         let xLabels = [];
         let yValues = [];
 
@@ -64,7 +65,7 @@ AFRAME.registerComponent("bar-chart", {
         this.createLabels(xLabels, yValues, BAR_TOTAL_SIZE, PANEL_WIDTH);
     },
 
-    createLabels: function(xLabels, yValues, barSize, planeWidth) {
+    createLabels: function(xLabels, yValues, barSize, planeWidth, bars) {
         // Font
         var self = this;
         var textureLoader = new THREE.TextureLoader();
@@ -81,21 +82,24 @@ AFRAME.registerComponent("bar-chart", {
             
             fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
                 const TEXT_WIDTH = 300;
+
+                // X labels
                 for (let i = 0; i < xLabels.length; i++) {
                     var geometry = fontCreator({
                         width: TEXT_WIDTH,
                         font: font,
                         letterSpacing: 1,
-                        align: "left",
+                        align: "right",
                         text: xLabels[i]
                     })
+
                     var mesh = new THREE.Mesh(geometry, material);
                     var textAnchor = new THREE.Object3D();
-                    textAnchor.scale.multiplyScalar(-0.004);
-                    textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2);
+                    textAnchor.scale.multiplyScalar(0.004);
+                    // 1.2 is magic, should fix that
+                    textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
                     textAnchor.rotation.set(Math.PI / 2, 0, -Math.PI / 2);
                     textAnchor.add(mesh);
-
                     self.el.setObject3D('mesh' + i, textAnchor);
                 }
             });
