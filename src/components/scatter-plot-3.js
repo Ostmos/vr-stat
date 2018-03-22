@@ -1,10 +1,17 @@
+var fontCreator = require('three-bmfont-text');
+var fontLoader = require('load-bmfont');
+var SDFShader = require('../shaders/sdf');
+
 AFRAME.registerComponent('scatter-plot-3', {
     schema: {
         size: { type: 'number', default: 3 },
         nodeSize: { type: 'number', default: 0.1 },
         levelLines: { type: 'number', default: 10 },
         color: { type: 'color', default: '#FFF' },
-        title: { type: 'string', default: 'no name' }
+        title: { type: 'string', default: 'no name' },
+        xLabel: { type: 'string', default: 'undefined' },
+        yLabel: { type: 'string', default: 'undefined' },
+        zLabel: { type: 'string', default: 'undefined' }
     },
     init: function () {
         //viktigt att datan som används har definerat max och min värden för x, y och z
@@ -12,7 +19,7 @@ AFRAME.registerComponent('scatter-plot-3', {
             "stats": {
                 "labels": {"x": "Retweet", "y": "Favorite", "z": "Number of tweets"},
                 "maxValues": {"x": 4, "y": 3, "z": 342},
-                "minValues": {"x": 0, "y": 0, "z": 19},
+                "minValues": {"x": 0, "y": 0, "z": 19},c
                 "values": [
                     {"x": 4, "y": 3, "z": 342},
                     {"x": 0, "y": 0, "z": 50},
@@ -31,7 +38,7 @@ AFRAME.registerComponent('scatter-plot-3', {
             }
         }`);
         this.createBase();
-        this.createWalls();
+        this.createWalls(twitterData.stats);
         this.createNodes(twitterData.stats);
     },
     createBase: function() {
@@ -48,7 +55,7 @@ AFRAME.registerComponent('scatter-plot-3', {
         this.setPosition(planeMesh, vector, 0);
         this.el.setObject3D("base", planeMesh);
     },
-    createWalls: function(){
+    createWalls: function(stats){
         /*  //This was a  
             let planeGeometry = new THREE.PlaneGeometry(
             this.data.size,
@@ -66,24 +73,65 @@ AFRAME.registerComponent('scatter-plot-3', {
         let vector_2 = new THREE.Vector3(this.data.size / 2, this.data.size / 2, 0);
         this.setPosition(planeMesh_2, vector_2);
         this.el.setObject3D("wall_2", planeMesh_2); */
+        
+        var self = this;
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+            texture.needsUpdate = true;
+            texture.anisotropy = 16;
 
-        let levelLines = this.data.levelLines;
-        for (let i = 0; i <= levelLines; i++){
-            var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-            var geometry = new THREE.Geometry();
-            let size = this.data.size;
-            let y = (size/levelLines) * i;
-            var vector_1 = new THREE.Vector3(   0, 0, size);
-            var vector_2 = new THREE.Vector3(   0, 0,    0);
-            var vector_3 = new THREE.Vector3(size, 0,    0);
-            geometry.vertices.push(vector_1);
-            geometry.vertices.push(vector_2);
-            geometry.vertices.push(vector_3);
-            var line = new THREE.Line(geometry, material);
-            let vector = new THREE.Vector3(0, y, 0);
-            this.setPosition(line, vector, 0);
-            this.el.setObject3D("line_"+i, line);
-        }
+            var fontTexture = new THREE.RawShaderMaterial(SDFShader({
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true,
+                color: 0x00000 
+            }))
+            fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+                let levelLines = this.data.levelLines;
+                for (let i = 0; i <= levelLines; i++){
+                    //level
+                    let vector = new THREE.Vector3(0, y, 0);
+
+                    //create level lines
+                    var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+                    var geometry = new THREE.Geometry();
+                    let size = this.data.size;
+                    let y = (size/levelLines) * i;
+                    var vector_1 = new THREE.Vector3(   0, 0, size);
+                    var vector_2 = new THREE.Vector3(   0, 0,    0);
+                    var vector_3 = new THREE.Vector3(size, 0,    0);
+                    geometry.vertices.push(vector_1);
+                    geometry.vertices.push(vector_2);
+                    geometry.vertices.push(vector_3);
+                    var line = new THREE.Line(geometry, material);
+                    this.setPosition(line, vector, 0);
+                    this.el.setObject3D("line_"+i, line);
+
+                    //create labels
+                    self.createYLabel(vector_1, vector, stats, i);
+
+                }
+            })
+        })
+    },
+    createYLabel: function(vector_1, vector, stats, i){
+        let label = stats.minValues.y + ((stats.maxValues.y - stats.minValues.y) / levelLines) * i ;
+        var fontGeometry = fontCreator({
+            width: 300,
+            font: font,
+            letterSpacing: 1,
+            align: "left",
+            text: label
+        })
+
+        var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+        var textAnchor = new THREE.Object3D();
+        textAnchor.scale.multiplyScalar(0.004);
+        // 1.2 is magic, should fix that
+        textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
+        textAnchor.rotation.set(0, Math.PI / 2, 0);
+        textAnchor.add(mesh);
+        this.el.setObject3D('yLabel_' + i, textAnchor);
     },
     createNodes: function(stats){
         
