@@ -1,3 +1,7 @@
+var fontCreator = require('three-bmfont-text');
+var fontLoader = require('load-bmfont');
+var SDFShader = require('../shaders/sdf');
+
 AFRAME.registerComponent("bar-chart", {
 
     schema: {
@@ -49,7 +53,47 @@ AFRAME.registerComponent("bar-chart", {
             this.el.setObject3D("bar" + i, barMesh);
         }
 
+        // Font
+        var self = this;
+
+        fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+            var geometry = fontCreator({
+                width: 300,
+                font: font,
+                letterSpacing: 1,
+            })
+
+            geometry.update('Lorem ipsum\nDolor sit amet.')
+            
+            console.log(geometry.layout.height)
+            console.log(geometry.layout.descender)
+                
+            var textureLoader = new THREE.TextureLoader();
+            textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+                texture.needsUpdate = true;
+                texture.anisotropy = 16;
+
+                var material = new THREE.RawShaderMaterial(SDFShader({
+                    map: texture,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    color: 0x00000 
+                }))
+
+                var mesh = new THREE.Mesh(geometry, material)
+                var textAnchor = new THREE.Object3D();
+                textAnchor.scale.multiplyScalar(-0.002);
+                textAnchor.position.set(0, 0 , 1);
+                textAnchor.rotation.set(0, Math.PI, 0);
+                textAnchor.add(mesh);
+                
+                self.el.setObject3D('mesh', textAnchor);
+            })
+        })
+
+
     },
+
 
     /*createChart: function(stats, data) {
         // The grid is basically a spreadsheet(columns x rows)
