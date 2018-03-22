@@ -2,10 +2,7 @@ var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
-var bar;
-
 AFRAME.registerComponent("bar-chart", {
-
 
     schema: {
         src: {type: "asset", default: "empty"},
