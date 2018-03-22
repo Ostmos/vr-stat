@@ -1,0 +1,505 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0, 
+            "componentType" : 5125, 
+            "count" : 451509, 
+            "max" : [
+                451494
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 1, 
+            "componentType" : 5126, 
+            "count" : 451495, 
+            "max" : [
+                106.00033569335938, 
+                44.1544075012207, 
+                23.72868537902832
+            ], 
+            "min" : [
+                4.428014755249023, 
+                -47.601470947265625, 
+                -69.48744201660156
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 2, 
+            "componentType" : 5126, 
+            "count" : 451495, 
+            "max" : [
+                0.999963104724884, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -0.9999879002571106, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 3, 
+            "componentType" : 5126, 
+            "count" : 451495, 
+            "max" : [
+                1.0, 
+                0.9999999403953552, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -0.999485969543457, 
+                -0.9999918937683105, 
+                -1.0, 
+                -1.0
+            ], 
+            "type" : "VEC4"
+        }, 
+        {
+            "bufferView" : 4, 
+            "componentType" : 5126, 
+            "count" : 451495, 
+            "max" : [
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                0.0, 
+                0.0
+            ], 
+            "type" : "VEC2"
+        }, 
+        {
+            "bufferView" : 5, 
+            "componentType" : 5123, 
+            "count" : 14862, 
+            "max" : [
+                7320
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 6, 
+            "componentType" : 5126, 
+            "count" : 7321, 
+            "max" : [
+                3.6110000610351562, 
+                0.05000000074505806, 
+                0.2800000011920929
+            ], 
+            "min" : [
+                -0.032999999821186066, 
+                -0.05000000074505806, 
+                -0.7320000529289246
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 7, 
+            "componentType" : 5126, 
+            "count" : 7321, 
+            "max" : [
+                0.9869380593299866, 
+                1.0, 
+                0.9951170086860657
+            ], 
+            "min" : [
+                -0.9878536462783813, 
+                -1.0, 
+                -0.9952086210250854
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 8, 
+            "componentType" : 5126, 
+            "count" : 7321, 
+            "max" : [
+                1.0, 
+                0.9803668856620789, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -1.0, 
+                -0.9913471937179565, 
+                -1.0, 
+                1.0
+            ], 
+            "type" : "VEC4"
+        }, 
+        {
+            "bufferView" : 9, 
+            "componentType" : 5126, 
+            "count" : 7321, 
+            "max" : [
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                0.0, 
+                0.0
+            ], 
+            "type" : "VEC2"
+        }, 
+        {
+            "bufferView" : 10, 
+            "componentType" : 5123, 
+            "count" : 1728, 
+            "max" : [
+                299
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 11, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                1.0, 
+                0.009869217872619629, 
+                0.31904709339141846
+            ], 
+            "min" : [
+                -0.8800570964813232, 
+                -0.3297397494316101, 
+                -0.04444044083356857
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 12, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                0.6898708939552307, 
+                0.999786376953125, 
+                0.9884334802627563
+            ], 
+            "min" : [
+                -0.6897793412208557, 
+                -0.999786376953125, 
+                -0.9880977869033813
+            ], 
+            "type" : "VEC3"
+        }
+    ], 
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter", 
+        "version" : "2.0"
+    }, 
+    "bufferViews" : [
+        {
+            "buffer" : 0, 
+            "byteLength" : 1806036, 
+            "byteOffset" : 0, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 5417940, 
+            "byteOffset" : 1806036, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 5417940, 
+            "byteOffset" : 7223976, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 7223920, 
+            "byteOffset" : 12641916, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3611960, 
+            "byteOffset" : 19865836, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 29724, 
+            "byteOffset" : 23477796, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 87852, 
+            "byteOffset" : 23507520, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 87852, 
+            "byteOffset" : 23595372, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 117136, 
+            "byteOffset" : 23683224, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 58568, 
+            "byteOffset" : 23800360, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3456, 
+            "byteOffset" : 23858928, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 23862384, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 23865984, 
+            "target" : 34962
+        }
+    ], 
+    "buffers" : [
+        {
+            "byteLength" : 23869584, 
+            "uri" : "teleport_controller.bin"
+        }
+    ], 
+    "images" : [
+        {
+            "uri" : "controller_texture.png"
+        }, 
+        {
+            "uri" : "teleport.png"
+        }
+    ], 
+    "materials" : [
+        {
+            "name" : "Material.002", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.0, 
+                    0.0, 
+                    0.0, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Material.004", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.8095238208770752, 
+                    0.0988950267821771, 
+                    0.12871489818891746, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Material.005", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.20235455337695107, 
+                    0.20235455337695107, 
+                    0.20235455337695107, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Material.006", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    1.0
+                ], 
+                "baseColorTexture" : {
+                    "index" : 0
+                }, 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Material.007", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    1.0
+                ], 
+                "baseColorTexture" : {
+                    "index" : 1
+                }, 
+                "metallicFactor" : 0.0
+            }
+        }
+    ], 
+    "meshes" : [
+        {
+            "name" : "OculusTouch Left", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2, 
+                        "POSITION" : 1, 
+                        "TANGENT" : 3, 
+                        "TEXCOORD_0" : 4
+                    }, 
+                    "indices" : 0, 
+                    "material" : 3
+                }
+            ]
+        }, 
+        {
+            "name" : "CUTeleport", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 7, 
+                        "POSITION" : 6, 
+                        "TANGENT" : 8, 
+                        "TEXCOORD_0" : 9
+                    }, 
+                    "indices" : 5, 
+                    "material" : 4
+                }
+            ]
+        }, 
+        {
+            "name" : "BezierCurve.001", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 12, 
+                        "POSITION" : 11
+                    }, 
+                    "indices" : 10, 
+                    "material" : 0
+                }
+            ]
+        }
+    ], 
+    "nodes" : [
+        {
+            "mesh" : 2, 
+            "name" : "BezierCurve", 
+            "rotation" : [
+                -0.5507573485374451, 
+                0.24384596943855286, 
+                -0.12334834039211273, 
+                0.7886638641357422
+            ], 
+            "scale" : [
+                41.57351303100586, 
+                41.57351303100586, 
+                41.57351303100586
+            ], 
+            "translation" : [
+                0.7539055347442627, 
+                24.54573631286621, 
+                32.34391403198242
+            ]
+        }, 
+        {
+            "name" : "Camera", 
+            "rotation" : [
+                0.483536034822464, 
+                0.33687159419059753, 
+                -0.20870360732078552, 
+                0.7804827094078064
+            ], 
+            "translation" : [
+                7.481131553649902, 
+                5.34366512298584, 
+                6.5076398849487305
+            ]
+        }, 
+        {
+            "name" : "Hemi", 
+            "translation" : [
+                7.092106819152832, 
+                53.15803909301758, 
+                29.672611236572266
+            ]
+        }, 
+        {
+            "mesh" : 0, 
+            "name" : "OculusTouch Left"
+        }, 
+        {
+            "mesh" : 1, 
+            "name" : "Teleport", 
+            "rotation" : [
+                -0.01760024018585682, 
+                -0.8078344464302063, 
+                0.5887148380279541, 
+                0.022548777982592583
+            ], 
+            "scale" : [
+                28.45948028564453, 
+                28.459476470947266, 
+                28.45948028564453
+            ], 
+            "translation" : [
+                23.404499053955078, 
+                48.54193115234375, 
+                49.49956512451172
+            ]
+        }
+    ], 
+    "samplers" : [
+        {}
+    ], 
+    "scene" : 0, 
+    "scenes" : [
+        {
+            "name" : "Scene", 
+            "nodes" : [
+                4, 
+                0, 
+                2, 
+                3, 
+                1
+            ]
+        }
+    ], 
+    "textures" : [
+        {
+            "sampler" : 0, 
+            "source" : 0
+        }, 
+        {
+            "sampler" : 0, 
+            "source" : 1
+        }
+    ]
+}
