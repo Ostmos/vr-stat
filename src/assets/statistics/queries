@@ -1,0 +1,2 @@
+SELECT Salary, HoursPerWeek, YearsCodedJob FROM [fh-bigquery:stackoverflow.survey_results_public_2017] WHERE Salary != 'NA' AND HoursPerWeek != 'NA' AND YearsCodedJob != 'NA' 
+https://bigquery.cloud.google.com/results/nott-890e1:US.bquijob_62d96c31_1624de65629
