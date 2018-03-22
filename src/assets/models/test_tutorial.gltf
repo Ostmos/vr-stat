@@ -3,9 +3,9 @@
         {
             "bufferView" : 0, 
             "componentType" : 5121, 
-            "count" : 24, 
+            "count" : 234, 
             "max" : [
-                9
+                83
             ], 
             "min" : [
                 0
@@ -15,23 +15,23 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 10, 
+            "count" : 84, 
             "max" : [
-                1.0, 
+                14.270929336547852, 
                 0.0, 
-                1.362472653388977
+                1.7150003910064697
             ], 
             "min" : [
-                -1.0, 
+                -2.239658832550049, 
                 0.0, 
-                -1.0
+                -6.382333755493164
             ], 
             "type" : "VEC3"
         }, 
         {
             "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 10, 
+            "count" : 84, 
             "max" : [
                 0.0, 
                 1.0, 
@@ -39,7 +39,7 @@
             ], 
             "min" : [
                 0.0, 
-                1.0, 
+                0.9999999403953552, 
                 -0.0
             ], 
             "type" : "VEC3"
@@ -52,32 +52,32 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 24, 
+            "byteLength" : 234, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 120, 
-            "byteOffset" : 24, 
+            "byteLength" : 1008, 
+            "byteOffset" : 236, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 120, 
-            "byteOffset" : 144, 
+            "byteLength" : 1008, 
+            "byteOffset" : 1244, 
             "target" : 34962
         }
     ], 
     "buffers" : [
         {
-            "byteLength" : 264, 
-            "uri" : "tutorial_room.bin"
+            "byteLength" : 2252, 
+            "uri" : "test_tutorial.bin"
         }
     ], 
     "meshes" : [
         {
-            "name" : "Plane.001", 
+            "name" : "Plane", 
             "primitives" : [
                 {
                     "attributes" : {
@@ -113,9 +113,14 @@
             "mesh" : 0, 
             "name" : "Plane", 
             "scale" : [
-                12.985114097595215, 
-                1.0, 
-                58.36458969116211
+                3.0, 
+                2.0, 
+                6.800000190734863
+            ], 
+            "translation" : [
+                -23.0, 
+                0.0, 
+                20.0
             ]
         }
     ], 
