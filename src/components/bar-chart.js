@@ -1,218 +1,144 @@
-AFRAME.registerComponent('bar-chart', {
+var fontCreator = require('three-bmfont-text');
+var fontLoader = require('load-bmfont');
+var SDFShader = require('../shaders/sdf');
+
+AFRAME.registerComponent("bar-chart", {
+
     schema: {
-        size: { type: 'number', default: 2 },
-        offset: { type: 'number', default: 1 },
-        barSize: { type: 'number', default: 0.05 },
-        barPadding: { type: 'number', default: 0.05 },
-        panelBoxPadding: { type: 'number', default: 0 },
-        color: { type: 'color', default: '#FFF' },
-        textColor: { type: 'color', default: '#000000' },
-        title: { type: 'string', default: '' }
-    },
+        src: {type: "asset", default: "empty"},
 
+        title: {type: "string", default: ""},
+        xLabel: {type: "string", default: ""},
+        yLabel: {type: "string", default: ""},
+        suffix: {type: "string", default: ""},
+
+        yScale: {type: "number", default: 1.0},
+        scale: {type: "number", default: 1.0},
+        barWidth: {type: "number", default: 0.3},
+        barPadding: {type: "number", default: 0.1},
+        fontSize: {type: "number", default: 2}
+    },
+ 
     init: function () {
-        var data = this.data;
-        var entity = this.el;
-        var object = this.el.object3D
+        var self = this;
 
-        //var z = ['2013', '2014', '2015', '2016', '2017'];
-        //var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5', 'Omrdae8', 'Omrdae9'];
-        var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        var z = ['Stockholms lan', 'Ostra mellansverige', 'Smaland med oarna', 'Sydsverige', 'Vastsverige', 'Norra mellansverige', 'Mellersta Norrland', 'Ovre Norrland'];
-        var x = ['2016K1','2016K2','2016K3','2016K4','2017K1','2017K2','2017K3','2017K4']
-        var values =  [142, 543, 475, 369, 159, 544, 455, 373, 206, 694, 661, 407, 201, 639, 705, 436, 176, 425, 480, 314, 184, 396, 480, 337, 197, 416, 455, 352, 192, 398, 424, 397, 237, 666, 652, 454, 250, 685, 619, 456, 261, 493, 576, 450, 251, 507, 586, 427, 123, 240, 280, 191, 135, 197, 266, 224, 84, 224, 303, 176, 77, 192, 329, 166];
-        
-        //var values = [];
-        //for (var i = 0; i < x.length * z.length; i++) {
-        //    values[i] = (Math.random() * 1000);
-        //}
-        var maxValue = Math.max(...values);
+        fetch(this.data.src)
+        .then((response) => response.json())
+        .then(function(jsonData){
+            self.createChart(jsonData);
+        });
 
-
-
-        const BAR_TOT_SIZE = (data.barPadding * 2) + data.barSize;
-        const WIDTH = BAR_TOT_SIZE * x.length;
-        const DEPTH = BAR_TOT_SIZE * z.length;
-        const MAX_HEIGHT = 1;
-
-        setTitle(this.el, data.title, MAX_HEIGHT, DEPTH, data.size);
-
-        var panelBox = createPanelBox(WIDTH, DEPTH, data.panelBoxPadding, data.barSize,
-            BAR_TOT_SIZE, data.textColor, x, z);
-        entity.appendChild(panelBox);
-
-
-
-        createLevelLines(WIDTH, DEPTH, maxValue, MAX_HEIGHT, panelBox, data.textColor, y, data.barSize);
-
-        //createBars(WIDTH, DEPTH, x.length, z.length, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor);
-        createBars(WIDTH, DEPTH, x, z, values, data.barSize, BAR_TOT_SIZE, panelBox, data.textColor, maxValue);
+        let scale = this.data.scale;
+        this.el.object3D.scale.set(scale, scale, scale);
     },
-});
 
-function createPanelBox(width, depth, padding, barSize, barTotalSize, textColor, xLabels, zLabels) {
-    var panelBox = document.createElement("a-box");
-    panelBox.setAttribute('height', '0.03');
-    panelBox.setAttribute('width', width + padding);
-    panelBox.setAttribute('depth', depth + padding);
-    panelBox.setAttribute('color', "#2A363B");
-    panelBox.setAttribute('transparent', 'true');
-    panelBox.setAttribute('opacity', '0.5');
+    createChart: function(bars) {
+        var data = this.data;
 
-    for (var i = 0; i < zLabels.length; i++) {
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", zLabels[i]);
-        label.setAttribute("rotation", "-90 0 0");
-        label.setAttribute("color", textColor);
-        label.setAttribute("position", {
-            x: width / 2, y: 0.00, z: depth / 2 - barTotalSize / 2 - barTotalSize * i
-        });
-        panelBox.appendChild(label);
-    }
+        // Values
+        let xLabels = [];
+        let yValues = [];
 
-    for (var i = 0; i < xLabels.length; i++) {
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", xLabels[i]);
-        label.setAttribute("rotation", "-90 90 0");
-        label.setAttribute("color", textColor);
-        label.setAttribute("align", "right")
-        label.setAttribute("position", {
-            x: width / 2 - barTotalSize / 2 - barTotalSize * i, y: 0.00, z: width / 2
-        });
-        panelBox.appendChild(label);
-    }
-
-    var label = document.createElement("a-text");
-    label.setAttribute("width", barSize * 35);
-    label.setAttribute("value", "Number of sold vacation properties");
-    label.setAttribute("rotation", "0 90 90");
-    label.setAttribute("color", textColor);
-    label.setAttribute("align", "left")
-    label.setAttribute("position", {
-        x: -width / 2, y: 0.05, z: width / 2 + barTotalSize * 2
-    });
-    panelBox.appendChild(label);
-
-    return panelBox;
-};
-
-
-function createLevelLines(width, depth, maxValue, maxHeight, panelBox, textColor, yLabels, barSize) {
-    var corner1 = new THREE.Vector3(-width / 2, 0, depth / 2);
-    var corner2 = new THREE.Vector3(-width / 2, 0, -depth / 2);
-    var corner3 = new THREE.Vector3(width / 2, 0, -depth / 2);
-    const numberOfLines = 10;
-
-    var lineStep = maxHeight / numberOfLines;
-    var labelStep = maxValue / numberOfLines
-    var lines = document.createElement("a-entity");
-    for (var i = 1; i <= 10; i++) {
-        var line = document.createElement("a-entity");
-        var c1 = corner1.x + ", " + corner1.y + lineStep * i + ", " + corner1.z + ";";
-        var c2 = corner2.x + ", " + corner2.y + lineStep * i + ", " + corner2.z + ";";
-        var c3 = corner3.x + ", " + corner3.y + lineStep * i + ", " + corner3.z + ";";
-        var color = "color: black"; 
-        var lineAtribute_1 = "start :" + c1 + "end: "+ c2 + color;
-        var lineAtribute_2 = "start :" + c3 + "end: "+ c2 + color;
-        line.setAttribute("line__1", lineAtribute_1);
-        line.setAttribute("line__2", lineAtribute_2);
-        lines.appendChild(line);
-
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", Math.floor(labelStep * i));
-        label.setAttribute("rotation", "0 90 0");
-        label.setAttribute("align", "right")
-        label.setAttribute("color", textColor);
-        label.setAttribute("position", {
-            x: corner1.x, y: corner1.y + lineStep * i, z: corner1.z + 0.01
-        });
-        lines.appendChild(label);
-    }
-    panelBox.appendChild(lines);
-}
-
-function createBars(width, depth, xLabels, zLabels, values, barSize, barTotalSize, panelBox, textColor, maxValue) {
-    values.reverse();
-    const OFFSET = barTotalSize / 2;
-    var color_1 = ["#E1F5C4", "#ECE473", "#F9D423", "#F6903D", "#F05053"]
-    var c = color_1;
-    var pos = {x: 0, y: 0, z: 0}; 
-    var z = 0;
-    var labX, labY, labZ;
-    for (var i = 0; i < values.length; i++) {
-        var val = (values[i] / maxValue);
-        var bar = document.createElement("a-box");
-
-        bar.setAttribute("width", barSize);
-        bar.setAttribute("depth", barSize);
-        bar.setAttribute("height", val);
-        bar.setAttribute("transparent", "true");
-        bar.setAttribute("opacity", "0.9");
-        
-        var colour;
-        if (val <= 0.2) colour = c[0];
-        else if(val <= 0.4) colour = c[1];
-        else if(val <= 0.6) colour = c[2];
-        else if(val <= 0.8) colour = c[3];
-        else colour = c[4];
-        bar.setAttribute("color", "#355C7D");
-
-        labY = Math.floor(values[i]);
-        labX = xLabels[i % xLabels.length];
-        if(i % xLabels.length == 0 && i != 0){
-            ++z;
-        }  
-        labZ = zLabels[z]; 
-
-        bar.setAttribute("labelX", labX);
-        bar.setAttribute("labelY", labY);
-        bar.setAttribute("labelZ", labZ);
-
-        bar.setAttribute("hoverable","");
-        bar.setAttribute("bar-listener","");
-
-        pos.x = ((pos.x % width)+ barTotalSize);
-
-        pos.y = val / 2;
-
-
-        if (i % xLabels.length == 0) {
-            pos.z += barTotalSize;
+        for (let i = 0; i < bars.length; i++) {
+            xLabels[i] = bars[i].x;
+            yValues[i] = bars[i].y;
         }
 
-        bar.setAttribute("position", {
-            x: (pos.x - width / 2) + OFFSET - barTotalSize,
-            y: pos.y,
-            z: (pos.z - depth / 2) - OFFSET
-        });
+        // Plane
+        const BAR_TOTAL_SIZE = data.barWidth + data.barPadding * 2;
+        const PANEL_WIDTH = bars.length * BAR_TOTAL_SIZE;
+        const PANEL_DEPTH = BAR_TOTAL_SIZE;
+        const PANEL_START_POS = -PANEL_WIDTH / 2 + BAR_TOTAL_SIZE / 2; 
+        const PLANE_GEOMETRY = new THREE.PlaneGeometry(PANEL_WIDTH, PANEL_DEPTH);
+        const PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xACDBC9, side: THREE.DoubleSide});
+        let planeMesh = new THREE.Mesh(PLANE_GEOMETRY, PLANE_MATERIAL);
+        planeMesh.rotation.x = Math.PI / 2;
+        this.el.setObject3D("planeMesh", planeMesh);
 
-        var label = document.createElement("a-text");
-        label.setAttribute("width", barSize * 40);
-        label.setAttribute("value", Math.floor(values[i]));
-        label.setAttribute("rotation", "0 0 0")
-        label.setAttribute("color", textColor);
-        label.setAttribute("align", "center");
-        label.setAttribute("position", {
-            x: 0, y: val / 2 + barSize / 2, z: 0
-        });
-        label.setAttribute("visible", "false");
+        // Load texture
+        var self = this;
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+            texture.needsUpdate = true;
+            texture.anisotropy = 16;
+
+            var fontTexture = new THREE.RawShaderMaterial(SDFShader({
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true,
+                color: 0x00000 
+            }))
+            
+            fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+                self.createBars(yValues, PANEL_START_POS, BAR_TOTAL_SIZE, PANEL_WIDTH, font, fontTexture);
+                self.createLabels(xLabels, BAR_TOTAL_SIZE, PANEL_WIDTH, font, fontTexture);
+                self.createTitle(Math.max(...yValues), PANEL_WIDTH, font, fontTexture);
+            });
+        })
         
-        bar.appendChild(label);
+    },
 
-        panelBox.appendChild(bar);
-    }
-};
+    createBars: function(yValues, startPos, totalBarSize, panelWidth, font, fontTexture){
+        let data = this.data;
 
-function setTitle(el, title, height, depth, size){
-    var titleText = document.createElement('a-text'); 
-    titleText.setAttribute("wrap-pixels", 750);
-    titleText.setAttribute("width", size);
-    titleText.setAttribute("align", "center");
-    titleText.setAttribute("value", title);
-    titleText.setAttribute("position", {y:height * 1.2, z:-depth/2});
-    titleText.setAttribute("color", "#000");
-    el.appendChild(titleText);
-};
+        for(let i = 0; i < yValues.length; i++){
+            const BAR_GEOMETRY = new THREE.BoxBufferGeometry(data.barWidth, yValues[i] * data.yScale, data.barWidth);
+            const BAR_MATERIAL = new THREE.MeshStandardMaterial({color: 0xF48B94});
+            let barMesh = new THREE.Mesh(BAR_GEOMETRY, BAR_MATERIAL);
+            barMesh.position.set(startPos + totalBarSize * i, yValues[i] / 2 * data.yScale, 0);
+            this.el.setObject3D("bars" + i, barMesh);
+
+            var fontGeometry = fontCreator({
+                width: 200,
+                font: font,
+                letterSpacing: 1,
+                align: "center",
+                text: yValues[i] + data.suffix
+            })
+
+            var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+            mesh.rotation.set(Math.PI, 0, 0);
+            mesh.scale.multiplyScalar(0.004);
+            mesh.position.set(-totalBarSize / 1.3, yValues[i] / 2 * data.yScale + 0.05, 0);
+            barMesh.add(mesh);
+        }
+    },
+
+    createLabels: function(xLabels, barSize, planeWidth, font, fontTexture) {
+        for (let i = 0; i < xLabels.length; i++) {
+            var fontGeometry = fontCreator({
+                width: 300,
+                font: font,
+                letterSpacing: 1,
+                align: "right",
+                text: xLabels[i]
+            })
+
+            var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+            var textAnchor = new THREE.Object3D();
+            textAnchor.scale.multiplyScalar(0.004);
+            // 1.2 is magic, should fix that
+            textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
+            textAnchor.rotation.set(Math.PI / 2, 0, -Math.PI / 2);
+            textAnchor.add(mesh);
+            this.el.setObject3D('xLabel' + i, textAnchor);
+        }
+    },
+
+    createTitle: function(yMax, panelWidth, font, fontTexture) {
+        var fontGeometry = fontCreator({
+            width: 1000,
+            font: font,
+            letterSpacing: 1,
+            align: "left",
+            text: this.data.title
+        })
+        var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+        mesh.rotation.set(Math.PI, 0, 0);
+        mesh.scale.multiplyScalar(0.006);
+        const TITLE_OFFSET = 0.5;
+        mesh.position.set(-panelWidth / 2, yMax * this.data.yScale + TITLE_OFFSET, 0);
+        this.el.setObject3D('title', mesh);
+    },
+
+});
