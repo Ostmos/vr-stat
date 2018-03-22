@@ -1,102 +1,102 @@
 [
   {
-    "language": "JavaScript",
-    "popularity": 62.5
+    "x": "JavaScript",
+    "y": 62.5
   },
   {
-    "language": "SQL",
-    "popularity": 51.2
+    "x": "SQL",
+    "y": 51.2
   },
   {
-    "language": "Java",
-    "popularity": 39.7
+    "x": "Java",
+    "y": 39.7
   },
   {
-    "language": "C#",
-    "popularity": 34.1
+    "x": "C#",
+    "y": 34.1
   },
   {
-    "language": "Python",
-    "popularity": 32
+    "x": "Python",
+    "y": 32
   },
   {
-    "language": "PHP",
-    "popularity": 28.1
+    "x": "PHP",
+    "y": 28.1
   },
   {
-    "language": "C++",
-    "popularity": 22.3
+    "x": "C++",
+    "y": 22.3
   },
   {
-    "language": "C",
-    "popularity": 19
+    "x": "C",
+    "y": 19
   },
   {
-    "language": "TypeScript",
-    "popularity": 9.5
+    "x": "TypeScript",
+    "y": 9.5
   },
   {
-    "language": "Ruby",
-    "popularity": 9.1
+    "x": "Ruby",
+    "y": 9.1
   },
   {
-    "language": "Swift",
-    "popularity": 6.5
+    "x": "Swift",
+    "y": 6.5
   },
   {
-    "language": "Objective-C",
-    "popularity": 6.4
+    "x": "Objective-C",
+    "y": 6.4
   },
   {
-    "language": "VB.NET",
-    "popularity": 6.2
+    "x": "VB.NET",
+    "y": 6.2
   },
   {
-    "language": "Assembly",
-    "popularity": 5
+    "x": "Assembly",
+    "y": 5
   },
   {
-    "language": "R",
-    "popularity": 4.5
+    "x": "R",
+    "y": 4.5
   },
   {
-    "language": "Perl",
-    "popularity": 4.3
+    "x": "Perl",
+    "y": 4.3
   },
   {
-    "language": "VBA",
-    "popularity": 4.3
+    "x": "VBA",
+    "y": 4.3
   },
   {
-    "language": "Matlab",
-    "popularity": 4.3
+    "x": "Matlab",
+    "y": 4.3
   },
   {
-    "language": "Go",
-    "popularity": 4.3
+    "x": "Go",
+    "y": 4.3
   },
   {
-    "language": "Scala",
-    "popularity": 3.6
+    "x": "Scala",
+    "y": 3.6
   },
   {
-    "language": "Groovy",
-    "popularity": 3.3
+    "x": "Groovy",
+    "y": 3.3
   },
   {
-    "language": "CoffeeScript",
-    "popularity": 3.3
+    "x": "CoffeeScript",
+    "y": 3.3
   },
   {
-    "language": "Visual Basic 6",
-    "popularity": 2.9
+    "x": "Visual Basic 6",
+    "y": 2.9
   },
   {
-    "language": "Lua",
-    "popularity": 2.8
+    "x": "Lua",
+    "y": 2.8
   },
   {
-    "language": "Haskell",
-    "popularity": 1.8
+    "x": "Haskell",
+    "y": 1.8
   }
 ]

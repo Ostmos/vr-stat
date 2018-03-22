@@ -2,7 +2,10 @@ var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
+var bar;
+
 AFRAME.registerComponent("bar-chart", {
+
 
     schema: {
         src: {type: "asset", default: "empty"},
@@ -30,68 +33,73 @@ AFRAME.registerComponent("bar-chart", {
     createChart: function(bars) {
         var data = this.data;
 
-        const BAR_TOTAL_SIZE = data.barWidth + data.barPadding * 2;
+        let xLabels = [];
+        let yValues = [];
+
+        for (let i = 0; i < bars.length; i++) {
+            xLabels[i] = bars[i].x;
+            yValues[i] = bars[i].y;
+        }
 
         // Plane
+        const BAR_TOTAL_SIZE = data.barWidth + data.barPadding * 2;
         const PANEL_WIDTH = bars.length * BAR_TOTAL_SIZE;
         const PANEL_DEPTH = BAR_TOTAL_SIZE;
-
         const PLANE_GEOMETRY = new THREE.PlaneGeometry(PANEL_WIDTH, PANEL_DEPTH);
         const PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xACDBC9, side: THREE.DoubleSide});
         let planeMesh = new THREE.Mesh(PLANE_GEOMETRY, PLANE_MATERIAL);
         planeMesh.rotation.x = Math.PI / 2;
-
         this.el.setObject3D("planeMesh", planeMesh);
         
         // Bars
         const PANEL_START_POS = -PANEL_WIDTH / 2 + BAR_TOTAL_SIZE / 2; 
         for(let i = 0; i < bars.length; i++){
-            const BAR_GEOMETRY = new THREE.BoxBufferGeometry(data.barWidth, bars[i].popularity * data.scale, data.barWidth);
+            const BAR_GEOMETRY = new THREE.BoxBufferGeometry(data.barWidth, bars[i].y * data.scale, data.barWidth);
             const BAR_MATERIAL = new THREE.MeshStandardMaterial({color: 0xF48B94});
             let barMesh = new THREE.Mesh(BAR_GEOMETRY, BAR_MATERIAL);
-            barMesh.position.set(PANEL_START_POS + BAR_TOTAL_SIZE * i, bars[i].popularity / 2 * data.scale, 0);
+            barMesh.position.set(PANEL_START_POS + BAR_TOTAL_SIZE * i, bars[i].y / 2 * data.scale, 0);
             this.el.setObject3D("bar" + i, barMesh);
         }
 
+        this.createLabels(xLabels, yValues, BAR_TOTAL_SIZE, PANEL_WIDTH);
+    },
+
+    createLabels: function(xLabels, yValues, barSize, planeWidth) {
         // Font
         var self = this;
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+            texture.needsUpdate = true;
+            texture.anisotropy = 16;
 
-        fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
-            var geometry = fontCreator({
-                width: 300,
-                font: font,
-                letterSpacing: 1,
-            })
-
-            geometry.update('Lorem ipsum\nDolor sit amet.')
+            var material = new THREE.RawShaderMaterial(SDFShader({
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true,
+                color: 0x00000 
+            }))
             
-            console.log(geometry.layout.height)
-            console.log(geometry.layout.descender)
-                
-            var textureLoader = new THREE.TextureLoader();
-            textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
-                texture.needsUpdate = true;
-                texture.anisotropy = 16;
+            fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+                const TEXT_WIDTH = 300;
+                for (let i = 0; i < xLabels.length; i++) {
+                    var geometry = fontCreator({
+                        width: TEXT_WIDTH,
+                        font: font,
+                        letterSpacing: 1,
+                        align: "left",
+                        text: xLabels[i]
+                    })
+                    var mesh = new THREE.Mesh(geometry, material);
+                    var textAnchor = new THREE.Object3D();
+                    textAnchor.scale.multiplyScalar(-0.004);
+                    textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2);
+                    textAnchor.rotation.set(Math.PI / 2, 0, -Math.PI / 2);
+                    textAnchor.add(mesh);
 
-                var material = new THREE.RawShaderMaterial(SDFShader({
-                    map: texture,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    color: 0x00000 
-                }))
-
-                var mesh = new THREE.Mesh(geometry, material)
-                var textAnchor = new THREE.Object3D();
-                textAnchor.scale.multiplyScalar(-0.002);
-                textAnchor.position.set(0, 0 , 1);
-                textAnchor.rotation.set(0, Math.PI, 0);
-                textAnchor.add(mesh);
-                
-                self.el.setObject3D('mesh', textAnchor);
-            })
+                    self.el.setObject3D('mesh' + i, textAnchor);
+                }
+            });
         })
-
-
     },
 
 
