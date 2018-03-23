@@ -21,5 +21,4 @@ AFRAME.registerComponent("rotation-observer", {
             }
         });
     },
-
 });
