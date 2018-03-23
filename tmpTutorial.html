@@ -11,9 +11,10 @@
     <script src="src/components/bar-listener.js"></script>
     <script src="src/components/bar-chart-listener.js"></script>
     <script src="src/components/rotation-controller.js"></script>
+
+    <script src="archive/bar-chart-old.js"></script>
     
-    <script src="src/components/scatter-plot-2.js"></script>
-    <script src="build/vr-stat.bundle.js"></script>
+    <!-- <script src="build/vr-stat.bundle.js"></script> -->
     <script>AFRAME.registerComponent('camera-listener', {
         tick: function () {
           var cameraEl = this.el.sceneEl.camera.el;
@@ -21,18 +22,18 @@
 
           var cameraPosZ = cameraEl.getAttribute('position').z;
 
-          var txtMove = document.querySelector('#txtMove');
+          var textMove = document.querySelector('#txtMove');
           var controllerMove = document.querySelector('#modelMoveController');
           var moveDiagram = document.querySelector('#move');
 
           var moveDiagramPosX = moveDiagram.getAttribute('position').x;
 
-          var txtHover = document.querySelector('#txtHover');
+          var textHover = document.querySelector('#txtHover');
           var controllerHover = document.querySelector('#modelHoverController');
           var hoverDiagram = document.querySelector('#hover');
 
           //Rotate components
-          var txtRotate = document.querySelector('#txtRotate');
+          var textRotate = document.querySelector('#txtRotate');
           var controllerRotate = document.querySelector('#modelRotateController');
           var rotateDiagram = document.querySelector('#rotate');
 
@@ -40,38 +41,89 @@
           var rotateDiagramPosY = rotateDiagram.getAttribute('rotation').y;
           var rotateDiagramPosZ = rotateDiagram.getAttribute('rotation').z;
 
+          //Scale componenets
+
+          var textScale = document.querySelector('#txtScale');
+          var controllerScale = document.querySelector('#modelScaleController');
+          var scaleDiagram = document.querySelector('#scale');
+          
+          var scaleDiagramPosX = rotateDiagram.getAttribute('scale').x;
+          var scaleDiagramPosY = rotateDiagram.getAttribute('scale').y;
+          var scaleDiagramPosZ = rotateDiagram.getAttribute('scale').z;
+
+          // Scene 1
 
           if(cameraPosZ<-4){
-              circleEl.setAttribute('position', {x: -1, y: 0, z: -9});
+            var cameraMoved = true;
+          }
 
-              txtMove.parentNode.removeChild(txtMove);
-            //   txtMove.setAttribute('visible', true);
+          if(cameraMoved){
+              circleEl.setAttribute('position', {x: -1, y: 0, z: -9.8});
+
+              /* txtMove.parentNode.removeChild(txtMove); */
+              textMove.setAttribute('visible', true);
               controllerMove.setAttribute('visible', true);
               moveDiagram.setAttribute('visible', true);
-              txtHover.setAttribute('visible', true);
+              textHover.setAttribute('visible', true);
               controllerHover.setAttribute('visible', true);
 
           }
 
-          if(moveDiagramPosX<0){
+          // Scene 2
+
+          if(moveDiagramPosX<3.4){
+            var remText = true;
+          }
+
+          if(remText){
+            textMove.setAttribute('visible', false);
+            textHover.setAttribute('visible', false);
+          }
+          
+          if(moveDiagramPosX<-0.2){
             var moved = true;
           }
 
           if(moved){
-            circleEl.setAttribute('position', {x: 5, y: 0, z: -12});
-            txtMove.setAttribute('visible', false);
-            textHover.setAttribute('visible', false);
-            moveDiagram.setAttribute('visible', false);
+            circleEl.setAttribute('position', {x: 3, y: 0, z: -10});
+            /* moveDiagram.setAttribute('visible', false); */
 
             rotateDiagram.setAttribute('visible', true);
             controllerRotate.setAttribute('visible', true);
-            txtRotate.setAttribute('visible', true);
+            textRotate.setAttribute('visible', true);
 
           }
 
-          if(rotateDiagramPosX!=0 || rotateDiagramPosY!=0 || rotateDiagramPosZ!=0){
+          // Scene 3
+
+          if(rotateDiagramPosX!=0 || rotateDiagramPosY!=270 || rotateDiagramPosZ!=0){
+            var rotated = true;
+          }
+          
+
+          if(rotated){
             circleEl.setAttribute('position', {x: -0, y: 0, z: -15});
+            textRotate.setAttribute('visible', false);
+
+            scaleDiagram.setAttribute('visible', true);
+            controllerScale.setAttribute('visible', true);
+            textScale.setAttribute('visible', true);
+
           }
+
+          // Scene 4
+
+          if(scaleDiagramPosX!=1 || scaleDiagramPosY!=1 || scaleDiagramPosZ!=1){
+            var scaled = true;  
+          }
+
+          if(scaled){
+            textScale.setAttribute('visible', false);
+          }
+
+          /* if(rotateDiagramPosX!=0 || rotateDiagramPosY!=0 || rotateDiagramPosZ!=0){
+            circleEl.setAttribute('position', {x: -0, y: 0, z: -15});
+          } */
           
         }
     })
@@ -100,8 +152,8 @@
       </a-asset>
   
       <!--World-->
-      <a-entity id="modelTutorial" position="3.5 0 -25" scale="0.5 0.5 0.3" gltf-model="#modelTestRoom" shadow></a-entity>
-      <a-entity id="circle" camera-listener  position="-0.5 0 -5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
+      <a-entity id="modelTutorial" position="3.5 0 -23" scale="0.5 0.5 0.3" gltf-model="#modelTestRoom" shadow></a-entity>
+      <a-entity id="circle" camera-listener  position="-0.5 0 -4.2" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
       <a-entity link="href: index.html; title:Enter room; image: #imgBoard; color: black" visible="false" position="25 2 -50" scale="3 3 3"></a-entity>
   
       <a-sky src="#imgSky"></a-sky>
@@ -114,28 +166,40 @@
       <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
 
       <!--Teleport-->
-      <a-entity id="txtTeleport" position="0 1.7 -3.5" rotation="0 0 0" scale="0.5 0.5 0.5" >
+      <a-entity id="txtTeleport" position="0 1.7 -3" rotation="0 0 0" scale="0.5 0.5 0.5" >
         <a-image src="#imgTeleport" width="3" height="1" side="front"></a-image>
       </a-entity>
-      <a-entity id="modelTeleportController" rotation="-60 150 0" position="-0.5 1.2 -3" scale="0.003 0.003 0.003" gltf-model="#modelTeleport" camera-listener></a-entity>
+      <a-entity id="modelTeleportController" rotation="-60 150 0" position="-0.5 1.2 -2.5" scale="0.003 0.003 0.003" gltf-model="#modelTeleport" camera-listener></a-entity>
 
-      <!-- Move -->
-      <a-entity id="txtMove" position="0 1.5 -8" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
+      <!-- Move and Hover-->
+      <a-entity id="txtMove" position="0 1.5 -7" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
         <a-image src="#imgMove" width="3" height="1" side="front"></a-image>
       </a-entity>
-      <a-entity id="txtHover" position="0 2 -8" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
+      <a-entity id="txtHover" position="0 2 -7" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
         <a-image src="#imgHover" width="3" height="1" side="front"></a-image>
       </a-entity>
-      <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="3 1 -9" camera-listener bar-chart="yScale: 0.05; title: This is a diagram!; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity>
-      <a-entity id="modelMoveController" visible="false" rotation="-10 150 0" position="0.5 1.2 -6.5" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
-      <a-entity id="modelHoverController" visible="false" rotation="-10 150 0" position="0.5 1.2 -6.5" scale="0.003 0.003 0.003" gltf-model="#modelHover"  camera-listener></a-entity>
+     <!--  <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="3 1 -9" camera-listener bar-chart="yScale: 0.05; title: This is a diagram!; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
+      <a-entity id="modelMoveController" visible="false" rotation="-10 150 0" position="0.2 1.2 -5.5" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
+      <a-entity id="modelHoverController" visible="false" rotation="-10 150 0" position="0.2 1.2 -5.5" scale="0.003 0.003 0.003" gltf-model="#modelHover"  camera-listener></a-entity>
+      <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart="title:I am a diagram!" bar-chart-listener position="3.5 0.5 -9" scale="1 1 1" rotation="0 270 0" camera-listener></a-entity>
 
-     <!--  <a-entity id="txtRotate" position="5 1.7 -14" rotation="0 -45 0" scale="1.8 1.8 1.8" visible="false"  camera-listener>
+      <!-- Rotate -->
+      <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Rotate me" bar-chart-listener scale="1 1 1" position="5 1 -16"  rotation="0 270 0" camera-listener></a-entity>
+      <a-entity id="txtRotate" position="3.5 1.8 -11.5" rotation="0 -45 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
         <a-image src="#imgRotate" width="3" height="1" side="both"></a-image>
       </a-entity>
       <a-entity id="modelRotateController" visible="false" rotation="-10 130 0" position="5.5 1.2 -14" scale="0.003 0.003 0.003" gltf-model="#modelRotate" camera-listener></a-entity>
-      <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity>
- -->
+      <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
+  
+      <!-- Scale -->
+      <a-entity id="scale" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Scale me" bar-chart-listener scale="1 1 1" position="1.124 1 -49" camera-listener></a-entity>
+      <a-entity id="modelScaleController" visible="false" rotation="-10 170 0" position="2.5 1.4 -47" scale="0.003 0.003 0.003" gltf-model="#modelScale" camera-listener></a-entity>
+      <a-entity id="txtScale" position="1.3 2 -48" rotation="0 10 0" scale="1.9 1.9 1.9" visible="false"  camera-listener>
+        <a-image src="#imgScale" width="3" height="1" side="front"></a-image>
+      </a-entity>
+     
+     
+      
 
       <a-entity progressive-controls="objects: .cube; maxLevel: point">
         <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
