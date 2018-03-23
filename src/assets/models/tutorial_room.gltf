@@ -2,10 +2,10 @@
     "accessors" : [
         {
             "bufferView" : 0, 
-            "componentType" : 5123, 
-            "count" : 1872, 
+            "componentType" : 5121, 
+            "count" : 24, 
             "max" : [
-                561
+                9
             ], 
             "min" : [
                 0
@@ -15,27 +15,11 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 562, 
+            "count" : 10, 
             "max" : [
-                1.5385773181915283, 
-                2.3168132305145264, 
-                3.546367883682251
-            ], 
-            "min" : [
-                -1.574817419052124, 
+                1.0, 
                 0.0, 
-                -1.4430925846099854
-            ], 
-            "type" : "VEC3"
-        }, 
-        {
-            "bufferView" : 2, 
-            "componentType" : 5126, 
-            "count" : 562, 
-            "max" : [
-                1.0, 
-                1.0, 
-                1.0
+                1.362472653388977
             ], 
             "min" : [
                 -1.0, 
@@ -45,18 +29,20 @@
             "type" : "VEC3"
         }, 
         {
-            "bufferView" : 3, 
+            "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 562, 
+            "count" : 10, 
             "max" : [
+                0.0, 
                 1.0, 
-                1.0
+                -0.0
             ], 
             "min" : [
                 0.0, 
-                0.0
+                1.0, 
+                -0.0
             ], 
-            "type" : "VEC2"
+            "type" : "VEC3"
         }
     ], 
     "asset" : {
@@ -66,108 +52,44 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 3744, 
+            "byteLength" : 24, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 6744, 
-            "byteOffset" : 3744, 
+            "byteLength" : 120, 
+            "byteOffset" : 24, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 6744, 
-            "byteOffset" : 10488, 
-            "target" : 34962
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 4496, 
-            "byteOffset" : 17232, 
+            "byteLength" : 120, 
+            "byteOffset" : 144, 
             "target" : 34962
         }
     ], 
     "buffers" : [
         {
-            "byteLength" : 21728, 
+            "byteLength" : 264, 
             "uri" : "tutorial_room.bin"
-        }
-    ], 
-    "images" : [
-        {
-            "uri" : "walls_tutorial.png"
-        }
-    ], 
-    "materials" : [
-        {
-            "name" : "Material.001", 
-            "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.3871334610452273, 
-                    0.6217033478871485, 
-                    0.640000066757203, 
-                    1.0
-                ], 
-                "metallicFactor" : 0.0
-            }
-        }, 
-        {
-            "name" : "Material.002", 
-            "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.6400000190734865, 
-                    0.6400000190734865, 
-                    0.6400000190734865, 
-                    1.0
-                ], 
-                "baseColorTexture" : {
-                    "index" : 0
-                }, 
-                "metallicFactor" : 0.0
-            }
         }
     ], 
     "meshes" : [
         {
-            "name" : "Plane", 
+            "name" : "Plane.001", 
             "primitives" : [
                 {
                     "attributes" : {
                         "NORMAL" : 2, 
-                        "POSITION" : 1, 
-                        "TEXCOORD_0" : 3
+                        "POSITION" : 1
                     }, 
-                    "indices" : 0, 
-                    "material" : 1
+                    "indices" : 0
                 }
             ]
         }
     ], 
     "nodes" : [
-        {
-            "name" : "Camera", 
-            "rotation" : [
-                0.483536034822464, 
-                0.33687159419059753, 
-                -0.20870360732078552, 
-                0.7804827094078064
-            ], 
-            "translation" : [
-                7.481131553649902, 
-                5.34366512298584, 
-                6.5076398849487305
-            ]
-        }, 
-        {
-            "name" : "Hemi", 
-            "translation" : [
-                13.10090160369873, 
-                4.336209297180176, 
-                -4.529881954193115
-            ]
-        }, 
         {
             "name" : "Lamp", 
             "rotation" : [
@@ -182,44 +104,20 @@
                 0.9999999403953552
             ], 
             "translation" : [
-                0.09744836390018463, 
-                4.306712627410889, 
-                3.2635250091552734
+                4.076245307922363, 
+                5.903861999511719, 
+                -1.0054539442062378
             ]
         }, 
         {
             "mesh" : 0, 
             "name" : "Plane", 
             "scale" : [
-                3.542050361633301, 
-                2.288076639175415, 
-                2.984370231628418
-            ], 
-            "translation" : [
-                0.0, 
-                0.0, 
-                -3.5248053073883057
-            ]
-        }, 
-        {
-            "name" : "Point", 
-            "translation" : [
-                -2.9395151138305664, 
-                4.572021961212158, 
-                -4.585511684417725
-            ]
-        }, 
-        {
-            "name" : "Point.001", 
-            "translation" : [
-                2.6379611492156982, 
-                4.433094024658203, 
-                -4.48436164855957
+                12.985114097595215, 
+                1.0, 
+                58.36458969116211
             ]
         }
-    ], 
-    "samplers" : [
-        {}
     ], 
     "scene" : 0, 
     "scenes" : [
@@ -227,18 +125,8 @@
             "name" : "Scene", 
             "nodes" : [
                 1, 
-                5, 
-                4, 
-                3, 
-                2, 
                 0
             ]
-        }
-    ], 
-    "textures" : [
-        {
-            "sampler" : 0, 
-            "source" : 0
         }
     ]
 }
