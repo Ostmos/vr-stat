@@ -10,9 +10,8 @@
 
     <!--Broken raytracer but working replayer-->
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
-    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
-    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
+    <!--<script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>-->
+    <!--<script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>-->
 
     <!--<script src="src/components/bar-listener.js"></script>
     <script src="src/components/bar-chart-listener.js"></script>
@@ -68,7 +67,8 @@
     <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
 
     <!--Controllers-->
-    <!--<a-camera>
+    <!--
+    <a-camera>
       <a-entity controller-display slice9="width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png" position="3 2 2"></a-entity>
       <a-entity controller-display position="0 2 0"></a-entity>
       <a-entity position="0 1.6 0" progressive-controls="objects: .cube; maxLevel: point"></a-entity>
@@ -78,10 +78,14 @@
         <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
       </a-entity>
     </a-camera>-->
-    <a-entity progressive-controls="objects: .cube; maxLevel: point">
+    <!--<a-entity progressive-controls="objects: .cube; maxLevel: point">
       <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
         rotation-controller></a-entity>
       <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
+    </a-entity>-->
+    <a-entity progressive-controls="objects: .cube">
+      <a-entity id="rHand" class="right-controller"></a-entity>
+      <a-entity id="lHand" class="left-controller"></a-entity>
     </a-entity>
 
   </a-scene>
