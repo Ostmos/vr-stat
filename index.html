@@ -26,8 +26,10 @@
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
               position="0 1 -3"
-              grabbable draggable></a-entity>
-    <a-box class="cube rotate" grabbable draggable></a-box>
+              grabbable 
+              draggable
+              rotation-observer
+              hover-rotation></a-entity>
 
     <!-- Lights -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
@@ -38,7 +40,8 @@
 
     <a-entity id="rig" progressive-controls="objects: .diagram; maxLevel: point">
         <a-entity id="controller1" class="right-controller" 
-        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube" rotation-controller></a-entity>
+        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
+        rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
                   raycaster="showLine:false;"></a-entity>
