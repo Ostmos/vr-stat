@@ -17,7 +17,7 @@ AFRAME.registerComponent('scatter-plot', {
         fetch(this.data.src)
         .then((response) => response.json())
         .then(function(jsonData){
-            self.createChart(jsonData);
+            console.log(jsonData);
         });
 
         this.createBase();
