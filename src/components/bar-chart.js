@@ -13,7 +13,6 @@ AFRAME.registerComponent("bar-chart", {
         suffix: {type: "string", default: ""},
 
         yScale: {type: "number", default: 1.0},
-        scale: {type: "number", default: 1.0},
         barWidth: {type: "number", default: 0.3},
         barPadding: {type: "number", default: 0.1},
         fontSize: {type: "number", default: 2}
@@ -27,9 +26,6 @@ AFRAME.registerComponent("bar-chart", {
         .then(function(jsonData){
             self.createChart(jsonData);
         });
-
-        let scale = this.data.scale;
-        this.el.object3D.scale.set(scale, scale, scale);
     },
 
     createChart: function(bars) {
@@ -165,7 +161,7 @@ AFRAME.registerComponent("bar-chart", {
         lines.vertices.push(new THREE.Vector3(-panelWidth / 2, 0, 0));
         lines.vertices.push(new THREE.Vector3(-panelWidth / 2, (CEIL + LINE_STEP / 2) * this.data.yScale, 0));
         let line = new THREE.LineSegments(lines, material);
-        this.el.setObject3D('yAxis', line);
+        this.el.setObject3D("yAxis", line);
     }
 
 });

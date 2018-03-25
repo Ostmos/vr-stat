@@ -1,28 +1,205 @@
 AFRAME.registerComponent('scatter-plot', {
     schema: {
-        offset: { type: 'number', default: 1 },
-        barSize: { type: 'number', default: 0.01 },
-        barPadding: { type: 'number', default: 0.05 },
-        panelBoxPadding: { type: 'number', default: 0 },
-        color: { type: 'color', default: '#FFF' },
-        textColor: { type: 'color', default: '#000000' }
+        src: {type: "asset", default: "empty"},
+
+        title: { type: "string", default: ""},
+        xLabel: {type: "string", default: ""},
+        yLabel: {type: "string", default: ""},
+        zLabel: {type: "string", default: ""},
+
+        xAxisStart: {type: "number", default: 0},
+        yAxisStart: {type: "number", default: 0},
+        zAxisStart: {type: "number", default: 0},
+
+        xAxisScale: {type: "number", default: 1},
+        yAxisScale: {type: "number", default: 1},
+        zAxisScale: {type: "number", default: 1},
+
+        nbrOfPoints: {type: "number", default: -1},
+        pointSize: { type: "number", default: 0.1 }
     },
 
     init: function () {
-        var data = this.data;
-        var entity = this.el;
-        var object = this.el.object3D
+        let self = this;
 
-        var apartment_cost = [1073, 1153, 1144, 1071, 1144, 1043, 971, 1094, 1088, 1201, 1293, 1254, 1066, 1309, 1172, 1251, 1165, 1257, 1182, 1147, 1123, 1141, 958, 1159, 964, 1028, 1185, 1093, 1031, 968, 1059, 1033, 932, 890, 979, 985, 979, 834, 866, 907, 807, 871, 922, 901, 1068, 1065, 976, 862, 933, 898, 856, 963, 1026, 953, 897, 919, 852, 903, 860, 909, 820, 884, 874, 880, 928, 832, 956, 923, 853, 919, 1005, 772, 909, 797, 1028, 812, 966, 879, 871, 918, 1053, 882, 1070, 915, 979, 953, 1034, 1120, 864, 913, 960, 951, 1069, 981, 967, 1067, 1011, 927, 834, 896, 848, 927, 977, 1173, 1102, 1026, 1134, 1011, 1094, 948, 998, 1022, 1040, 893, 951, 1072, 1000, 973, 954, 1036, 1022, 1007, 1003, 1094, 1062, 985, 1007, 918, 1083, 933, 902, 1025, 1111, 906, 1095, 794, 830, 897, 868, 876, 858, 956, 984, 967, 814, 886, 888, 798, 1116, 1100, 1021, 964, 930, 1006, 969, 975, 1013, 1011, 908, 978, 914, 905, 957, 825, 880, 1032, 923, 877, 859, 983, 785, 881, 948, 870, 1017, 896, 873, 869, 945, 865, 966, 963, 870, 976, 1012, 954, 884, 965, 934, 785, 911, 945, 1058, 964, 977, 909, 846, 879, 903, 940, 901, 891, 886, 1005, 958, 932, 952, 851, 925, 940, 925, 862, 880, 925, 949, 983, 980, 907, 981, 805, 990, 950, 997, 892, 850, 977, 831, 821, 865, 862, 1055, 871, 918, 938, 797, 760, 806, 802, 762, 719, 789, 737, 812, 828, 834, 814, 1020, 870, 941, 895, 920, 878, 795, 899, 894, 926, 803, 926, 915, 901, 971, 937];
-        var population = [33175, 44130, 43444, 76453, 27753, 110003, 91925, 88037, 47304, 27614, 10660, 32888, 71848, 949761, 96032, 101231, 49424, 79707, 47185, 11831, 60808, 47146, 28109, 21083, 9402, 18064, 13854, 20930, 219914, 43797, 21927, 9180, 11019, 55467, 12008, 16864, 34133, 104709, 35045, 5343, 3733, 9882, 5453, 11631, 21577, 7920, 158520, 140927, 14521, 43549, 27019, 9733, 7328, 11845, 13840, 137481, 31178, 34206, 11496, 27415, 17416, 18894, 9561, 8806, 12451, 20026, 17148, 10170, 91060, 28297, 6087, 7083, 15000, 14579, 13498, 9368, 67451, 20406, 26928, 36551, 15728, 10857, 58595, 13482, 66666, 29568, 32200, 14025, 18073, 35790, 14715, 10047, 15429, 30959, 21074, 15642, 19071, 15552, 16478, 13416, 12699, 13182, 7335, 17462, 15828, 333633, 121274, 45286, 143304, 26193, 33236, 44595, 84151, 19376, 41786, 52003, 10990, 99752, 25147, 44195, 62755, 81986, 37412, 37880, 12923, 26224, 15790, 15108, 9073, 10423, 12763, 4763, 6592, 30223, 41510, 11490, 9262, 5750, 5647, 6954, 11841, 9905, 9377, 13961, 34484, 10659, 9485, 15942, 13242, 11110, 564039, 66121, 44110, 14621, 55763, 13218, 39151, 58238, 40390, 111026, 24296, 12711, 24290, 39506, 54975, 9093, 33077, 11910, 8618, 11890, 4123, 16174, 3763, 11509, 9011, 9948, 91120, 24650, 10783, 11782, 26060, 15727, 7868, 15932, 9668, 7109, 150291, 21506, 11175, 10747, 23613, 4431, 8603, 15998, 150134, 22631, 26116, 13934, 6837, 10114, 10241, 15640, 6887, 7068, 10894, 58340, 51964, 11160, 15566, 23256, 26992, 5896, 9660, 11609, 9481, 19028, 100603, 39259, 25782, 26918, 37401, 9480, 18030, 25190, 98810, 18610, 19709, 56139, 5444, 6501, 14925, 11791, 11268, 7122, 10154, 62601, 7103, 2451, 5412, 6784, 4086, 3133, 5902, 2516, 2646, 8776, 6787, 2809, 125080, 12257, 72723, 6440, 2821, 5081, 3367, 16169, 6101, 17825, 8274, 77470, 42184, 28181, 9805, 23116]
-        var salary = [335.6, 334.7, 338.4, 305.1, 376.5, 303.8, 253.6, 284.5, 330.8, 294.1, 331.8, 508.6, 369.8, 344.6, 255.1, 383.8, 319.3, 337.1, 431.9, 373.2, 272.2, 285.9, 282.4, 311.9, 257.5, 343.8, 251, 249, 290, 282.1, 274.4, 244.1, 276.4, 279.3, 265.8, 240.4, 254.4, 254.9, 297.6, 242, 249.8, 259.2, 259.1, 258.4, 266.7, 242.4, 280.8, 264.7, 279.6, 256.9, 268.8, 272.4, 264.8, 293.5, 273.1, 280.5, 258, 280.5, 249.7, 263.3, 269.8, 253.9, 249.3, 237.1, 242, 256.3, 294.5, 240.8, 275, 263.5, 228.9, 242.4, 273.8, 238.8, 264.3, 249.7, 272.2, 242, 283.5, 255.4, 254.9, 244.7, 250.1, 256.8, 270.1, 251.8, 263.4, 256.6, 254.2, 345.7, 242, 240.3, 243.1, 313.5, 294.7, 263.1, 256.9, 254.3, 273.1, 243.6, 256.3, 249.8, 235.2, 241.6, 244.6, 248.8, 282.7, 246.8, 275.6, 300.8, 265.5, 263.9, 261.8, 251.6, 285.3, 252, 246.6, 271.9, 256.9, 262.3, 285.9, 340, 335.1, 321.4, 311.2, 313.9, 308.5, 274.7, 282.3, 250.9, 255.6, 227.2, 239.3, 289.7, 324.2, 262.4, 293.8, 261.4, 251.2, 264, 261.3, 232.7, 229.7, 265.5, 264.2, 251.8, 255.9, 251.5, 262.5, 245.6, 289, 319.3, 311.2, 270, 270, 246.8, 264.7, 266.9, 285.9, 270.5, 267.9, 235.8, 261.6, 275.6, 278.7, 260, 254, 261.1, 224.5, 237.9, 249.9, 314.2, 234.3, 255.4, 251.3, 218.5, 272.3, 246.8, 230.2, 244.4, 247.3, 237.6, 271.8, 257.1, 248.8, 236.3, 270.2, 270.7, 267.6, 262.6, 258.3, 252.5, 257.8, 259.1, 288.4, 256.6, 261, 254.3, 239.6, 249.7, 264.5, 267, 239.2, 244.5, 267.7, 281.3, 261.2, 272.7, 255.5, 257.9, 263.5, 244.8, 261.8, 241.8, 245.4, 242.7, 276.5, 265.9, 251.6, 246.1, 263.3, 250.9, 267.5, 255.8, 287.6, 246.1, 246.1, 277.6, 238.5, 234.8, 267.8, 237.4, 252, 237.2, 246.8, 270.4, 252.7, 234.7, 246.6, 251.9, 250.5, 265.1, 244.2, 240.6, 237.9, 264.3, 235.7, 235.3, 277.7, 258.7, 272.6, 260.6, 260.9, 261.4, 250.2, 263.8, 246, 306.2, 254.4, 285.3, 279.6, 272.4, 233.3, 309.7]
+        fetch(this.data.src)
+        .then((response) => response.json())
+        .then(function(jsonData){
+            self.createAxis(jsonData);
+            self.createPoints(jsonData);
+        });
+    },
 
-        var z = ['2013', '2014', '2015', '2016'];
-        var x = ['Göteborg', 'Stockholm', 'Omrade2', 'Omrade3', 'Omrade4', 'Omrade5'];
-        var y = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-        var values = [];
-        for (var i = 0; i < x.length * z.length; i++) {
-            values[i] = (Math.random() * 1000);
+    createAxis(jsonData) {
+        let x = [];
+        let y = [];
+        let z = [];
+
+        for (let i = 0; i < jsonData.length; i++) {
+            x[i] = jsonData[i].x;
+            y[i] = jsonData[i].y;
+            z[i] = jsonData[i].z;
+        }
+
+        let d = this.data;
+        let material = new THREE.LineBasicMaterial({color: 0x2A363B});
+        let lines = new THREE.Geometry();
+        lines.vertices.push(new THREE.Vector3(0, 0, 0));
+        lines.vertices.push(new THREE.Vector3(Math.max(...x) * d.xAxisScale + d.xAxisStart, 0, 0));
+        lines.vertices.push(new THREE.Vector3(0, 0, 0));
+        lines.vertices.push(new THREE.Vector3(0, Math.max(...y) * d.yAxisScale + d.yAxisScale, 0));
+        lines.vertices.push(new THREE.Vector3(0, 0, 0));
+        lines.vertices.push(new THREE.Vector3(0, 0, Math.max(...z) * d.zAxisScale + d.zAxisStart));
+        let line = new THREE.LineSegments(lines, material);
+        this.el.setObject3D("axis", line);
+    },
+
+    createPoints(jsonData) {
+        let d = this.data;
+
+        const LENGTH = d.nbrOfPoints < 0 ? jsonData.length : d.nbrOfPoints;
+
+        let geometry = new THREE.Geometry();
+
+        let COLORS = [0xF8B195, 0xF67280, 0xC06C84, 0x6C5B7B, 0x355C7D];
+        let vertexColors = [];
+
+        for(let i = 0; i < LENGTH; i++){
+
+            let vertex = new THREE.Vector3();
+            vertex.x = jsonData[i].x * d.xAxisScale + d.xAxisStart;
+            vertex.y = jsonData[i].y * d.yAxisScale + d.yAxisStart;
+            vertex.z = jsonData[i].z * d.zAxisScale + d.zAxisStart;
+
+            geometry.vertices.push(vertex); 
+
+            vertexColors.push(new THREE.Color(COLORS[i % COLORS.length]));
+        }
+
+        geometry.colors = vertexColors;
+
+        let material = new THREE.PointsMaterial({size: d.pointSize, vertexColors: THREE.VertexColors});
+        let points = new THREE.Points(geometry, material);
+
+        this.el.setObject3D("points", points);
+    },
+
+    createBase: function() {
+        let size = this.data.size;
+        let planeGeometry = new THREE.PlaneGeometry(
+            size,
+            size
+        );
+        let planeMaterial = new THREE.MeshBasicMaterial({color: "red", side: THREE.DoubleSide, opacity: 0.1});
+        //var planeMaterial = new THREE.MeshLambertMaterial( { map: map, transparent: true } );
+        let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+        planeMesh.rotation.x = Math.PI / 2;
+        let vector = new THREE.Vector3(size / 2, 0, size / 2);
+        this.setPosition(planeMesh, vector, 0);
+        this.el.setObject3D("base", planeMesh);
+    },
+    
+    createWalls: function(stats){
+        /*  //This was a  
+            let planeGeometry = new THREE.PlaneGeometry(
+            this.data.size,
+            this.data.size
+        );
+        let planeMaterial_1 = new THREE.MeshBasicMaterial({color: "green", side: THREE.DoubleSide, opacity: 0.1});
+        let planeMesh_1 = new THREE.Mesh(planeGeometry, planeMaterial_1);
+        planeMesh_1.rotation.y = Math.PI / 2;
+        let vector_1 = new THREE.Vector3(0, this.data.size / 2, this.data.size / 2);
+        this.setPosition(planeMesh_1, vector_1);
+        this.el.setObject3D("wall_1", planeMesh_1);
+
+        let planeMaterial_2 = new THREE.MeshBasicMaterial({color: "yellow", side: THREE.DoubleSide, opacity: 0.});
+        let planeMesh_2 = new THREE.Mesh(planeGeometry, planeMaterial_2);
+        let vector_2 = new THREE.Vector3(this.data.size / 2, this.data.size / 2, 0);
+        this.setPosition(planeMesh_2, vector_2);
+        this.el.setObject3D("wall_2", planeMesh_2); */
+        
+        var self = this;
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+            texture.needsUpdate = true;
+            texture.anisotropy = 16;
+
+            var fontTexture = new THREE.RawShaderMaterial(SDFShader({
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true,
+                color: 0x00000 
+            }))
+            fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+                let levelLines = this.data.levelLines;
+                for (let i = 0; i <= levelLines; i++){
+                    //level
+                    let vector = new THREE.Vector3(0, y, 0);
+
+                    //create level lines
+                    var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+                    var geometry = new THREE.Geometry();
+                    let size = this.data.size;
+                    let y = (size/levelLines) * i;
+                    var vector_1 = new THREE.Vector3(   0, 0, size);
+                    var vector_2 = new THREE.Vector3(   0, 0,    0);
+                    var vector_3 = new THREE.Vector3(size, 0,    0);
+                    geometry.vertices.push(vector_1);
+                    geometry.vertices.push(vector_2);
+                    geometry.vertices.push(vector_3);
+                    var line = new THREE.Line(geometry, material);
+                    this.setPosition(line, vector, 0);
+                    this.el.setObject3D("line_"+i, line);
+
+                    //create labels
+                    self.createYLabel(vector_1, vector, stats, i);
+
+                }
+            })
+        })
+    },
+    createYLabel: function(vector_1, vector, stats, i){
+        let label = stats.minValues.y + ((stats.maxValues.y - stats.minValues.y) / levelLines) * i ;
+        var fontGeometry = fontCreator({
+            width: 300,
+            font: font,
+            letterSpacing: 1,
+            align: "left",
+            text: label
+        })
+
+        var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+        var textAnchor = new THREE.Object3D();
+        textAnchor.scale.multiplyScalar(0.004);
+        // 1.2 is magic, should fix that
+        textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
+        textAnchor.rotation.set(0, Math.PI / 2, 0);
+        textAnchor.add(mesh);
+        this.el.setObject3D('yLabel_' + i, textAnchor);
+    },
+    createNodes: function(stats){
+        
+        for(let index in stats.values){
+            //load values
+            let node = stats.values[index];
+            let x = node.x;
+            let y = node.y;
+            let z = node.z;
+
+            //Scale
+            let size = this.data.size;
+            let max = stats.maxValues;
+            let min = stats.minValues;
+            let maxX = max.x-min.x;
+            let maxY = max.y-min.y;
+            let maxZ = max.z-min.z;
+            x = ((x - min.x) / maxX) * size; 
+            y = ((y - min.y) / maxY) * size;
+            z = ((z - min.z) / maxZ) * size;
+            let vector = new THREE.Vector3(x, y, z);
+            
+            //create node
+            this.createNode(vector, index);
         }
         var maxValue = Math.max(...values);
 
