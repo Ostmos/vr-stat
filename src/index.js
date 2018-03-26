@@ -8,3 +8,4 @@ require("./components/scatter-plot");
 require("./components/rotation-observer");
 require("./components/rotation-controller");
 require("./components/controllers/controller-display");
+require("./components/controllers/bar-chart-listener");

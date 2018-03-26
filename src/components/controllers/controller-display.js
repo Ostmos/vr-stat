@@ -30,7 +30,7 @@ AFRAME.registerComponent('controller-display', {
         });
 
         window.addEventListener('keyup', function(event) {
-            console.log("a-button up");
+            console.log("a-button up" + event.keyCode);
             //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
             data.buttonDown = false;
         });
