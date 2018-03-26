@@ -28,12 +28,23 @@
               rotation-observer></a-entity>
 
     <a-entity class="diagram"
-              scatter-plot="src:url(./src/assets/statistics/salary_hours_job.json); xAxisScale: 0.15; yAxisScale: 0.00003125; zAxisScale: 0.3"
-              position="-10 -1 -20"
+              scatter-plot=
+                "src:url(./src/assets/statistics/salary_hours_job.json);
+                 xAxisScale: 0.2;
+                 yAxisScale: 0.00005;
+                 zAxisScale: 0.4;
+                 title: Relation between job searching time, salary and years spent coding professionally;
+                 xLabel: Hours spent look for a new job each month;
+                 yLabel: Salary;
+                 zLabel: Years spent coding professionally;
+                 xSuffix: h;
+                 ySuffix: $;
+                 zSuffix: y"
+              position="-4 1 -10"
               grabbable
               draggable
               rotation-observer></a-entity>
-
+              
     <!-- Lights -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
@@ -47,7 +58,7 @@
         rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
-                  raycaster="showLine:false;"></a-entity>
+                  raycaster="showLine:false; enabled: false;"></a-entity>
     </a-entity>
 
   </a-scene>

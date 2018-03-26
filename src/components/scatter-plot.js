@@ -10,6 +10,10 @@ AFRAME.registerComponent('scatter-plot', {
         xLabel: {type: "string", default: ""},
         yLabel: {type: "string", default: ""},
         zLabel: {type: "string", default: ""},
+        
+        xSuffix: {type: "string", default: ""},
+        ySuffix: {type: "string", default: ""},
+        zSuffix: {type: "string", default: ""},
 
         xAxisStart: {type: "number", default: 0},
         yAxisStart: {type: "number", default: 0},
@@ -118,9 +122,29 @@ AFRAME.registerComponent('scatter-plot', {
            this.el.setObject3D("plane" + i, planes[i]);
         }
 
+        function Label(text, width, position, align, rotation, textOffset, font, fontTexture, fontSize) {
+                let fontGeometry = fontCreator({
+                    width: width,
+                    font: font,
+                    letterSpacing: 1,
+                    align: align, // left, right, center
+                    text: text 
+                });
+
+                let mesh = new THREE.Mesh(fontGeometry, fontTexture);
+                mesh.rotation.set(Math.PI, 0, 0);
+                let textAnchor = new THREE.Object3D();
+                textAnchor.scale.multiplyScalar(fontSize);
+
+                textAnchor.position.set(position.x + textOffset.x, position.y + textOffset.y, position.z + textOffset.z);
+                textAnchor.rotation.set(rotation.x, rotation.y, rotation.z);
+                textAnchor.add(mesh);
+                return textAnchor;
+        }
+
         let labelId = 0;
 
-        function labels(values, align, startPos, scale, offset, direction, rot, textOffset) {
+        function labels(values, suffix, align, startPos, scale, offset, direction, rot, textOffset) {
             const MAX_VALUE = Math.max(...values);
             const VALUE_STEP = MAX_VALUE / 10;
 
@@ -130,39 +154,41 @@ AFRAME.registerComponent('scatter-plot', {
             let position = startPos;
 
             for (let label = 0; label <= MAX_VALUE; label += VALUE_STEP) {
-                let fontGeometry = fontCreator({
-                    width: 300,
-                    font: font,
-                    letterSpacing: 1,
-                    align: align, // left, right, center
-                    text: label.toFixed(2)
-                });
-
-                let mesh = new THREE.Mesh(fontGeometry, fontTexture);
-                mesh.rotation.set(Math.PI, 0, 0);
-                let textAnchor = new THREE.Object3D();
-                textAnchor.scale.multiplyScalar(0.004);
-
                 if (label != 0) {position.addScaledVector(direction, POS_STEP);}
-                textAnchor.position.set(position.x + textOffset.x, position.y + textOffset.y, position.z + textOffset.z);
-                textAnchor.rotation.set(rot.x, rot.y, rot.z);
-                textAnchor.add(mesh);
                 
-                self.el.setObject3D('label' + labelId++, textAnchor);
+                let mesh = new Label(label.toFixed(2) + suffix, 300, position, align, rot, textOffset, font, fontTexture, 0.006);
+
+                self.el.setObject3D("label" + labelId++, mesh);
             } 
         }
 
         let rotX = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
         let offsetX = new THREE.Vector3(0, 0, 0);
-        labels(xValues, "left", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.xAxisScale, d.xAxisStart, new THREE.Vector3(1, 0, 0), rotX, offsetX);
+        labels(xValues, d.xSuffix,"left", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.xAxisScale, d.xAxisStart, new THREE.Vector3(1, 0, 0), rotX, offsetX);
         
         let rotY = new THREE.Vector3(0, Math.PI / 2, 0);
-        let offsetY = new THREE.Vector3(0, 0, 1.18);
-        labels(yValues, "right", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.yAxisScale, d.yAxisStart, new THREE.Vector3(0, 1, 0), rotY, offsetY);
+        let offsetY = new THREE.Vector3(0, 0, 1.8);
+        labels(yValues, d.ySuffix,"right", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.yAxisScale, d.yAxisStart, new THREE.Vector3(0, 1, 0), rotY, offsetY);
         
         let rotZ = new THREE.Vector3(-Math.PI / 2, 0, 0);
-        let offsetZ = new THREE.Vector3(-0.77, 0, 0);
-        labels(zValues, "right", new THREE.Vector3(xMax * d.xAxisScale, 0, 0), d.zAxisScale, d.zAxisStart, new THREE.Vector3(0, 0, 1), rotZ, offsetZ);
+        let offsetZ = new THREE.Vector3(-1.05, 0, 0);
+        labels(zValues, d.zSuffix, "right", new THREE.Vector3(xMax * d.xAxisScale, 0, 0), d.zAxisScale, d.zAxisStart, new THREE.Vector3(0, 0, 1), rotZ, offsetZ);
+
+        let xLabel = new Label(d.xLabel, 600, new THREE.Vector3(xMax * d.xAxisScale / 2, 0, zMax * d.zAxisScale),
+         "center", new THREE.Vector3(-Math.PI / 2, 0, 0), new THREE.Vector3(-1.5, 0, 1.4), font, fontTexture, 0.007);
+        this.el.setObject3D("xLabel", xLabel);
+
+        let yLabel = new Label(d.yLabel, 600, new THREE.Vector3(0, yMax * d.yAxisScale / 2, zMax * d.zAxisScale),
+         "center", new THREE.Vector3(0, Math.PI / 2, Math.PI / 2), new THREE.Vector3(0, -1.5, 1.4), font, fontTexture, 0.007);
+        this.el.setObject3D("yLabel", yLabel);
+
+        let zLabel = new Label(d.zLabel, 600, new THREE.Vector3(xMax * d.xAxisScale, 0, zMax * d.zAxisScale / 2),
+         "center", new THREE.Vector3(-Math.PI / 2, 0, Math.PI / 2), new THREE.Vector3(1.4, 0, 1.7), font, fontTexture, 0.007);
+        this.el.setObject3D("zLabel", zLabel);
+
+        let title = new Label(d.title, 800, new THREE.Vector3(0, yMax * d.yAxisScale, zMax * d.zAxisScale / 2),
+         "center", new THREE.Vector3(0, Math.PI / 4, 0), new THREE.Vector3(0, 0.5, 1.7), font, fontTexture, 0.010);
+        this.el.setObject3D("title", title);
     },
 
     createPoints(jsonData) {
