@@ -13,7 +13,6 @@ AFRAME.registerComponent("bar-chart", {
         suffix: {type: "string", default: ""},
 
         yScale: {type: "number", default: 1.0},
-        scale: {type: "number", default: 1.0},
         barWidth: {type: "number", default: 0.3},
         barPadding: {type: "number", default: 0.1},
         fontSize: {type: "number", default: 2}
@@ -27,9 +26,6 @@ AFRAME.registerComponent("bar-chart", {
         .then(function(jsonData){
             self.createChart(jsonData);
         });
-
-        let scale = this.data.scale;
-        this.el.object3D.scale.set(scale, scale, scale);
     },
 
     createChart: function(bars) {
@@ -73,6 +69,7 @@ AFRAME.registerComponent("bar-chart", {
                 self.createBars(yValues, PANEL_START_POS, BAR_TOTAL_SIZE, PANEL_WIDTH, font, fontTexture);
                 self.createLabels(xLabels, BAR_TOTAL_SIZE, PANEL_WIDTH, font, fontTexture);
                 self.createTitle(Math.max(...yValues), PANEL_WIDTH, font, fontTexture);
+                self.createYAxis(Math.max(...yValues), PANEL_WIDTH, font, fontTexture);
             });
         })
         
@@ -136,9 +133,35 @@ AFRAME.registerComponent("bar-chart", {
         var mesh = new THREE.Mesh(fontGeometry, fontTexture);
         mesh.rotation.set(Math.PI, 0, 0);
         mesh.scale.multiplyScalar(0.006);
-        const TITLE_OFFSET = 0.5;
+        const TITLE_OFFSET = 0.7;
         mesh.position.set(-panelWidth / 2, yMax * this.data.yScale + TITLE_OFFSET, 0);
         this.el.setObject3D('title', mesh);
     },
+
+    createYAxis: function(yMax, panelWidth, font, fontTexture) {
+        let CEIL = Math.ceil(yMax / 10) * 10;
+        const LINE_STEP = 10; 
+        for (let i = 0; i <= CEIL; i+= LINE_STEP) {
+            var fontGeometry = fontCreator({
+                width: 300,
+                font: font,
+                letterSpacing: 1,
+                align: "right",
+                text: String(i) + this.data.suffix  
+            })
+            var mesh = new THREE.Mesh(fontGeometry, fontTexture);
+            mesh.rotation.set(Math.PI, 0, 0);
+            mesh.scale.multiplyScalar(0.004);
+            mesh.position.set(-panelWidth / 2 - 1.2, i * this.data.yScale, 0);
+            this.el.setObject3D('yLabel' + i, mesh);
+        }
+
+        let material = new THREE.LineBasicMaterial({color: 0x2A363B});
+        let lines = new THREE.Geometry();
+        lines.vertices.push(new THREE.Vector3(-panelWidth / 2, 0, 0));
+        lines.vertices.push(new THREE.Vector3(-panelWidth / 2, (CEIL + LINE_STEP / 2) * this.data.yScale, 0));
+        let line = new THREE.LineSegments(lines, material);
+        this.el.setObject3D("yAxis", line);
+    }
 
 });
