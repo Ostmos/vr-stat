@@ -25,18 +25,28 @@
     <!--Models-->
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
-              position="-5 1 -4"
+              position="-10 1 -4"
               grabbable 
               draggable
               rotation-observer></a-entity>
 
     <a-entity class="diagram"
-              scatter-plot="src:url(./src/assets/statistics/salary_hours_job.json); xAxisScale: 0.2; yAxisScale: 0.00005; zAxisScale: 0.4"
-              position="5 -2 -10"
+              scatter-plot=
+                "src:url(./src/assets/statistics/salary_hours_job.json);
+                 xAxisScale: 0.2;
+                 yAxisScale: 0.00005;
+                 zAxisScale: 0.4;
+                 xLabel: Hours spent look for a new job each month;
+                 yLabel: Salary;
+                 zLabel: Years spent coding professionally;
+                 xSuffix: h;
+                 ySuffix: $;
+                 zSuffix: y"
+              position="-4 1 -10"
               grabbable
               draggable
               rotation-observer></a-entity>
-
+Salary, HoursPerWeek, YearsCodedJob 
     <!-- Lights -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
