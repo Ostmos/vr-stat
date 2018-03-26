@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>VR-Stat</title>
-    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
+    <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
 </head>
 
@@ -32,7 +32,7 @@
               scatter-plot=
                 "src:url(./src/assets/statistics/salary_hours_job.json);
                  xAxisScale: 0.2;
-                 yAxisScale: 0.00005;
+                 yAxisScale: 0.00004;
                  zAxisScale: 0.4;
                  title: Relation between job searching time, salary and years spent coding professionally;
                  xLabel: Hours spent look for a new job each month;
@@ -53,9 +53,11 @@
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
     <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
 
-    <a-entity id="rig" progressive-controls="objects: .diagram; maxLevel: point">
+    <a-entity id="rig" progressive-controls="maxLevel: point">
         <a-entity id="controller1" class="right-controller" 
-        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
+        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
+        raycaster="objects: .diagram"
+        line="color:blue"
         rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
