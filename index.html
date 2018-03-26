@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>VR-Stat</title>
-    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
+    <!--<script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>-->
+    <script src="https://rawgit.com/aframevr/aframe/cc70719/dist/aframe-master.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
 </head>
 
@@ -25,14 +26,14 @@
     <!--Models-->
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
-              position="5 1 -4"
+              position="-5 1 -4"
               grabbable 
               draggable
               rotation-observer></a-entity>
 
     <a-entity class="diagram"
               scatter-plot="src:url(./src/assets/statistics/salary_hours_job.json); xAxisScale: 0.2; yAxisScale: 0.00005; zAxisScale: 0.4"
-              position="-2 -2 -10"
+              position="5 -2 -10"
               grabbable
               draggable
               rotation-observer></a-entity>
@@ -50,7 +51,7 @@
         rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
-                  raycaster="showLine:false;"></a-entity>
+                  raycaster="showLine:false; enabled: false;"></a-entity>
     </a-entity>
 
   </a-scene>
