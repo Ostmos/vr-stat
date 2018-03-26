@@ -45,6 +45,8 @@ AFRAME.registerComponent('scatter-plot', {
                 zValues[i] = jsonData[i].z;
             }
 
+            console.log(xValues.length);
+
             function Axes(origin, xAxis, yAxis, zAxis) {
                 this.origin = origin;
                 this.xAxis = xAxis;
@@ -79,7 +81,7 @@ AFRAME.registerComponent('scatter-plot', {
                 }))
                 
                 fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
-                    self.createAxes(axes, xValues, yValues, zValues, font, fontTexture, X_MAX, Y_MAX, Z_MAX);
+                   self.createAxes(axes, xValues, yValues, zValues, font, fontTexture, X_MAX, Y_MAX, Z_MAX);
                 });
             })
         });
@@ -198,7 +200,7 @@ AFRAME.registerComponent('scatter-plot', {
 
         let geometry = new THREE.Geometry();
 
-        let COLORS = [0xF8B195, 0xF67280, 0xC06C84, 0x6C5B7B, 0x355C7D];
+        let COLORS = [0xF7D969];
         let vertexColors = [];
 
         for(let i = 0; i < LENGTH; i++){
@@ -216,8 +218,8 @@ AFRAME.registerComponent('scatter-plot', {
         geometry.colors = vertexColors;
 
         let material = new THREE.PointsMaterial({size: d.pointSize, vertexColors: THREE.VertexColors});
-        let points = new THREE.Points(geometry, material);
+        this.points = new THREE.Points(geometry, material);
 
-        this.el.setObject3D("points", points);
+        this.el.setObject3D("points", this.points);
     },
 });
