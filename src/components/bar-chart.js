@@ -1,4 +1,4 @@
-var fontCreator = require('three-bmfont-text');
+    var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
