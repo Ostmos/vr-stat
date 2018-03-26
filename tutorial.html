@@ -29,6 +29,9 @@
           var rotateDiagramPosY = rotateDiagram.getAttribute('rotation').y;
           var rotateDiagramPosZ = rotateDiagram.getAttribute('rotation').z;
 
+          //Hover components
+          var textHover = document.querySelector('#txtHover');
+
           //Link componenet
 
           var link = document.querySelector('a-link');
@@ -72,12 +75,13 @@
             rotateDiagram.setAttribute('visible', true);
             controllerRotate.setAttribute('visible', true);
             textRotate.setAttribute('visible', true);
+            textHover.setAttribute('visible',true);
 
           }
 
           // Scene 3
 
-          if(rotateDiagramPosX!=0 || rotateDiagramPosY!=0 || rotateDiagramPosZ!=0){
+          if(rotateDiagramPosX!=0 || rotateDiagramPosY!=-45 || rotateDiagramPosZ!=0){
             var rotated = true;
           }
           
@@ -85,6 +89,7 @@
           if(rotated){
             circleEl.setAttribute('position', {x: 0.2, y: 0, z: -17});
             textRotate.setAttribute('visible', false);
+            textHover.setAttribute('visible',false);
 
             link.setAttribute('visible', true)
 
@@ -130,7 +135,7 @@
       <a-entity id="modelTutorial" position="0 0 0" scale="1 1 1" gltf-model="#modelTestRoom" shadow></a-entity>
       <a-entity id="circle" camera-listener  position="-0.5 0 -4.2" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
       <!--<a-entity id="portal" link="href: index.html; title:Enter room; image: #imgBoard; color: black" visible="true" position="0 2 -2" scale="1 1 1"></a-entity>-->
-      <a-link id="portal" href="index.html" visible="false" position="0.2 1 -17.5" scale="1 1 1" hoverable></a-link>
+      <a-link id="portal" href="index.html" visible="false" position="0.2 1 -18" scale="1 1.5 1" hoverable></a-link>
   
       <a-sky src="#imgSky"></a-sky>
   
@@ -167,17 +172,25 @@
 
       <!-- Rotate -->
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Rotate me" bar-chart-listener scale="1 1 1" position="3.5 0.5 -14"  rotation="0 270 0" camera-listener></a-entity> -->
-      <a-entity id="rotate"
-                class="diagram" 
-                bar-chart="yScale: 0.025; title: Rotate me!; suffix: %; src:url(./src/assets/statistics/tutorial-stats.json)" 
-                position="3.5 0.5 -14"
-                grabbable 
-                draggable
-                rotation-observer
-                camera-listener
-                visible="false"></a-entity>
-      <a-entity id="txtRotate" position="3.5 1.9 -12" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
+      <a-entity id="rotate"class="diagram" tutorial-scatter-plot=
+        "src:url(./src/assets/statistics/tutorial-stat-2.json);
+        xAxisScale: 0.14;
+        yAxisScale: 0.014;
+        zAxisScale: 0.19;
+        title: Rotate me!;"
+        position="3.2 0.5 -14"
+        grabbable
+        draggable
+        rotation-observer
+        camera-listener
+        visible="false"
+        rotation="0 -45 0"></a-entity>
+      </a-entity>
+      <a-entity id="txtRotate" position="3.5 2 -12" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
         <a-image src="#imgRotate" width="3" height="1" side="both"></a-image>
+      </a-entity>
+      <a-entity id="txtHover" position="3.5 1.5 -12" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
+        <a-image src="#imgHover" width="3" height="1" side="both"></a-image>
       </a-entity>
       <a-entity id="modelRotateController" visible="false" rotation="-30 170 0" position="3.6 1.2 -11.5" scale="0.003 0.003 0.003" gltf-model="#modelRotate" camera-listener></a-entity>
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
@@ -198,16 +211,16 @@
         <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
       </a-entity> -->
       <!-- Correct controllers I think -->
-        <!-- <a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
+        <a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
           <a-entity id="controller1" class="right-controller" 
             super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
             rotation-controller></a-entity>
           <a-entity id="controller2" class="left-controller" 
             teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
             raycaster="showLine:false;"></a-entity>
-        </a-entity> -->
+        </a-entity>
      
-     <a-camera position="0 1.6 0"><a-cursor></a-cursor></a-camera>
+     <!-- <a-camera position="0 1.6 0"><a-cursor></a-cursor></a-camera> -->
     </a-scene>
     
 
