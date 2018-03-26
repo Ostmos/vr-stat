@@ -185,6 +185,10 @@ AFRAME.registerComponent('scatter-plot', {
         let zLabel = new Label(d.zLabel, 600, new THREE.Vector3(xMax * d.xAxisScale, 0, zMax * d.zAxisScale / 2),
          "center", new THREE.Vector3(-Math.PI / 2, 0, Math.PI / 2), new THREE.Vector3(1.4, 0, 1.7), font, fontTexture, 0.007);
         this.el.setObject3D("zLabel", zLabel);
+
+        let title = new Label(d.title, 800, new THREE.Vector3(0, yMax * d.yAxisScale, zMax * d.zAxisScale / 2),
+         "center", new THREE.Vector3(0, Math.PI / 4, 0), new THREE.Vector3(0, 0.5, 1.7), font, fontTexture, 0.010);
+        this.el.setObject3D("title", title);
     },
 
     createPoints(jsonData) {
