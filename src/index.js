@@ -7,3 +7,4 @@ require("./components/bar-chart");
 require("./components/scatter-plot");
 require("./components/rotation-observer");
 require("./components/rotation-controller");
+require("./components/controllers/controller-display");
