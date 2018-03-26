@@ -4,6 +4,33 @@
   <meta charset="UTF-8">
   <title>VR-Stat</title>
 
+    <!--Working raytracer but no models for the replayer
+    <script src="https://rawgit.com/aframevr/aframe/a3e0fc9/dist/aframe-master.min.js"></script>
+    <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>-->
+
+    <!--Broken raytracer but working replayer-->
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-motion-capture-components/dist/aframe-motion-capture-components.min.js"></script>
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
+
+    <script src="src/components/bar-listener.js"></script>
+    <script src="src/components/bar-chart-listener.js"></script>
+    <script src="src/components/rotation-controller.js"></script>
+    <script src="src/components/bar-chart.js"></script>
+    <script src="src/components/scatter-plot-2.js"></script>
+
+    <script src="src/components/controller-display.js"></script>  
+
+
+    <script src="src/components/gothenburg.js"></script>
+
+
+
+    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
+
     <script src="build/vr-stat.bundle.js"></script>
 </head>
 
@@ -47,13 +74,24 @@
               grabbable
               draggable
               rotation-observer></a-entity>
-Salary, HoursPerWeek, YearsCodedJob 
+<!--Salary, HoursPerWeek, YearsCodedJob--> 
     <!-- Lights -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 -10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
     <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
+
+
+    <!--Controllers-->
+    <!--<a-entity controller-display slice9="width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png" position="3 2 2"></a-entity>
+    <a-entity controller-display position="0 2 0"></a-entity>-->
+    <!--<a-entity position="0 1.6 0" progressive-controls="objects: .cube; maxLevel: point">-->
+
+    <a-entity progressive-controls="objects: .cube; maxLevel: point">
+      <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;" rotation-controller controller-display></a-entity>
+      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
+    </a-entity>
 
 
 
