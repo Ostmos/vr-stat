@@ -1,5 +1,7 @@
 AFRAME.registerComponent('activate-vr', {
     init: function(){
-        this.el.sceneEl.enterVR();
+        sceneEl.addEventListener('vrdisplayactivate', function (){
+            this.el.sceneEl.enterVR();
+          });
         }
 });

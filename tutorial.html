@@ -218,16 +218,17 @@
           rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
       </a-entity> -->
-      <!--Correct controllers I think-->
+      <!-- Correct controllers I think
         <a-entity id="rig" progressive-controls="objects: .diagram; maxLevel: point">
           <a-entity id="controller1" class="right-controller" 
             super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
             rotation-controller></a-entity>
           <a-entity id="controller2" class="left-controller" 
-                  teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
-                  raycaster="showLine:false;"></a-entity>
+            teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
+            raycaster="showLine:false;"></a-entity>
         </a-entity>
-     
+      -->
+      <a-camera position="0 0 0"><a-cursor></a-cursor></a-camera>
     </a-scene>
     
 
