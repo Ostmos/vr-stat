@@ -1,19 +1,18 @@
 AFRAME.registerComponent("rotation-observer", {
     init: function () {
         let el = this.el;
-        let hovering = false;
+        let grabbed = false;
 
         el.addEventListener('grab-start', function(event) {
-            hovering = true;
+            grabbed = true;
         });
 
         el.addEventListener('grab-end', function(event) {
-            hovering = false;
+            grabbed = false;
         });
 
         this.el.sceneEl.addEventListener('rotation', function(event) {
-            console.log(hovering);
-            if (hovering) {
+            if (grabbed) {
                 el.object3D.rotation.set(
                     THREE.Math.degToRad(event.detail.y * 35),
                     THREE.Math.degToRad(event.detail.x * 180),
