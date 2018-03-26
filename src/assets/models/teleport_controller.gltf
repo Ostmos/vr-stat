@@ -79,6 +79,50 @@
         {
             "bufferView" : 5, 
             "componentType" : 5123, 
+            "count" : 1728, 
+            "max" : [
+                299
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 6, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                1.0, 
+                0.009760865941643715, 
+                0.29563942551612854
+            ], 
+            "min" : [
+                -0.7900280952453613, 
+                -0.5928789377212524, 
+                -0.05410384014248848
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 7, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                0.6918851137161255, 
+                0.999359130859375, 
+                0.9751884341239929
+            ], 
+            "min" : [
+                -0.6915799379348755, 
+                -0.9993896484375, 
+                -0.9767754077911377
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 8, 
+            "componentType" : 5123, 
             "count" : 14862, 
             "max" : [
                 7320
@@ -89,7 +133,7 @@
             "type" : "SCALAR"
         }, 
         {
-            "bufferView" : 6, 
+            "bufferView" : 9, 
             "componentType" : 5126, 
             "count" : 7321, 
             "max" : [
@@ -105,7 +149,7 @@
             "type" : "VEC3"
         }, 
         {
-            "bufferView" : 7, 
+            "bufferView" : 10, 
             "componentType" : 5126, 
             "count" : 7321, 
             "max" : [
@@ -121,7 +165,7 @@
             "type" : "VEC3"
         }, 
         {
-            "bufferView" : 8, 
+            "bufferView" : 11, 
             "componentType" : 5126, 
             "count" : 7321, 
             "max" : [
@@ -139,7 +183,7 @@
             "type" : "VEC4"
         }, 
         {
-            "bufferView" : 9, 
+            "bufferView" : 12, 
             "componentType" : 5126, 
             "count" : 7321, 
             "max" : [
@@ -151,50 +195,6 @@
                 0.0
             ], 
             "type" : "VEC2"
-        }, 
-        {
-            "bufferView" : 10, 
-            "componentType" : 5123, 
-            "count" : 1728, 
-            "max" : [
-                299
-            ], 
-            "min" : [
-                0
-            ], 
-            "type" : "SCALAR"
-        }, 
-        {
-            "bufferView" : 11, 
-            "componentType" : 5126, 
-            "count" : 300, 
-            "max" : [
-                1.0, 
-                0.009869217872619629, 
-                0.31904709339141846
-            ], 
-            "min" : [
-                -0.8800570964813232, 
-                -0.3297397494316101, 
-                -0.04444044083356857
-            ], 
-            "type" : "VEC3"
-        }, 
-        {
-            "bufferView" : 12, 
-            "componentType" : 5126, 
-            "count" : 300, 
-            "max" : [
-                0.6898708939552307, 
-                0.999786376953125, 
-                0.9884334802627563
-            ], 
-            "min" : [
-                -0.6897793412208557, 
-                -0.999786376953125, 
-                -0.9880977869033813
-            ], 
-            "type" : "VEC3"
         }
     ], 
     "asset" : {
@@ -234,50 +234,50 @@
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 29724, 
+            "byteLength" : 3456, 
             "byteOffset" : 23477796, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 23481252, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 23484852, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 29724, 
+            "byteOffset" : 23488452, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
             "byteLength" : 87852, 
-            "byteOffset" : 23507520, 
+            "byteOffset" : 23518176, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 87852, 
-            "byteOffset" : 23595372, 
+            "byteOffset" : 23606028, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 117136, 
-            "byteOffset" : 23683224, 
+            "byteOffset" : 23693880, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 58568, 
-            "byteOffset" : 23800360, 
-            "target" : 34962
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3456, 
-            "byteOffset" : 23858928, 
-            "target" : 34963
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3600, 
-            "byteOffset" : 23862384, 
-            "target" : 34962
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3600, 
-            "byteOffset" : 23865984, 
+            "byteOffset" : 23811016, 
             "target" : 34962
         }
     ], 
@@ -380,37 +380,37 @@
             ]
         }, 
         {
-            "name" : "CUTeleport", 
-            "primitives" : [
-                {
-                    "attributes" : {
-                        "NORMAL" : 7, 
-                        "POSITION" : 6, 
-                        "TANGENT" : 8, 
-                        "TEXCOORD_0" : 9
-                    }, 
-                    "indices" : 5, 
-                    "material" : 4
-                }
-            ]
-        }, 
-        {
             "name" : "BezierCurve.001", 
             "primitives" : [
                 {
                     "attributes" : {
-                        "NORMAL" : 12, 
-                        "POSITION" : 11
+                        "NORMAL" : 7, 
+                        "POSITION" : 6
                     }, 
-                    "indices" : 10, 
+                    "indices" : 5, 
                     "material" : 0
+                }
+            ]
+        }, 
+        {
+            "name" : "CUTeleport", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 10, 
+                        "POSITION" : 9, 
+                        "TANGENT" : 11, 
+                        "TEXCOORD_0" : 12
+                    }, 
+                    "indices" : 8, 
+                    "material" : 4
                 }
             ]
         }
     ], 
     "nodes" : [
         {
-            "mesh" : 2, 
+            "mesh" : 1, 
             "name" : "BezierCurve", 
             "rotation" : [
                 -0.5507573485374451, 
@@ -456,17 +456,17 @@
             "name" : "OculusTouch Left"
         }, 
         {
-            "mesh" : 1, 
+            "mesh" : 2, 
             "name" : "Teleport", 
             "rotation" : [
-                -0.01760024018585682, 
-                -0.8078344464302063, 
-                0.5887148380279541, 
-                0.022548777982592583
+                0.07776086777448654, 
+                -0.9044819474220276, 
+                0.41468703746795654, 
+                0.06245196983218193
             ], 
             "scale" : [
                 28.45948028564453, 
-                28.459476470947266, 
+                28.4594783782959, 
                 28.45948028564453
             ], 
             "translation" : [

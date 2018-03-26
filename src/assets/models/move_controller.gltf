@@ -3,6 +3,50 @@
         {
             "bufferView" : 0, 
             "componentType" : 5123, 
+            "count" : 1728, 
+            "max" : [
+                299
+            ], 
+            "min" : [
+                0
+            ], 
+            "type" : "SCALAR"
+        }, 
+        {
+            "bufferView" : 1, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                1.0, 
+                0.009869217872619629, 
+                0.31904709339141846
+            ], 
+            "min" : [
+                -0.8800570964813232, 
+                -0.3297397494316101, 
+                -0.04444044083356857
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 2, 
+            "componentType" : 5126, 
+            "count" : 300, 
+            "max" : [
+                0.6898708939552307, 
+                0.999786376953125, 
+                0.9884334802627563
+            ], 
+            "min" : [
+                -0.6897793412208557, 
+                -0.999786376953125, 
+                -0.9880977869033813
+            ], 
+            "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 3, 
+            "componentType" : 5123, 
             "count" : 6486, 
             "max" : [
                 3217
@@ -13,7 +57,7 @@
             "type" : "SCALAR"
         }, 
         {
-            "bufferView" : 1, 
+            "bufferView" : 4, 
             "componentType" : 5126, 
             "count" : 3218, 
             "max" : [
@@ -29,7 +73,7 @@
             "type" : "VEC3"
         }, 
         {
-            "bufferView" : 2, 
+            "bufferView" : 5, 
             "componentType" : 5126, 
             "count" : 3218, 
             "max" : [
@@ -45,7 +89,7 @@
             "type" : "VEC3"
         }, 
         {
-            "bufferView" : 3, 
+            "bufferView" : 6, 
             "componentType" : 5126, 
             "count" : 3218, 
             "max" : [
@@ -63,7 +107,7 @@
             "type" : "VEC4"
         }, 
         {
-            "bufferView" : 4, 
+            "bufferView" : 7, 
             "componentType" : 5126, 
             "count" : 3218, 
             "max" : [
@@ -75,50 +119,6 @@
                 0.0
             ], 
             "type" : "VEC2"
-        }, 
-        {
-            "bufferView" : 5, 
-            "componentType" : 5123, 
-            "count" : 1728, 
-            "max" : [
-                299
-            ], 
-            "min" : [
-                0
-            ], 
-            "type" : "SCALAR"
-        }, 
-        {
-            "bufferView" : 6, 
-            "componentType" : 5126, 
-            "count" : 300, 
-            "max" : [
-                1.0, 
-                0.009869217872619629, 
-                0.31904709339141846
-            ], 
-            "min" : [
-                -0.8800570964813232, 
-                -0.3297397494316101, 
-                -0.04444044083356857
-            ], 
-            "type" : "VEC3"
-        }, 
-        {
-            "bufferView" : 7, 
-            "componentType" : 5126, 
-            "count" : 300, 
-            "max" : [
-                0.6898708939552307, 
-                0.999786376953125, 
-                0.9884334802627563
-            ], 
-            "min" : [
-                -0.6897793412208557, 
-                -0.999786376953125, 
-                -0.9880977869033813
-            ], 
-            "type" : "VEC3"
         }, 
         {
             "bufferView" : 8, 
@@ -204,50 +204,50 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 12972, 
+            "byteLength" : 3456, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 3456, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 3600, 
+            "byteOffset" : 7056, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 12972, 
+            "byteOffset" : 10656, 
+            "target" : 34963
+        }, 
+        {
+            "buffer" : 0, 
             "byteLength" : 38616, 
-            "byteOffset" : 12972, 
+            "byteOffset" : 23628, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 38616, 
-            "byteOffset" : 51588, 
+            "byteOffset" : 62244, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 51488, 
-            "byteOffset" : 90204, 
+            "byteOffset" : 100860, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
             "byteLength" : 25744, 
-            "byteOffset" : 141692, 
-            "target" : 34962
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3456, 
-            "byteOffset" : 167436, 
-            "target" : 34963
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3600, 
-            "byteOffset" : 170892, 
-            "target" : 34962
-        }, 
-        {
-            "buffer" : 0, 
-            "byteLength" : 3600, 
-            "byteOffset" : 174492, 
+            "byteOffset" : 152348, 
             "target" : 34962
         }, 
         {
@@ -365,30 +365,30 @@
     ], 
     "meshes" : [
         {
-            "name" : "CUText", 
-            "primitives" : [
-                {
-                    "attributes" : {
-                        "NORMAL" : 2, 
-                        "POSITION" : 1, 
-                        "TANGENT" : 3, 
-                        "TEXCOORD_0" : 4
-                    }, 
-                    "indices" : 0, 
-                    "material" : 3
-                }
-            ]
-        }, 
-        {
             "name" : "BezierCurve.001", 
             "primitives" : [
                 {
                     "attributes" : {
-                        "NORMAL" : 7, 
-                        "POSITION" : 6
+                        "NORMAL" : 2, 
+                        "POSITION" : 1
                     }, 
-                    "indices" : 5, 
+                    "indices" : 0, 
                     "material" : 2
+                }
+            ]
+        }, 
+        {
+            "name" : "CUText", 
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 5, 
+                        "POSITION" : 4, 
+                        "TANGENT" : 6, 
+                        "TEXCOORD_0" : 7
+                    }, 
+                    "indices" : 3, 
+                    "material" : 3
                 }
             ]
         }, 
@@ -410,7 +410,7 @@
     ], 
     "nodes" : [
         {
-            "mesh" : 1, 
+            "mesh" : 0, 
             "name" : "BezierCurve", 
             "rotation" : [
                 -0.26832661032676697, 
@@ -456,17 +456,17 @@
             "name" : "OculusTouch Right"
         }, 
         {
-            "mesh" : 0, 
+            "mesh" : 1, 
             "name" : "Text", 
             "rotation" : [
-                0.045149046927690506, 
-                0.8230149745941162, 
-                -0.5623538494110107, 
-                0.06607630103826523
+                -0.032934464514255524, 
+                -0.8211736083030701, 
+                0.5684797763824463, 
+                0.03768336400389671
             ], 
             "scale" : [
-                31.621809005737305, 
-                31.62181282043457, 
+                31.621807098388672, 
+                31.621810913085938, 
                 31.62181282043457
             ], 
             "translation" : [
