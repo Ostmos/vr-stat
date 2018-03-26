@@ -25,41 +25,144 @@ AFRAME.registerComponent('scatter-plot', {
 
     init: function () {
         let self = this;
+        let d = this.data;
 
         fetch(this.data.src)
         .then((response) => response.json())
         .then(function(jsonData){
-            self.createAxis(jsonData);
+
+            let xValues = [];
+            let yValues = [];
+            let zValues = [];
+
+            for (let i = 0; i < jsonData.length; i++) {
+                xValues[i] = jsonData[i].x;
+                yValues[i] = jsonData[i].y;
+                zValues[i] = jsonData[i].z;
+            }
+
+            function Axes(origin, xAxis, yAxis, zAxis) {
+                this.origin = origin;
+                this.xAxis = xAxis;
+                this.yAxis = yAxis;
+                this.zAxis = zAxis;
+            }
+
+            
+            const X_MAX = Math.max(...xValues);
+            const Y_MAX = Math.max(...yValues);
+            const Z_MAX = Math.max(...zValues);
+
+            let axes = new Axes(
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(X_MAX * d.xAxisScale + d.xAxisStart, 0, 0),
+                new THREE.Vector3(0, Y_MAX * d.yAxisScale + d.yAxisStart, 0),
+                new THREE.Vector3(0, 0, Z_MAX * d.zAxisScale + d.yAxisStart),
+            );
+
             self.createPoints(jsonData);
+
+            var textureLoader = new THREE.TextureLoader();
+            textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
+                texture.needsUpdate = true;
+                texture.anisotropy = 16;
+
+                var fontTexture = new THREE.RawShaderMaterial(SDFShader({
+                    map: texture,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    color: 0x00000 
+                }))
+                
+                fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
+                    self.createAxes(axes, xValues, yValues, zValues, font, fontTexture, X_MAX, Y_MAX, Z_MAX);
+                });
+            })
         });
     },
 
-    createAxis(jsonData) {
-        let x = [];
-        let y = [];
-        let z = [];
+    createAxes(axes, xValues, yValues, zValues, font, fontTexture, xMax, yMax, zMax) {
+        let self = this;
+        let d = this.data;
 
-        for (let i = 0; i < jsonData.length; i++) {
-            x[i] = jsonData[i].x;
-            y[i] = jsonData[i].y;
-            z[i] = jsonData[i].z;
+        const LINE_MATERIAL = new THREE.LineBasicMaterial({color: 0x000000});
+        let lines = new THREE.Geometry();
+        lines.vertices.push(axes.origin, axes.xAxis);
+        lines.vertices.push(axes.origin, axes.yAxis);
+        lines.vertices.push(axes.origin, axes.zAxis);
+        const LINE_MESH = new THREE.LineSegments(lines, LINE_MATERIAL);
+        this.el.setObject3D("axes", LINE_MESH);
+
+        const PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0x000000, opacity: 0.1, transparent: true, side: THREE.DoubleSide});
+        let planeGeometries = [];
+        planeGeometries.push(
+            new THREE.PlaneGeometry(axes.zAxis.z, axes.yAxis.y),
+            new THREE.PlaneGeometry(axes.xAxis.x, axes.zAxis.z),
+            new THREE.PlaneGeometry(axes.xAxis.x, axes.yAxis.y)
+        );
+
+        let planes = [];
+        for (let i = 0; i < planeGeometries.length; i++) {
+            planes.push(new THREE.Mesh(planeGeometries[i], PLANE_MATERIAL));
         }
 
-        let d = this.data;
-        let material = new THREE.LineBasicMaterial({color: 0x2A363B});
-        let lines = new THREE.Geometry();
-        lines.vertices.push(new THREE.Vector3(0, 0, 0));
-        lines.vertices.push(new THREE.Vector3(Math.max(...x) * d.xAxisScale + d.xAxisStart, 0, 0));
-        lines.vertices.push(new THREE.Vector3(0, 0, 0));
-        lines.vertices.push(new THREE.Vector3(0, Math.max(...y) * d.yAxisScale + d.yAxisScale, 0));
-        lines.vertices.push(new THREE.Vector3(0, 0, 0));
-        lines.vertices.push(new THREE.Vector3(0, 0, Math.max(...z) * d.zAxisScale + d.zAxisStart));
-        let line = new THREE.LineSegments(lines, material);
-        this.el.setObject3D("axis", line);
-    },
+        planes[0].position.set(axes.xAxis.x / 2, axes.yAxis.y / 2, 0);
 
-    createOneAxis() {
+        planes[1].rotation.set(Math.PI / 2, 0, 0);
+        planes[1].position.set(axes.xAxis.x / 2, 0, axes.zAxis.z / 2);
+
+        planes[2].rotation.set(0, Math.PI / 2, 0);
+        planes[2].position.set(0, axes.yAxis.y / 2, axes.zAxis.z / 2);
+
+        for (let i = 0; i < planes.length; i++) {
+           this.el.setObject3D("plane" + i, planes[i]);
+        }
+
+        let labelId = 0;
+
+        function labels(values, align, startPos, scale, offset, direction, rot, textOffset) {
+            const MAX_VALUE = Math.max(...values);
+            const VALUE_STEP = MAX_VALUE / 10;
+
+            const MAX_POS = Math.max(...values) * scale + offset;
+            const POS_STEP = MAX_POS / 10;
+
+            let position = startPos;
+
+            for (let label = 0; label <= MAX_VALUE; label += VALUE_STEP) {
+                let fontGeometry = fontCreator({
+                    width: 300,
+                    font: font,
+                    letterSpacing: 1,
+                    align: align, // left, right, center
+                    text: label.toFixed(2)
+                });
+
+                let mesh = new THREE.Mesh(fontGeometry, fontTexture);
+                mesh.rotation.set(Math.PI, 0, 0);
+                let textAnchor = new THREE.Object3D();
+                textAnchor.scale.multiplyScalar(0.004);
+
+                if (label != 0) {position.addScaledVector(direction, POS_STEP);}
+                textAnchor.position.set(position.x + textOffset.x, position.y + textOffset.y, position.z + textOffset.z);
+                textAnchor.rotation.set(rot.x, rot.y, rot.z);
+                textAnchor.add(mesh);
+                
+                self.el.setObject3D('label' + labelId++, textAnchor);
+            } 
+        }
+
+        let rotX = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
+        let offsetX = new THREE.Vector3(0, 0, 0);
+        labels(xValues, "left", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.xAxisScale, d.xAxisStart, new THREE.Vector3(1, 0, 0), rotX, offsetX);
         
+        let rotY = new THREE.Vector3(0, Math.PI / 2, 0);
+        let offsetY = new THREE.Vector3(0, 0, 1.18);
+        labels(yValues, "right", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.yAxisScale, d.yAxisStart, new THREE.Vector3(0, 1, 0), rotY, offsetY);
+        
+        let rotZ = new THREE.Vector3(-Math.PI / 2, 0, 0);
+        let offsetZ = new THREE.Vector3(-0.77, 0, 0);
+        labels(zValues, "right", new THREE.Vector3(xMax * d.xAxisScale, 0, 0), d.zAxisScale, d.zAxisStart, new THREE.Vector3(0, 0, 1), rotZ, offsetZ);
     },
 
     createPoints(jsonData) {
@@ -91,114 +194,4 @@ AFRAME.registerComponent('scatter-plot', {
 
         this.el.setObject3D("points", points);
     },
-
-    createBase: function() {
-        let size = this.data.size;
-        let planeGeometry = new THREE.PlaneGeometry(
-            size,
-            size
-        );
-        let planeMaterial = new THREE.MeshBasicMaterial({color: "red", side: THREE.DoubleSide, opacity: 0.1});
-        //var planeMaterial = new THREE.MeshLambertMaterial( { map: map, transparent: true } );
-        let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-        planeMesh.rotation.x = Math.PI / 2;
-        let vector = new THREE.Vector3(size / 2, 0, size / 2);
-        this.setPosition(planeMesh, vector, 0);
-        this.el.setObject3D("base", planeMesh);
-    },
-    
-    createWalls: function(stats){
-        var self = this;
-        var textureLoader = new THREE.TextureLoader();
-        textureLoader.load('./src/assets/fonts/dejavu/DejaVu-sdf.png', function (texture) {
-            texture.needsUpdate = true;
-            texture.anisotropy = 16;
-
-            var fontTexture = new THREE.RawShaderMaterial(SDFShader({
-                map: texture,
-                side: THREE.DoubleSide,
-                transparent: true,
-                color: 0x00000 
-            }))
-            fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
-                let levelLines = this.data.levelLines;
-                for (let i = 0; i <= levelLines; i++){
-                    //level
-                    let vector = new THREE.Vector3(0, y, 0);
-
-                    //create level lines
-                    var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-                    var geometry = new THREE.Geometry();
-                    let size = this.data.size;
-                    let y = (size/levelLines) * i;
-                    var vector_1 = new THREE.Vector3(   0, 0, size);
-                    var vector_2 = new THREE.Vector3(   0, 0,    0);
-                    var vector_3 = new THREE.Vector3(size, 0,    0);
-                    geometry.vertices.push(vector_1);
-                    geometry.vertices.push(vector_2);
-                    geometry.vertices.push(vector_3);
-                    var line = new THREE.Line(geometry, material);
-                    this.setPosition(line, vector, 0);
-                    this.el.setObject3D("line_"+i, line);
-
-                    //create labels
-                    self.createYLabel(vector_1, vector, stats, i);
-
-                }
-            })
-        })
-    },
-    createYLabel: function(vector_1, vector, stats, i){
-        let label = stats.minValues.y + ((stats.maxValues.y - stats.minValues.y) / levelLines) * i ;
-        var fontGeometry = fontCreator({
-            width: 300,
-            font: font,
-            letterSpacing: 1,
-            align: "left",
-            text: label
-        })
-
-        var mesh = new THREE.Mesh(fontGeometry, fontTexture);
-        var textAnchor = new THREE.Object3D();
-        textAnchor.scale.multiplyScalar(0.004);
-        // 1.2 is magic, should fix that
-        textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
-        textAnchor.rotation.set(0, Math.PI / 2, 0);
-        textAnchor.add(mesh);
-        this.el.setObject3D('yLabel_' + i, textAnchor);
-    },
-
-    createBase: function() {
-        let size = this.data.size;
-        let planeGeometry = new THREE.PlaneGeometry(
-            size,
-            size
-        );
-        let planeMaterial = new THREE.MeshBasicMaterial({color: "red", side: THREE.DoubleSide, opacity: 0.1});
-        //var planeMaterial = new THREE.MeshLambertMaterial( { map: map, transparent: true } );
-        let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-        planeMesh.rotation.x = Math.PI / 2;
-        let vector = new THREE.Vector3(size / 2, 0, size / 2);
-        this.setPosition(planeMesh, vector, 0);
-        this.el.setObject3D("base", planeMesh);
-    },
-
-    createNode: function(vector, index){
-        let nodeSize = this.data.nodeSize;
-        let planeGeometry = new THREE.PlaneGeometry(
-            nodeSize,
-            nodeSize
-        );
-        let planeMaterial = new THREE.MeshBasicMaterial({color: "blue", side: THREE.DoubleSide});
-        let planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-        this.setPosition(planeMesh, vector, nodeSize);
-        this.el.setObject3D("node_"+index, planeMesh);
-    },
-    setPosition: function(obj, vector, padding){
-        let size = this.data.size - padding;
-
-        obj.position.y = vector.y - size / 2;
-        obj.position.z = vector.z - size / 2;
-        obj.position.x = vector.x - size / 2;
-    } 
-})
+});
