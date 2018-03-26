@@ -11,15 +11,16 @@
   <a-scene activate-vr avatar-recorder> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
     <a-asset>
       <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
+      <a-asset-item id="controller" src="src/assets/models/controller.gltf"></a-asset-item>
       <img id="sky" src="src/assets/images/equi.png">
-      <img id="board" src="src/assets/images/museum_board.png">
     </a-asset>
 
     <!--World-->
     <a-sky color="#add8e6"></a-sky>
-    <a-entity id="#floor" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>
+    <a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>
+    <a-entity position="-7 1.2 -8" rotation="0 270 0" scale="0.006 0.006 0.006" gltf-model="#controller"></a-entity>
 
-    <!--Models-->
+    <!-- Models-->
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
               position="10 0.5 -20"
@@ -40,12 +41,15 @@
                  xSuffix: h;
                  ySuffix: $;
                  zSuffix: y"
-              position="-4 1 -10"
+              position="-10 1 -20"
               grabbable
               draggable
               rotation-observer
               bar-chart-listener></a-entity>
               
+
+              rotation-observer></a-entity>
+
     <!-- Lights -->
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
@@ -61,6 +65,8 @@
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
                   raycaster="showLine:false; enabled: false;"></a-entity>
     </a-entity>
+
+    <a-entity value-display></a-entity>
 
   </a-scene>
 

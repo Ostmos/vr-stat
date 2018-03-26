@@ -3,9 +3,9 @@
         {
             "bufferView" : 0, 
             "componentType" : 5121, 
-            "count" : 24, 
+            "count" : 60, 
             "max" : [
-                9
+                39
             ], 
             "min" : [
                 0
@@ -15,23 +15,23 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 10, 
+            "count" : 40, 
             "max" : [
-                1.0, 
+                0.3709401786327362, 
                 0.0, 
-                1.362472653388977
+                1.090389370918274
             ], 
             "min" : [
-                -1.0, 
+                -0.8227016925811768, 
                 0.0, 
-                -1.0
+                0.757061779499054
             ], 
             "type" : "VEC3"
         }, 
         {
             "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 10, 
+            "count" : 40, 
             "max" : [
                 0.0, 
                 1.0, 
@@ -39,10 +39,42 @@
             ], 
             "min" : [
                 0.0, 
-                1.0, 
+                0.9999999403953552, 
                 -0.0
             ], 
             "type" : "VEC3"
+        }, 
+        {
+            "bufferView" : 3, 
+            "componentType" : 5126, 
+            "count" : 40, 
+            "max" : [
+                1.0, 
+                0.0, 
+                1.0, 
+                1.0
+            ], 
+            "min" : [
+                -1.0, 
+                0.0, 
+                -1.0, 
+                1.0
+            ], 
+            "type" : "VEC4"
+        }, 
+        {
+            "bufferView" : 4, 
+            "componentType" : 5126, 
+            "count" : 40, 
+            "max" : [
+                0.9997972249984741, 
+                0.9997971996635897
+            ], 
+            "min" : [
+                0.0002028003364102915, 
+                0.1329662799835205
+            ], 
+            "type" : "VEC2"
         }
     ], 
     "asset" : {
@@ -52,27 +84,73 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 24, 
+            "byteLength" : 60, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 120, 
-            "byteOffset" : 24, 
+            "byteLength" : 480, 
+            "byteOffset" : 60, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 120, 
-            "byteOffset" : 144, 
+            "byteLength" : 480, 
+            "byteOffset" : 540, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 640, 
+            "byteOffset" : 1020, 
+            "target" : 34962
+        }, 
+        {
+            "buffer" : 0, 
+            "byteLength" : 320, 
+            "byteOffset" : 1660, 
             "target" : 34962
         }
     ], 
     "buffers" : [
         {
-            "byteLength" : 264, 
+            "byteLength" : 1980, 
             "uri" : "tutorial_room.bin"
+        }
+    ], 
+    "images" : [
+        {
+            "uri" : "tutorial_floor.png"
+        }
+    ], 
+    "materials" : [
+        {
+            "name" : "Material.001", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6038274168968201, 
+                    0.7230553030967712, 
+                    0.6038274168968201, 
+                    1.0
+                ], 
+                "metallicFactor" : 0.0
+            }
+        }, 
+        {
+            "name" : "Material.002", 
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    0.6400000190734865, 
+                    1.0
+                ], 
+                "baseColorTexture" : {
+                    "index" : 0
+                }, 
+                "metallicFactor" : 0.0
+            }
         }
     ], 
     "meshes" : [
@@ -82,9 +160,12 @@
                 {
                     "attributes" : {
                         "NORMAL" : 2, 
-                        "POSITION" : 1
+                        "POSITION" : 1, 
+                        "TANGENT" : 3, 
+                        "TEXCOORD_0" : 4
                     }, 
-                    "indices" : 0
+                    "indices" : 0, 
+                    "material" : 0
                 }
             ]
         }
@@ -93,15 +174,15 @@
         {
             "name" : "Lamp", 
             "rotation" : [
-                0.16907575726509094, 
-                0.7558802962303162, 
-                -0.27217137813568115, 
-                0.570947527885437
+                0.22766007483005524, 
+                0.7955662608146667, 
+                0.5254132151603699, 
+                0.1979551762342453
             ], 
             "scale" : [
                 1.0, 
-                1.0, 
-                0.9999999403953552
+                0.9999999403953552, 
+                1.0
             ], 
             "translation" : [
                 4.076245307922363, 
@@ -116,8 +197,16 @@
                 12.985114097595215, 
                 1.0, 
                 58.36458969116211
+            ], 
+            "translation" : [
+                7.388514518737793, 
+                1.9614098789588752e-08, 
+                -63.75820541381836
             ]
         }
+    ], 
+    "samplers" : [
+        {}
     ], 
     "scene" : 0, 
     "scenes" : [
@@ -127,6 +216,12 @@
                 1, 
                 0
             ]
+        }
+    ], 
+    "textures" : [
+        {
+            "sampler" : 0, 
+            "source" : 0
         }
     ]
 }
