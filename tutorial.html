@@ -39,6 +39,7 @@
           //Link componenet
 
           var link = document.querySelector('a-link');
+          var textPortal = document.querySelector('#txtPortal');
 
 
           // Scene 1
@@ -86,6 +87,7 @@
             // textHover.setAttribute('visible',false);
 
             link.setAttribute('visible', true)
+            textPortal.setAttribute('visible',true);
 
           }
           
@@ -123,14 +125,14 @@
         <img id="imgMove" src="src/assets/images/move_text.png">
         <img id="imgHover" src="src/assets/images/hover_text.png">
         <img id="imgRotate" src="src/assets/images/rotate_text.png">
-        <img id="imgPortal" src="src/assets/images/portal_text.png"
+        <img id="imgPortal" src="src/assets/images/portal_text.png">
       </a-asset>
   
       <!--World-->
       <a-entity id="modelTutorial" position="0 0 0" scale="1 1 1" gltf-model="#modelTestRoom" shadow></a-entity>
       <a-entity id="circle" camera-listener  position="-0.5 0 -4.2" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
       <!--<a-entity id="portal" link="href: index.html; title:Enter room; image: #imgBoard; color: black" visible="true" position="0 2 -2" scale="1 1 1"></a-entity>-->
-      <a-link id="portal" href="index.html" titleColor="0x00000" title=""  visible="false" position="0.2 1.5 -18" scale="1 1 1" hoverable></a-link>
+      <a-link id="portal" href="index.html" titleColor="0x00000" title="_"  visible="false" position="0.2 1.5 -18" scale="1 1 1" hoverable></a-link>
   
       <a-sky src="#imgSky"></a-sky>
   
@@ -197,7 +199,7 @@
         <a-image src="#imgScale" width="3" height="1" side="front"></a-image>
       </a-entity> -->
      
-      <a-entity id="txtPortal" position="0.2 1.9 -18" rotation="0 0 0" scale="0.5 0.5 0.5" visible="true"  camera-listener>
+      <a-entity id="txtPortal" position="0.2 2.3 -18" rotation="0 0 0" scale="1 1 1" visible="false"  camera-listener>
         <a-image src="#imgPortal" width="3" height="1" side="both"></a-image>
       </a-entity>
       
