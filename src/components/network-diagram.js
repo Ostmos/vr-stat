@@ -7,15 +7,18 @@ AFRAME.registerComponent('network-diagram', {
     init: function() {
         var data = this.data;
         var object = this.el.object3D;
-
-        // We should implement a graph data structure here
-        // Nodes
+        
+        
+        // Import json file and get data from there
         
         var values = [100, 78, 74, 64, 53, 49, 44, 33, 27, 25, 18, 12, 6, 1]
         var numberOfElements = values.length;
+
+        //Nodes
         for(i = 1; i<numberOfElements; i++){
             mesh = this.createNode(values[i],values[0]);
             this.translateNode(mesh, i, values[i], values[0], numberOfElements);
+            //Behöver sättas ut linjer 
             object.add(mesh);
         }
 
@@ -44,7 +47,7 @@ AFRAME.registerComponent('network-diagram', {
         },
 
         translateNode: function(mesh,counter,value,maxValue, numberOfElements){
-            size = 2*value/maxValue; 
+            size = 2*value/maxValue; //Diameter of the node
             if (counter != 1){
                 //DET HÄR ÄR INTE ETT BRA SÄTT, datapunkter kan bli dolda
                 mesh.translateX(Math.sin(size*counter+counter/numberOfElements) + Math.tan(counter/numberOfElements));
