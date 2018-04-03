@@ -9,3 +9,4 @@ require("./components/tutorial-scatter-plot");
 require("./components/rotation-observer");
 require("./components/rotation-controller");
 require("./components/value-display");
+require("./components/network-diagram");
