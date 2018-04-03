@@ -1,6 +1,6 @@
 AFRAME.registerComponent('network-diagram', {
     schema: {
-        size: {type: 'number', default: 1},
+        sizeFactor: {type: 'number', default: 0.5},
         color: {type: 'color', default: '#FFF'}
     },
 
@@ -10,9 +10,12 @@ AFRAME.registerComponent('network-diagram', {
 
         // We should implement a graph data structure here
         // Nodes
-        for(i = 1; i<5; i++){
-            mesh = this.createNode(i,5);
-            this.translateNode(mesh, i);
+        
+        var values = [100, 78, 74, 64, 53, 49, 44, 33, 27, 25, 18, 12, 6, 1]
+        var numberOfElements = values.length;
+        for(i = 1; i<numberOfElements; i++){
+            mesh = this.createNode(values[i],values[0]);
+            this.translateNode(mesh, i, values[i], values[0], numberOfElements);
             object.add(mesh);
         }
 
@@ -33,16 +36,20 @@ AFRAME.registerComponent('network-diagram', {
     },
         //create nodes:
         createNode: function(value, maxValue) {
-            size = 0.5*value/maxValue;
+            size = (this.data.sizeFactor)*(value/maxValue);
             var geometry = new THREE.SphereGeometry(size, 32, 32);
-            var material = new THREE.MeshBasicMaterial({color: 0x777777});
+            var material = new THREE.MeshBasicMaterial({color: '#' + (0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)});
             var mesh = new THREE.Mesh(geometry, material);
-            mesh.translateX(i*0.5);
             return mesh;
         },
-        translateNode: function(mesh,counter){
-            if(counter != 0){
-                mesh.translateX(counter*0.5);
+
+        translateNode: function(mesh,counter,value,maxValue, numberOfElements){
+            size = 2*value/maxValue; 
+            if (counter != 1){
+                //DET HÄR ÄR INTE ETT BRA SÄTT, datapunkter kan bli dolda
+                mesh.translateX(Math.sin(size*counter+counter/numberOfElements) + Math.tan(counter/numberOfElements));
+                mesh.translateY(Math.cos(size*counter+counter/numberOfElements) + Math.sin(counter/numberOfElements));
+                mesh.translateZ(Math.tan(size*counter+counter/numberOfElements) + Math.cos(counter/numberOfElements));
             }
         },
 });
