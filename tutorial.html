@@ -20,6 +20,9 @@
           var moveDiagram = document.querySelector('#move');
 
           var moveDiagramPosX = moveDiagram.getAttribute('position').x;
+          var moveDiagramPosY = moveDiagram.getAttribute('position').y;
+          var moveDiagramPosZ = moveDiagram.getAttribute('position').z;
+          var moved;
 
           //Rotate components
           var textRotate = document.querySelector('#txtRotate');
@@ -36,6 +39,7 @@
           //Link componenet
 
           var link = document.querySelector('a-link');
+          var textPortal = document.querySelector('#txtPortal');
 
 
           // Scene 1
@@ -44,7 +48,7 @@
           }
 
           if(cameraMoved){
-              circleEl.setAttribute('position', {x: -1, y: 0, z: -9.8});
+              // circleEl.setAttribute('position', {x: -1, y: 0, z: -9.8});
 
               /* txtMove.parentNode.removeChild(txtMove); */
               textMove.setAttribute('visible', true);
@@ -55,21 +59,12 @@
 
           // Scene 2
 
-          if(moveDiagramPosX<3.4){
-            var remText = true;
-          }
-
-          if(remText){
-            textMove.setAttribute('visible', false);
-            textHover.setAttribute('visible', false);
-          }
-          
-          if(moveDiagramPosX<-0.2){
-            var moved = true;
+          if(moveDiagramPosX!=3.5 || moveDiagramPosY!=0.5 || moveDiagramPosZ -9){
+            moved = true;
           }
 
           if(moved){
-            circleEl.setAttribute('position', {x: 3, y: 0, z: -10});
+            // textMove.setAttribute('visible', false);
             /* moveDiagram.setAttribute('visible', false); */
 
             rotateDiagram.setAttribute('visible', true);
@@ -88,10 +83,11 @@
 
           if(rotated){
             circleEl.setAttribute('position', {x: 0.2, y: 0, z: -15});
-            textRotate.setAttribute('visible', false);
-            textHover.setAttribute('visible',false);
+            // textRotate.setAttribute('visible', false);
+            // textHover.setAttribute('visible',false);
 
             link.setAttribute('visible', true)
+            textPortal.setAttribute('visible',true);
 
           }
           
@@ -129,6 +125,7 @@
         <img id="imgMove" src="src/assets/images/move_text.png">
         <img id="imgHover" src="src/assets/images/hover_text.png">
         <img id="imgRotate" src="src/assets/images/rotate_text.png">
+        <!-- <img id="imgPortal" src="src/assets/images/portal_text.png"> -->
         <img id="imgMuseum" src="src/assets/images/index360View.png">
       </a-asset>
   
@@ -203,7 +200,9 @@
         <a-image src="#imgScale" width="3" height="1" side="front"></a-image>
       </a-entity> -->
      
-     
+      <a-entity id="txtPortal" position="0.2 2.3 -18" rotation="0 0 0" scale="1 1 1" visible="false"  camera-listener>
+        <a-image src="#imgPortal" width="3" height="1" side="both"></a-image>
+      </a-entity>
       
 
       <!-- <a-entity progressive-controls="objects: .cube; maxLevel: point">
