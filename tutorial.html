@@ -60,14 +60,14 @@
 
           // Scene 2
 
-          if(moveDiagramPosX!=3.5 || moveDiagramPosY!=0.5 || moveDiagramPosZ -9){
+          if(moveDiagramPosX!=3.5 || moveDiagramPosY!=0.5 || moveDiagramPosZ != -9){
             moved = true;
           }
 
           if(moved){
             // textMove.setAttribute('visible', false);
             /* moveDiagram.setAttribute('visible', false); */
-            circleEl.setAttribute('position', {x: 3.5, y: 0, z: -11});
+            circleEl.setAttribute('position', {x: 3.5, y: 0, z: -12});
 
             circleEl.setAttribute('visible', true);
             rotateDiagram.setAttribute('visible', true);
@@ -206,13 +206,7 @@
       <a-entity id="txtPortal" position="0.2 2.3 -18" rotation="0 0 0" scale="1 1 1" visible="false"  camera-listener>
         <a-image src="#imgPortal" width="3" height="1" side="both"></a-image>
       </a-entity>
-      
 
-      <!-- <a-entity progressive-controls="objects: .cube; maxLevel: point">
-        <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;"
-          rotation-controller></a-entity>
-        <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
-      </a-entity> -->
       <!-- Correct controllers I think -->
         <a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
           <a-entity id="controller1" class="right-controller" 
