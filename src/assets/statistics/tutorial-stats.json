@@ -1,0 +1,18 @@
+[
+  {
+    "x": "This is a bar",
+    "y": 62.5
+  },
+  {
+    "x": "This is also a bar",
+    "y": 51.2
+  },
+  {
+    "x": "Another bar",
+    "y": 39.7
+  },
+  {
+    "x": "The last bar",
+    "y": 34.1
+  }
+]
