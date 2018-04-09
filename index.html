@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>VR-Stat</title>
-    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
+    <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
 </head>
 
@@ -18,12 +18,15 @@
     <!--World-->
     <a-sky color="#add8e6"></a-sky>
     <a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>
-    <a-entity position="-7 1.2 -8" rotation="0 270 0" scale="0.006 0.006 0.006" gltf-model="#controller"></a-entity>
+    <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
 
     <!-- Models-->
+    <a-entity class="diagram"
+              network-diagram></a-entity>
+
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
-              position="10 0.5 -20"
+              position="10 -1 -20"
               grabbable 
               draggable
               rotation-observer></a-entity>
@@ -31,9 +34,9 @@
     <a-entity class="diagram"
               scatter-plot=
                 "src:url(./src/assets/statistics/salary_hours_job.json);
-                 xAxisScale: 0.2;
-                 yAxisScale: 0.00005;
-                 zAxisScale: 0.4;
+                 xAxisScale: 0.15;
+                 yAxisScale: 0.00003;
+                 zAxisScale: 0.3;
                  title: Relation between job searching time, salary and years spent coding professionally;
                  xLabel: Hours spent look for a new job each month;
                  yLabel: Salary;
@@ -41,7 +44,7 @@
                  xSuffix: h;
                  ySuffix: $;
                  zSuffix: y"
-              position="-10 1 -20"
+              position="-10 -0.5 -20"
               grabbable
               draggable
               rotation-observer
@@ -57,16 +60,16 @@
     <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
     <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
 
-    <a-entity id="rig" progressive-controls="objects: .diagram; maxLevel: point">
+    <a-entity id="rig" progressive-controls="maxLevel: point">
         <a-entity id="controller1" class="right-controller" 
-        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
+        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
+        raycaster="objects: .diagram"
+        line="color:blue"
         rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
                   raycaster="showLine:false; enabled: false;"></a-entity>
     </a-entity>
-
-    <a-entity value-display></a-entity>
 
   </a-scene>
 

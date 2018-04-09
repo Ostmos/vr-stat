@@ -2,7 +2,7 @@ var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
-AFRAME.registerComponent('scatter-plot', {
+AFRAME.registerComponent('tutorial-scatter-plot', {
     schema: {
         src: {type: "asset", default: "empty"},
 
@@ -130,7 +130,7 @@ AFRAME.registerComponent('scatter-plot', {
 
         let labelId = 0;
 
-        function labels(values, suffix, align, startPos, scale, offset, direction, rot, textOffset) {
+        /* function labels(values, suffix, align, startPos, scale, offset, direction, rot, textOffset) {
             const MAX_VALUE = Math.max(...values);
             const VALUE_STEP = MAX_VALUE / 9;
 
@@ -146,9 +146,9 @@ AFRAME.registerComponent('scatter-plot', {
 
                 self.el.setObject3D("label" + labelId++, mesh);
             } 
-        }
+        } */
 
-        let rotX = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
+        /* let rotX = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
         let offsetX = new THREE.Vector3(0, 0, 0);
         labels(xValues, d.xSuffix,"left", new THREE.Vector3(0, 0, zMax * d.zAxisScale), d.xAxisScale, d.xAxisStart, new THREE.Vector3(1, 0, 0), rotX, offsetX);
         
@@ -158,9 +158,9 @@ AFRAME.registerComponent('scatter-plot', {
         
         let rotZ = new THREE.Vector3(-Math.PI / 2, 0, 0);
         let offsetZ = new THREE.Vector3(-1.05, 0, 0);
-        labels(zValues, d.zSuffix, "right", new THREE.Vector3(xMax * d.xAxisScale, 0, 0), d.zAxisScale, d.zAxisStart, new THREE.Vector3(0, 0, 1), rotZ, offsetZ);
+        labels(zValues, d.zSuffix, "right", new THREE.Vector3(xMax * d.xAxisScale, 0, 0), d.zAxisScale, d.zAxisStart, new THREE.Vector3(0, 0, 1), rotZ, offsetZ); */
 
-        let xLabel = this.Label(d.xLabel, 600, new THREE.Vector3(xMax * d.xAxisScale / 2, 0, zMax * d.zAxisScale),
+        /* let xLabel = this.Label(d.xLabel, 600, new THREE.Vector3(xMax * d.xAxisScale / 2, 0, zMax * d.zAxisScale),
          "center", new THREE.Vector3(-Math.PI / 2, 0, 0), new THREE.Vector3(-1.5, 0, 1.4), font, fontTexture, 0.007);
         this.el.setObject3D("xLabel", xLabel);
 
@@ -174,7 +174,7 @@ AFRAME.registerComponent('scatter-plot', {
 
         let title = this.Label(d.title, 800, new THREE.Vector3(0, yMax * d.yAxisScale, zMax * d.zAxisScale / 2),
          "center", new THREE.Vector3(0, Math.PI / 4, 0), new THREE.Vector3(0, 0.5, 1.7), font, fontTexture, 0.010);
-        this.el.setObject3D("title", title);
+        this.el.setObject3D("title", title); */
     },
 
     Label: function(text, width, position, align, rotation, textOffset, font, fontTexture, fontSize) {
