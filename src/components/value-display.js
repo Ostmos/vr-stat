@@ -21,6 +21,7 @@ AFRAME.registerComponent('value-display', {
         data.yValue = ...
         data.zValue = ...
         */
+	
     
         var text = document.createElement("a-entity");
         var result = document.createElement("a-entity");
@@ -61,5 +62,9 @@ AFRAME.registerComponent('value-display', {
 
         text.appendChild(result);
         this.el.appendChild(text);  
-    }   
+    }
+
+    tick: function() {
+	console.log(this.components);
+    }
 });
