@@ -10,8 +10,8 @@ AFRAME.registerComponent('bar-chart-listener', {
         el.addEventListener('hover-start', function(evt) {
             //var children = el.childNodes;
             //children[0].setAttribute("visible", "true");
-            //console.log(document.getElementById('controller1').getAttribute("controller-display").buttonDown);
-
+            console.log(document.getElementById('controller1'));
+	    
             data.isHovering = true;
         });
 
