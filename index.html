@@ -17,18 +17,19 @@
 
     <!--World-->
     <a-sky color="#add8e6"></a-sky>
-    <a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>
+    <!--<a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>-->
     <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
 
     <!-- Models-->
-    <a-entity class="diagram"
-              network-diagram></a-entity>
+    <!--<a-entity class="diagram"
+              network-diagram></a-entity>-->
 
     <a-entity class="diagram" 
               bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
               position="10 -1 -20"
               grabbable 
               draggable
+              rotation="0 0 0"
               rotation-observer></a-entity>
 
     <a-entity class="diagram"
@@ -46,6 +47,21 @@
                  zSuffix: y"
               position="-10 -0.5 -20"
               grabbable
+              draggable
+              rotation-observer></a-entity>
+
+    <a-entity class="diagram" 
+              axis="arr: yo, lol, xd, waddup, whyu, you, do, lol; startOnZero: false; axisLength: 10; type: category; textAlignment: right; label:Lmao xd"
+              position="0 0 -4"></a-entity>
+
+    <a-entity class="diagram" 
+              axis="arr: yo, lol, xd, waddup, whyu, you, do, lol; startOnZero: false; axisLength: 10; type: category; textAlignment: left; label:Lmao xd"
+              position="3 0 -4"></a-entity>
+
+    <a-entity class="diagram" 
+              bar-chart-2="src:url(./src/assets/statistics/language_popularity.json)" 
+              position="0 0 -2"
+              grabbable 
               draggable
               rotation-observer></a-entity>
 

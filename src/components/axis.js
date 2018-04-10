@@ -4,7 +4,7 @@ import * as text from "../lib/text";
 AFRAME.registerComponent( "axis", {
 
 	schema: {
-		arr: { type: "array" },
+		arr: { type: "array", default: [2, 3, 0, 1, 20] },
         axisLength: { type: "number", default: 1 },
         startOnZero: { type: "boolean", default: true },
         type: { type: "string", default: "numerical" },
