@@ -26,8 +26,6 @@ AFRAME.registerComponent("bar-chart", {
         .then(function(jsonData){
             self.createChart(jsonData);
         });
-	var contComp = document.getElementById('controller2').components; 
-	console.log(contComp.raycaster);
     },
     
     createChart: function(bars) {
