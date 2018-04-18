@@ -10,7 +10,7 @@ AFRAME.registerComponent('bar-chart-listener', {
         el.addEventListener('hover-start', function(evt) {
             //var children = el.childNodes;
             //children[0].setAttribute("visible", "true");
-            console.log(document.getElementById('controller1'));
+            console.log("hej");
 	    
             data.isHovering = true;
         });
@@ -21,6 +21,12 @@ AFRAME.registerComponent('bar-chart-listener', {
             data.isHovering = false;
         });
 
+        el.addEventListener('raycaster-intersected', function(evt) {
+            //var children = el.childNodes;
+            //children[0].setAttribute("visible", "false");
+            console.log(evt);
+            console.log("hej!");
+        });
     
     },
 
