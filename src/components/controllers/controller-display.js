@@ -28,7 +28,7 @@ AFRAME.registerComponent('controller-display', {
             //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
 	    var rightControllers = document.getElementsByClassName('right-controller');
 	    for(var i = 0; i < rightControllers.length; i++){
-		var hovered   = rightControllers[i].components['super-hands'].hoverEls;
+        var hovered   = rightControllers[i].components['raycaster'].intersectedEls[0].object3D.children[0].el;
 		console.log(hovered);
 		if(hovered){
 		    var contDisp = document.getElementById('controller1').components["controller-display"];

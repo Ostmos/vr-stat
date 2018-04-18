@@ -6,14 +6,12 @@ AFRAME.registerComponent("bar-chart", {
 
     schema: {
         src: {type: "asset", default: "empty"},
-
         title: {type: "string", default: ""},
         xLabel: {type: "string", default: ""},
         yLabel: {type: "string", default: ""},
         suffix: {type: "string", default: ""},
-
         yScale: {type: "number", default: 1.0},
-        barWidth: {type: "number", default: 0.3},
+        barWidth: {type: "number", default: 0.5},
         barPadding: {type: "number", default: 0.1},
         fontSize: {type: "number", default: 2}
     },

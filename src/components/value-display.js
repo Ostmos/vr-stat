@@ -62,7 +62,7 @@ AFRAME.registerComponent('value-display', {
 
         text.appendChild(result);
         this.el.appendChild(text);  
-    }
+    },
 
     tick: function() {
 	console.log(this.components);

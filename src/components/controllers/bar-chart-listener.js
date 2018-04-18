@@ -22,7 +22,7 @@ AFRAME.registerComponent('bar-chart-listener', {
         });
 
     
-    }
+    },
 
     getValues: function(){
         // This function needs to be fixed! How do we get the values from 
@@ -45,7 +45,7 @@ AFRAME.registerComponent('bar-chart-listener', {
                 });
             }
         }
-    }
+    },
     tick: function(){
         if(document.getElementById("controller1").getAttribute('controller-display').buttonDown &&  data.isHovering){
             console.log("spara värderna");
