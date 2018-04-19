@@ -1,3 +1,5 @@
+var loader = require( "../lib/stat-json" );
+
 AFRAME.registerComponent( "bar-chart-2", {
 
     schema: {
@@ -14,6 +16,12 @@ AFRAME.registerComponent( "bar-chart-2", {
  
     init: function() {
         var self = this;
+
+        let x = loader.loadJSON( this.data.src, function( data ) {
+
+            let x = loader.getColumn( data ,"x");
+            
+        } );
 
         fetch( this.data.src )
         .then( ( response ) => response.json() )
