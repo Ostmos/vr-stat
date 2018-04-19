@@ -11,7 +11,7 @@ require("./components/rotation-observer");
 require("./components/rotation-controller");
 
 require("./components/controllers/controller-display");
-requrire("./components/controllers/bar-chart-listener");
+require("./components/controllers/bar-chart-listener");
 
 require("./components/value-display");
 require("./components/network-diagram");
