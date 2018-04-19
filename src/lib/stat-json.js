@@ -1,10 +1,6 @@
 // Fetch JSON file
 export function loadJSON( url, callback ) {
 
-    if ( url != null ) {
-
-    }
-
     fetch( url )
     .then( function( response ) {
 
@@ -39,7 +35,7 @@ export function getColumn( jsonData, attribute ) {
             } );
 
         } );
-
+        
         return result;
 
     }
