@@ -267,9 +267,9 @@ AFRAME.registerComponent('scatter-plot', {
 
                 let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);   
                 
-                console.log(intersections);
+                //console.log(intersections);
 
-                document.getElementById('controller1').components["controller-display"].updateValues = true;
+                //document.getElementById('controller1').components["controller-display"].updateValues = true;
 
                 if (intersections.length > 0) {
                     let index = intersections[0].index;

@@ -33,7 +33,7 @@ AFRAME.registerComponent('controller-display', {
 		var hovered = 1;
 		diagrams = document.querySelectorAll(".diagram");
 		
-		    console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams,recursive=true));
+		console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams,recursive=true));
 
 
 		console.log(hovered);
