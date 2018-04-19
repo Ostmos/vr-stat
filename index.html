@@ -55,7 +55,7 @@
               
 
     <!-- Lights -->
-    <a-entity light="type: hemisphere; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: true; intensity: 1.0" position="3 3 -15"></a-entity>
+    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: true; intensity: 1.0" position="3 3 -15"></a-entity>
     <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
 
     <a-entity id="rig" progressive-controls="maxLevel: point">
@@ -63,8 +63,7 @@
         super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
         raycaster="objects: .diagram"
         line="color:blue"
-        rotation-controller
-        controller-display></a-entity>
+        rotation-controller></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
                   raycaster="showLine:false; enabled: false;"></a-entity>
