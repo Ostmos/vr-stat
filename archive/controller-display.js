@@ -1,9 +1,12 @@
 AFRAME.registerComponent('controller-display', {
     schema: {
         size: {type: 'number', default: 10},
+        buttonDown: {type: 'boolean', default: false},
     },
 
     init: function() {
+        var el = this.el;
+        var data = this.data;
         var text = document.createElement("a-entity");
         text.className = "cont-disp";
         text.setAttribute("slice9", "width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png");
@@ -18,6 +21,18 @@ AFRAME.registerComponent('controller-display', {
             width: 1,
             font: 'roboto'
         });
-        this.el.appendChild(text);
+        el.appendChild(text);
+
+        window.addEventListener('keydown', function(event) {
+            console.log("a-button down");
+            //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
+            data.buttonDown = true;
+        });
+
+        window.addEventListener('keyup', function(event) {
+            console.log("a-button up");
+            //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
+            data.buttonDown = false;
+        });
     }
 });

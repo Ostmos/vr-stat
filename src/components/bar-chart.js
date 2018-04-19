@@ -1,4 +1,4 @@
-var fontCreator = require('three-bmfont-text');
+    var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
@@ -25,7 +25,7 @@ AFRAME.registerComponent("bar-chart", {
             self.createChart(jsonData);
         });
     },
-
+    
     createChart: function(bars) {
         var data = this.data;
 
@@ -60,7 +60,7 @@ AFRAME.registerComponent("bar-chart", {
                 map: texture,
                 side: THREE.DoubleSide,
                 transparent: true,
-                color: 0x00000 
+                color: 0xffffff 
             }))
             
             fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
@@ -161,6 +161,5 @@ AFRAME.registerComponent("bar-chart", {
         let line = new THREE.LineSegments(lines, material);
         this.el.setObject3D("yAxis", line);
     }
-
 
 });

@@ -24,8 +24,8 @@
     "super-hands": "^2.1.0",
     "three-bmfont-text": "^2.3.0",
     "three-orbit-viewer": "^69.3.1",
-    "webpack": "^4.2.0",
-    "webpack-cli": "^2.0.13",
-    "webpack-dev-server": "^3.1.1"
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
   }
 }
