@@ -10,7 +10,7 @@ require("./components/tutorial-scatter-plot");
 require("./components/rotation-observer");
 require("./components/rotation-controller");
 
-require("./components/controllers/controller-display");
+require("./components/controller-display");
 requrire("./components/controllers/bar-chart-listener");
 
 require("./components/value-display");

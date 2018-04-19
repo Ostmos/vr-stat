@@ -2,6 +2,7 @@ var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
+
 AFRAME.registerComponent('scatter-plot', {
     schema: {
         src: {type: "asset", default: "empty"},
@@ -89,6 +90,7 @@ AFRAME.registerComponent('scatter-plot', {
                 });
             })
         });
+
     },
 
     createAxes: function(axes, xValues, yValues, zValues, font, fontTexture, xMax, yMax, zMax) {
@@ -263,7 +265,11 @@ AFRAME.registerComponent('scatter-plot', {
 
                 this.raycasterEl.objects = this.points;
 
-                let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);
+                let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);   
+                
+                console.log(intersections);
+
+                document.getElementById('controller1').components["controller-display"].updateValues = true;
 
                 if (intersections.length > 0) {
                     let index = intersections[0].index;
@@ -278,5 +284,6 @@ AFRAME.registerComponent('scatter-plot', {
                     }
                 }
             }
-    }
+    },
+
 });

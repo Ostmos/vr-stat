@@ -25,10 +25,15 @@ AFRAME.registerComponent('controller-display', {
 
         window.addEventListener('keydown', function(event) {
             console.log("a-button down");
+
             //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
 	    var rightControllers = document.getElementsByClassName('right-controller');
 	    for(var i = 0; i < rightControllers.length; i++){
-        var hovered   = rightControllers[i].components['raycaster'].intersectedEls[0].object3D.children[0].el;
+            var diagram = document.getElementsByClassName('diagrams')[0];
+            var hovered = 1;
+        rightControllers[i].addEventListener('raycaster-intersections', function(){
+            console.log('korsar skiten');
+        });
 		console.log(hovered);
 		if(hovered){
 		    var contDisp = document.getElementById('controller1').components["controller-display"];
