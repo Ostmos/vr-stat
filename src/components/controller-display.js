@@ -25,25 +25,73 @@ AFRAME.registerComponent('controller-display', {
 
 
         window.addEventListener('keydown', function(event) {
-            console.log("a-button down");
+        
+        var allPoints = document.querySelector('[scatter-plot]').object3D.children[0];
+        if(allPoints.length > 0){
+                var intersections = el.components.raycaster.raycaster.intersectObject(allPoints);
+
+                var value =  allPoints.geometry.vertices[intersections[0].index];
+
+                var scaleX = document.querySelector('[scatter-plot]').components['scatter-plot'].data.xAxisScale;
+                var scaleY = document.querySelector('[scatter-plot]').components['scatter-plot'].data.yAxisScale;
+                var scaleZ = document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisScale;
+
+                var startX = document.querySelector('[scatter-plot]').components['scatter-plot'].data.xAxisStart;
+                var startY = document.querySelector('[scatter-plot]').components['scatter-plot'].data.yAxisStart;
+                var startZ = document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisStart;
+                
+                
+                text.setAttribute("text", {
+                    value:  "x: " + (value.x / scaleX - startX) + "\n " +
+                            "y: " + (value.y / scaleY - startY) + "\n " +
+                            "z: " + (value.z / scaleZ - startZ) + "\n ",
+                        color: "#0050"
+                    });
+        }
+        function isBar(component) {
+            return (component.name === "bar");
+        }
+        function isLabel(component){
+            return (component.name === "label");
+        }
+        var allBars   = document.querySelector('[bar-chart]').object3D.children.filter(isBar);
+        var allLabels = document.querySelector('[bar-chart]').object3D.children.filter(isLabel);
+
+        function makePair(bars, labels){
+            var barLabelPairs = [];
+            for(var i = 0; i < allBars.length; i++){
+                barLabelPairs.push([allBars[i], allLabels[i]]);
+            }
+            return barLabelPairs;
+        }
+
+        var barLabelPairs = makePair(allBars, allLabels);
+
+        if(allBars.length > 0){
+            var intersections = el.components.raycaster.raycaster.intersectObjects(allBars);
+
+            var intersectedBar = intersections[0].object; 
+
+            console.log(intersections[0].object.uuid);
+
+            for(var b = 0; b < barLabelPairs.length; b++){
+                console.log(barLabelPairs[b][0].uuid);
+                if(barLabelPairs[b][0].uuid === intersectedBar.uuid){
+                    var scaleY = document.querySelector('[bar-chart]').components['bar-chart'].data.yScale;
+                    text.setAttribute("text", {
+                        value: barLabelPairs[b][1].value + ' : ' + (barLabelPairs[b][0].geometry.parameters.height / scaleY).toFixed(1), 
+                            color: "#0050"
+                        });
+                }
+            }
+
+            var value = intersections[0].object.geometry.parameters.height;
+            console.log(value);
+        }
+
 
 
         
-
-       var arr = document.querySelector('[scatter-plot]').object3D.children[0];
-       let intersections = el.components.raycaster.raycaster.intersectObject(arr);
-       //el.components.raycaster.objects = arr;
-       var value =  arr.geometry.vertices[intersections[0].index];
-
-       text.setAttribute("text", {
-         value: "x: " + value.x + "\n " +
-                "y: " + value.y + "\n " +
-                "z: " + value.z + "\n ",
-            color: "#0050"
-        });
-
-        console.log(document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisScale - document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisStart);
-
         //console.log(intersections[0].index);
 
 		//console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams));
