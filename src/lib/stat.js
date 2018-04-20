@@ -10,6 +10,13 @@ export function range( arr, min, max ) {
 
 }
 
+export function startOnZero( arr ) {
+
+    let result = range( arr, 0, ...arr );
+    return result;
+
+}
+
 export function interpolate( arr, steps ) {
 
     const MIN = Math.min( ...arr );
@@ -20,7 +27,6 @@ export function interpolate( arr, steps ) {
     for (let i = 0; i < steps + 1; i++ ) {
         interpolatedArray.push( MIN + STEP * i );
     }
-
     return interpolatedArray;
 
 }
@@ -31,15 +37,13 @@ export function stepArray( steps, stepLength ) {
     for ( let i = 0; i < steps * stepLength; i += stepLength ) {
         arr.push( i );
     }
-
     return arr;
 
 }
 
-export function offset( off, arr ) {
+export function offset( arr, off ) {
 
-    let offsetArr = arr.map ( elem => elem + off );
-
+    let offsetArr = arr.map( elem => elem + off );
     return offsetArr;
 
 }
@@ -50,24 +54,19 @@ export function scaleFit( arr, scale ) {
     const MAX = Math.max( ...arr ); 
     const RATIO = scale / (MAX - MIN);
     let scaledArray = arr.map( elem => elem * RATIO );
-
     return scaledArray;
 
 }
 
 export function sortNumeric( arr ) {
 
-    let arrCopy = arr.slice();
-    arrCopy.sort( (i, j) => (i - j) );
-
-    return arr;
+    arr.sort( ( i, j ) => ( i - j ));
 
 }
 
 export function decimalPrecision( arr, precision ) {
 
-    let precisionArray = arr.map ( elem => elem.toFixed(precision) );
-
+    let precisionArray = arr.map( elem => elem.toFixed(precision) );
     return precisionArray;
 
 }
@@ -76,10 +75,23 @@ export function suffix ( arr, s ) {
 
     let suffixArray = [];
     suffixArray = arr.map( elem => elem.concat( s ) );
-
     return suffixArray;
 
 }
+
+export function numericalToString( arr, precission, suffix ) {
+
+    let result = decimalPrecision( arr, precission);
+
+    if ( suffix ) {
+
+        result = suffix( result, suffix);
+
+    }
+
+    return result;
+
+} 
 
 export function longestString( arr ) {
 
@@ -87,7 +99,34 @@ export function longestString( arr ) {
     let sortedArr = arrCopy.sort ( ( str1, str2 ) => {
         return str1.length < str2.length;
     } );
-
     return sortedArr[0].length;
 
 }
+
+// Linear interpolation
+// Categorical values: stepArray => scaleFit 
+// Numerical values: interpolate => scaleFit
+export function statTypeScaledLinearInterpolation( values, steps, type, fitLength ) {
+
+    let result = [];
+    if ( type === "numerical" ) {
+
+        result = interpolate( values, steps );
+
+    } else if ( type === "categorical") {
+
+        const Length = values.length;
+        const StepLength = Length / steps; 
+        result = stepArray( Length, StepLength );
+        result = offset( result, fitLength / steps / 2);
+
+    } else {
+
+        throw Error( type + " not supported as a data type for stat" );
+
+    }
+
+    result = scaleFit( result, fitLength );
+    return result;
+
+} 

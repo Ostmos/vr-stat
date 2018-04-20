@@ -1,40 +1,54 @@
-import * as statJson from "../lib/statJson";
+import { loadJSON, getColumn } from "../lib/statJson";
+import * as stat from "../lib/stat";
 
 AFRAME.registerComponent( "bar-chart-2", {
 
     schema: {
         src: { type: "asset" },
-        xAxisAttribute: { type: "string" },
-        yAxisAttribute: { type: "string" },
+        xAxisCol: { type: "string" },
+        yAxisCol: { type: "string" },
+        height: { type: "number", default: 1.5 },
+        width: { type: "number", default: 1.5 },
         title: { type: "string" },
     },
  
     init: function() {
         let data = this.data;
 
-        statJson.loadJSON( this.data.src, function( jsonData ) {
+        // Load json data and extract two columns as arrays
+        let self = this;
+        loadJSON( this.data.src, jsonData => {
 
-            const XAxis = statJson.getColumn( jsonData, data.xAxisAttribute );
-            const YAxis = statJson.getColumn( jsonData, data.yAxisAttribute );
+            const XAxisData = getColumn( jsonData, data.xAxisCol );
+            const XAxisLabels = XAxisData;
 
-            console.log(XAxis);
-            console.log(YAxis);
-            
+            let YAxisData = getColumn( jsonData, data.yAxisCol );
+            YAxisData = stat.startOnZero( YAxisData ); 
+            const YAxisLabels = stat.numericalToString( YAxisData, 2 );
+
+            const XAxisPositions = stat.statTypeScaledLinearInterpolation( XAxisData, 20, "categorical", data.width );
+            const YAxisPositions = stat.statTypeScaledLinearInterpolation( YAxisData, 20, "numerical", data.height );
+
+            console.log(XAxisPositions);
+            console.log(YAxisPositions);
+
+
+            self.plot( XAxisPositions, XAxisLabels, YAxisPositions, YAxisLabels );
+
         } );
 
     },
 
-    plot: function( jsonData ) {
+    plot: function( xPositions, xLabels, yPositions, yLabels ) {
 
         let axis = document.createElement( "a-entity" );
         axis.setAttribute("axis", {
-            arr: [0, 1, 2], 
-            textAligment: "right"
+            positions: yPositions,
+            labels: yLabels, 
+            textAligment: "right",
+            rotation: { x: 0, y: 90, x: 0 },
+            axisLength: 1.5, 
         } );
-        axis.setAttribute( "rotation" ,
-            { x: 0, y: 90, z: 0 }
-        );
-
         this.el.appendChild( axis );
     } 
 

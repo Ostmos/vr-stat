@@ -4,16 +4,14 @@ import * as text from "../lib/text";
 AFRAME.registerComponent( "axis", {
 
 	schema: {
-		arr: { type: "array", default: [2, 3, 0, 1, 20] },
-        axisLength: { type: "number", default: 1 },
-        startOnZero: { type: "boolean", default: true },
-        type: { type: "string", default: "numerical" },
-        unit: { type: "string" },
-        decimals: { type: "number", default: 2 },
-        label: { type: "string" },
-		fontColor: { type: "color", default: "#000000" },
+        positons: { type: "array", default: [0.0, 0.5, 1] },
+        labels: { type: "array", default: ["No value", "No value", "No value"] }, 
 		textAlignment: { type: "string", default: "left" },
-		showTicks: { type: "boolean" }
+        axisLength: { type: "number", default: 1 },
+        axisEndPadding: { type: "number", default: 0 },
+		showTicks: { type: "boolean" },
+        label: { type: "string" },
+		fontColor: { type: "color", default: "#000000" }
 	},
 
 	init: function () {
@@ -27,38 +25,8 @@ AFRAME.registerComponent( "axis", {
         const StepPerMeter = 4;
         const Steps = data.axisLength * StepPerMeter; 
 
-        // Numerical and categorical
-        if ( data.type === "numerical" ) {
-
-            if ( data.startOnZero ) {
-                arr.push( 0 );
-            }
-
-            let steps = stat.interpolate( arr, Steps );
-
-            this.labelPositions = stat.scaleFit( steps, data.axisLength ); 
-            if ( !data.startOnZero ) {
-                this.labelPositions = stat.offset(
-                    -this.labelPositions[0] ,
-                    this.labelPositions 
-                );
-            }
-
-            let labels = stat.decimalPrecision( steps, data.decimals );
-            if ( data.unit.length > 0 ) {
-                labels = stat.suffix( labels, data.unit );
-            }
-            this.labels = labels;
-
-        } else {
-
-            this.labels = arr;
-            let positions = stat.stepArray( arr.length - 1, StepLength );
-            positions = stat.scaleFit( positions, data.axisLength - StepLength * 2 );
-            this.labelPositions = positions;
-            this.labelPositions = stat.offset( StepLength , positions );
-
-        }
+        this.labelPositions = this.data.positions;
+        this.labels = this.data.labels;
 
         const MAX_GLYPHS = stat.longestString( this.labels );
 
