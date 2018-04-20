@@ -24,11 +24,12 @@ AFRAME.registerComponent('controller-display', {
         el.appendChild(text);
 
 
-        window.addEventListener('keydown', function(event) {
+        window.addEventListener('abuttondown', function(event) {
         
         var allPoints = document.querySelector('[scatter-plot]').object3D.children[0];
-        if(allPoints.length > 0){
-                var intersections = el.components.raycaster.raycaster.intersectObject(allPoints);
+        var intersections = el.components.raycaster.raycaster.intersectObject(allPoints);
+
+        if(intersections.length > 0){
 
                 var value =  allPoints.geometry.vertices[intersections[0].index];
 
@@ -42,91 +43,38 @@ AFRAME.registerComponent('controller-display', {
                 
                 
                 text.setAttribute("text", {
-                    value:  "x: " + (value.x / scaleX - startX) + "\n " +
-                            "y: " + (value.y / scaleY - startY) + "\n " +
-                            "z: " + (value.z / scaleZ - startZ) + "\n ",
-                        color: "#0050"
+                    value:  "x: " + (value.x / scaleX - startX).toFixed(2) + "\n " +
+                            "y: " + (value.y / scaleY - startY).toFixed(2) + "\n " +
+                            "z: " + (value.z / scaleZ - startZ).toFixed(2) + "\n ",
+                        color: ' #e0e0e0' 
                     });
         }
-        function isBar(component) {
-            return (component.name === "bar");
-        }
-        function isLabel(component){
-            return (component.name === "label");
-        }
+
         var allBars   = document.querySelector('[bar-chart]').object3D.children.filter(isBar);
         var allLabels = document.querySelector('[bar-chart]').object3D.children.filter(isLabel);
 
-        function makePair(bars, labels){
-            var barLabelPairs = [];
-            for(var i = 0; i < allBars.length; i++){
-                barLabelPairs.push([allBars[i], allLabels[i]]);
-            }
-            return barLabelPairs;
-        }
-
         var barLabelPairs = makePair(allBars, allLabels);
 
-        if(allBars.length > 0){
-            var intersections = el.components.raycaster.raycaster.intersectObjects(allBars);
+        var barsIntersected = el.components.raycaster.raycaster.intersectObjects(allBars);
 
-            var intersectedBar = intersections[0].object; 
-
-            console.log(intersections[0].object.uuid);
+        if(barsIntersected.length > 0){
+            var intersectedBar = barsIntersected[0].object; 
 
             for(var b = 0; b < barLabelPairs.length; b++){
-                console.log(barLabelPairs[b][0].uuid);
-                if(barLabelPairs[b][0].uuid === intersectedBar.uuid){
+                var currentBar   = barLabelPairs[b][0];
+                var currentBarHeight = currentBar.geometry.parameters.height;
+
+                var currentlabel = barLabelPairs[b][1].value;
+
+                if(currentBar.uuid === intersectedBar.uuid){
                     var scaleY = document.querySelector('[bar-chart]').components['bar-chart'].data.yScale;
                     text.setAttribute("text", {
-                        value: barLabelPairs[b][1].value + ' : ' + (barLabelPairs[b][0].geometry.parameters.height / scaleY).toFixed(1), 
-                            color: "#0050"
+                        value: currentlabel + ' : ' + (currentBarHeight / scaleY).toFixed(1), 
+                            color: ' #e0e0e0' 
                         });
                 }
             }
-
-            var value = intersections[0].object.geometry.parameters.height;
-            console.log(value);
         }
-
-
-
-        
-        //console.log(intersections[0].index);
-
-		//console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams));
-		/*if(hovered){
-		    var contDisp = document.getElementById('controller1').components["controller-display"];
-		    
-		    if(contDisp != undefined){
-			if(el.parentNode.parentNode.getAttribute('bar-chart')){
-			    contDisp.setAttribute("text", {
-				// Change these to the intersected object's values
-				// Some similar method as:
-				//             rightControllers[i].components['raycaster'].intersectedEls[0].x.y.z...
-				value: "x: " + el.getAttribute('labelX') + "\n " +
-				    "y: " + el.getAttribute('labelY') + "\n " +
-				    "z: " + el.getAttribute('labelZ'), 
-				color: "#0050"
-			    });
-			}else if(el.parentNode.parentNode.getAttribute('scatter-plot-2')){
-			    contDisp.setAttribute("text", {
-				// Change these to the intersected object's values
-				// Some similar method as:
-				//             rightControllers[i].components['raycaster'].intersectedEls[0].x.y.z...
-				value: "x: " + el.getAttribute('labelX') + "\n " +
-				    "y: " + el.getAttribute('labelY') + "\n " +
-				    "z: " + el.getAttribute('labelZ') + "\n " +
-				    "val:"+ el.getAttribute("labelVal"),
-				color: "#0050"
-			    });
-			}
-		    }
-		    
-        }*/
-	    //}
-
-            data.buttonDown = true;
         });
 
         window.addEventListener('keyup', function(event) {
@@ -136,3 +84,18 @@ AFRAME.registerComponent('controller-display', {
         });
     }
 });
+
+function makePair(bars, labels){
+    var barLabelPairs = [];
+    for(var i = 0; i < bars.length; i++){
+        barLabelPairs.push([bars[i], labels[i]]);
+    }
+    return barLabelPairs;
+}
+
+function isBar(component) {
+    return (component.name === "bar");
+}
+function isLabel(component){
+    return (component.name === "label");
+}
