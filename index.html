@@ -5,6 +5,7 @@
   <title>VR-Stat</title>
     <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
 </head>
 
 <body>
@@ -65,7 +66,8 @@
         super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
         raycaster="objects: .diagram"
         line="color:blue"
-        rotation-controller></a-entity>
+        rotation-controller
+        controller-display></a-entity>
         <a-entity id="controller2" class="left-controller" 
                   teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
                   raycaster="showLine:false; enabled: false;"></a-entity>

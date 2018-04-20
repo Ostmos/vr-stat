@@ -2,6 +2,7 @@ var fontCreator = require('three-bmfont-text');
 var fontLoader = require('load-bmfont');
 var SDFShader = require('../shaders/sdf');
 
+
 AFRAME.registerComponent('scatter-plot', {
     schema: {
         src: {type: "asset", default: "empty"},
@@ -79,7 +80,7 @@ AFRAME.registerComponent('scatter-plot', {
                     map: texture,
                     side: THREE.DoubleSide,
                     transparent: true,
-                    color: 0xffffff 
+                    color: 0x00000 
                 }))
                 
                 fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
@@ -89,6 +90,7 @@ AFRAME.registerComponent('scatter-plot', {
                 });
             })
         });
+
     },
 
     createAxes: function(axes, xValues, yValues, zValues, font, fontTexture, xMax, yMax, zMax) {
@@ -202,6 +204,9 @@ AFRAME.registerComponent('scatter-plot', {
 
         const LENGTH = d.nbrOfPoints < 0 ? jsonData.length : d.nbrOfPoints;
 
+        console.log(LENGTH);
+
+
         this.geometry = new THREE.Geometry();
 
         let COLORS = [0xFF847C];
@@ -263,7 +268,11 @@ AFRAME.registerComponent('scatter-plot', {
 
                 this.raycasterEl.objects = this.points;
 
-                let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);
+                let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);   
+                
+                //console.log(intersections);
+                //var contDisp = document.getElementsByClassName('right-controller')[0].components["controller-display"];
+                //contDisp.updateValues = true;
 
                 if (intersections.length > 0) {
                     let index = intersections[0].index;
@@ -278,5 +287,6 @@ AFRAME.registerComponent('scatter-plot', {
                     }
                 }
             }
-    }
+    },
+
 });

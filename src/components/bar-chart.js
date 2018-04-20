@@ -81,6 +81,7 @@ AFRAME.registerComponent("bar-chart", {
             const BAR_MATERIAL = new THREE.MeshStandardMaterial({color: 0xF48B94});
             let barMesh = new THREE.Mesh(BAR_GEOMETRY, BAR_MATERIAL);
             barMesh.position.set(startPos + totalBarSize * i, yValues[i] / 2 * data.yScale, 0);
+            barMesh.name = 'bar';
             this.el.setObject3D("bars" + i, barMesh);
 
             var fontGeometry = fontCreator({
@@ -116,6 +117,8 @@ AFRAME.registerComponent("bar-chart", {
             textAnchor.position.set((-planeWidth / 2 + barSize / 2) + barSize * i, 0, barSize / 2 + 1.2);
             textAnchor.rotation.set(Math.PI / 2, 0, -Math.PI / 2);
             textAnchor.add(mesh);
+            textAnchor.name = "label";
+            textAnchor.value = xLabels[i];
             this.el.setObject3D('xLabel' + i, textAnchor);
         }
     },
