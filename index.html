@@ -33,7 +33,8 @@
               shadow
               rotation-observer></a-entity>
 
-    <a-entity bar-chart-2="src:url(./src/assets/statistics/language_popularity.json)"></a-entity>
+    <a-entity bar-chart-2="src:url(./src/assets/statistics/language_popularity.json);
+                           xAxisAttribute: x; yAxisAttribute: y;"></a-entity>
 
 
     <a-entity class="diagram"
@@ -75,40 +76,4 @@
 
 </body>
 
-</html> title: Relation between job searching time, salary and years spent coding professionally;
-                 xLabel: Hours spent look for a new job each month;
-                 yLabel: Salary;
-                 zLabel: Years spent coding professionally;
-                 xSuffix: h;
-                 ySuffix: $;
-                 zSuffix: y"
-              position="-4 1 -10"
-              grabbable
-              draggable
-              rotation-observer></a-entity>
-
-    <!-- Lights -->
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 -10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
-    <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
-
-
-    <!--Controllers-->
-    <!--<a-entity controller-display slice9="width: 0.5; height: 0.3; left: 20; right: 43; top: 20; bottom: 43; src: src/assets/images/tooltip.png" position="3 2 2"></a-entity>
-    <a-entity controller-display position="0 2 0"></a-entity>-->
-    <!--<a-entity position="0 1.6 0" progressive-controls="objects: .cube; maxLevel: point">
-
-    <a-entity progressive-controls="objects: .cube; maxLevel: point">
-      <a-entity id="controller1" class="right-controller" super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown;" rotation-controller controller-display></a-entity>
-      <a-entity id="controller2" class="left-controller" teleport-controls="button: trigger; collision-entities: #floor" raycaster="objects: .a; showLine: false;"></a-entity>
-    </a-entity>
-  -->
-
-
-  </a-scene>
-
-</body>
-
-</html>
+</html> 

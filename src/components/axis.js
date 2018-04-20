@@ -23,9 +23,9 @@ AFRAME.registerComponent( "axis", {
         let self = this;
         let arr = data.arr;
 
-        const STEP_LENGTH = 0.2;
-        const STEPS_PER_METER = 4;
-        const STEPS = data.axisLength * STEPS_PER_METER; 
+        const StepLength = 0.2;
+        const StepPerMeter = 4;
+        const Steps = data.axisLength * StepPerMeter; 
 
         // Numerical and categorical
         if ( data.type === "numerical" ) {
@@ -34,7 +34,7 @@ AFRAME.registerComponent( "axis", {
                 arr.push( 0 );
             }
 
-            let steps = stat.interpolate( arr, STEPS );
+            let steps = stat.interpolate( arr, Steps );
 
             this.labelPositions = stat.scaleFit( steps, data.axisLength ); 
             if ( !data.startOnZero ) {
@@ -53,10 +53,10 @@ AFRAME.registerComponent( "axis", {
         } else {
 
             this.labels = arr;
-            let positions = stat.stepArray( arr.length - 1, STEP_LENGTH );
-            positions = stat.scaleFit( positions, data.axisLength - STEP_LENGTH * 2 );
+            let positions = stat.stepArray( arr.length - 1, StepLength );
+            positions = stat.scaleFit( positions, data.axisLength - StepLength * 2 );
             this.labelPositions = positions;
-            this.labelPositions = stat.offset( STEP_LENGTH , positions );
+            this.labelPositions = stat.offset( StepLength , positions );
 
         }
 

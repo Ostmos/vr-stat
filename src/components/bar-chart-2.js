@@ -1,34 +1,25 @@
-var loader = require( "../lib/stat-json" );
+import * as statJson from "../lib/statJson";
 
 AFRAME.registerComponent( "bar-chart-2", {
 
     schema: {
-        src: { type: "asset", default: "empty" },
+        src: { type: "asset" },
+        xAxisAttribute: { type: "string" },
+        yAxisAttribute: { type: "string" },
         title: { type: "string" },
-        xLabel: { type: "string" },
-        yLabel: { type: "string" },
-        suffix: { type: "string" },
-        yScale: { type: "number", default: 1.0 },
-        barWidth: { type: "number", default: 0.5 },
-        barPadding: { type: "number", default: 0.1 },
-        fontSize: { type: "number", default: 2 }
     },
  
     init: function() {
-        var self = this;
+        let data = this.data;
 
-        let x = loader.loadJSON( this.data.src, function( data ) {
+        statJson.loadJSON( this.data.src, function( jsonData ) {
 
-            let x = loader.getColumn( data ,"x");
+            const XAxis = statJson.getColumn( jsonData, data.xAxisAttribute );
+            const YAxis = statJson.getColumn( jsonData, data.yAxisAttribute );
+
+            console.log(XAxis);
+            console.log(YAxis);
             
-        } );
-
-        fetch( this.data.src )
-        .then( ( response ) => response.json() )
-        .then( function( jsonData ) {
-
-            self.plot( jsonData );
-
         } );
 
     },

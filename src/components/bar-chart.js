@@ -27,6 +27,7 @@ AFRAME.registerComponent("bar-chart", {
     },
     
     createChart: function(bars) {
+
         var data = this.data;
 
         // Values
