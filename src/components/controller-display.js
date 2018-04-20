@@ -4,7 +4,7 @@ AFRAME.registerComponent('controller-display', {
         buttonDown: {type: 'boolean', default: false},
     },
 
-    init: function() {
+    init: function() {  
         var el = this.el;
         var data = this.data;
         var text = document.createElement("a-entity");
@@ -23,21 +23,31 @@ AFRAME.registerComponent('controller-display', {
         });
         el.appendChild(text);
 
+
         window.addEventListener('keydown', function(event) {
             console.log("a-button down");
 
-            //console.log(document.getElementById('controller1').getAttribute('controller-display').buttonDown);
-	    var rightControllers = document.getElementsByClassName('right-controller');
-	    for(var i = 0; i < rightControllers.length; i++){
-		var diagram = document.getElementsByClassName('diagrams')[0];
-		var hovered = 1;
-		diagrams = document.querySelectorAll(".diagram");
-		
-		    console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams,recursive=true));
 
+        
 
-		console.log(hovered);
-		if(hovered){
+       var arr = document.querySelector('[scatter-plot]').object3D.children[0];
+       let intersections = el.components.raycaster.raycaster.intersectObject(arr);
+       //el.components.raycaster.objects = arr;
+       var value =  arr.geometry.vertices[intersections[0].index];
+
+       text.setAttribute("text", {
+         value: "x: " + value.x + "\n " +
+                "y: " + value.y + "\n " +
+                "z: " + value.z + "\n ",
+            color: "#0050"
+        });
+
+        console.log(document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisScale - document.querySelector('[scatter-plot]').components['scatter-plot'].data.zAxisStart);
+
+        //console.log(intersections[0].index);
+
+		//console.log(rightControllers[i].components.raycaster.raycaster.intersectObjects(diagrams));
+		/*if(hovered){
 		    var contDisp = document.getElementById('controller1').components["controller-display"];
 		    
 		    if(contDisp != undefined){
@@ -65,8 +75,8 @@ AFRAME.registerComponent('controller-display', {
 			}
 		    }
 		    
-		}
-	    }
+        }*/
+	    //}
 
             data.buttonDown = true;
         });

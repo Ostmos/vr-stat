@@ -80,7 +80,7 @@ AFRAME.registerComponent('scatter-plot', {
                     map: texture,
                     side: THREE.DoubleSide,
                     transparent: true,
-                    color: 0xffffff 
+                    color: 0x00000 
                 }))
                 
                 fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {
@@ -204,6 +204,9 @@ AFRAME.registerComponent('scatter-plot', {
 
         const LENGTH = d.nbrOfPoints < 0 ? jsonData.length : d.nbrOfPoints;
 
+        console.log(LENGTH);
+
+
         this.geometry = new THREE.Geometry();
 
         let COLORS = [0xFF847C];
@@ -268,8 +271,8 @@ AFRAME.registerComponent('scatter-plot', {
                 let intersections = this.raycasterEl.components.raycaster.raycaster.intersectObject(this.points);   
                 
                 //console.log(intersections);
-
-                //document.getElementById('controller1').components["controller-display"].updateValues = true;
+                //var contDisp = document.getElementsByClassName('right-controller')[0].components["controller-display"];
+                //contDisp.updateValues = true;
 
                 if (intersections.length > 0) {
                     let index = intersections[0].index;

@@ -210,7 +210,8 @@
         <a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
           <a-entity id="controller1" class="right-controller" 
             super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
-            rotation-controller></a-entity>
+            rotation-controller
+            controller-display></a-entity>
           <a-entity id="controller2" class="left-controller" 
             teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
             raycaster="showLine:false; enabled:false"></a-entity>

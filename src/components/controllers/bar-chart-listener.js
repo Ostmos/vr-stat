@@ -20,13 +20,6 @@ AFRAME.registerComponent('bar-chart-listener', {
             //children[0].setAttribute("visible", "false");
             data.isHovering = false;
         });
-
-        el.addEventListener('raycaster-intersected', function(evt) {
-            //var children = el.childNodes;
-            //children[0].setAttribute("visible", "false");
-            console.log(evt);
-            console.log("hej!");
-        });
     
     },
 
