@@ -1,49 +1,55 @@
-var loader = require( "../lib/stat-json" );
+const stat = require("../lib/stat");
+const loadJSON = require("../lib/statJson").loadJSON;
+const getColumn = require("../lib/statJson").getColumn;
 
 AFRAME.registerComponent( "bar-chart-2", {
 
     schema: {
-        src: { type: "asset", default: "empty" },
+        src: { type: "asset" },
+        xAxisCol: { type: "string" },
+        yAxisCol: { type: "string" },
+        height: { type: "number", default: 1.5 },
+        width: { type: "number", default: 1.5 },
         title: { type: "string" },
-        xLabel: { type: "string" },
-        yLabel: { type: "string" },
-        suffix: { type: "string" },
-        yScale: { type: "number", default: 1.0 },
-        barWidth: { type: "number", default: 0.5 },
-        barPadding: { type: "number", default: 0.1 },
-        fontSize: { type: "number", default: 2 }
     },
  
     init: function() {
-        var self = this;
+        let data = this.data;
 
-        let x = loader.loadJSON( this.data.src, function( data ) {
+        // Load json data and extract two columns as arrays
+        let self = this;
+        loadJSON( this.data.src, jsonData => {
 
-            let x = loader.getColumn( data ,"x");
-            
-        } );
+            const XAxisData = getColumn( jsonData, data.xAxisCol );
+            const XAxisLabels = XAxisData;
 
-        fetch( this.data.src )
-        .then( ( response ) => response.json() )
-        .then( function( jsonData ) {
+            let YAxisData = getColumn( jsonData, data.yAxisCol );
+            YAxisData = stat.startOnZero( YAxisData ); 
+            const YAxisLabels = stat.numericalToString( YAxisData, 2 );
 
-            self.plot( jsonData );
+            const XAxisPositions = stat.statTypeScaledLinearInterpolation( XAxisData, 20, "categorical", data.width );
+            const YAxisPositions = stat.statTypeScaledLinearInterpolation( YAxisData, 20, "numerical", data.height );
+
+            console.log(XAxisPositions);
+            console.log(YAxisPositions);
+
+
+            self.plot( XAxisPositions, XAxisLabels, YAxisPositions, YAxisLabels );
 
         } );
 
     },
 
-    plot: function( jsonData ) {
+    plot: function( xPositions, xLabels, yPositions, yLabels ) {
 
         let axis = document.createElement( "a-entity" );
         axis.setAttribute("axis", {
-            arr: [0, 1, 2], 
-            textAligment: "right"
+            positions: yPositions,
+            labels: yLabels, 
+            textAligment: "right",
+            rotation: { x: 0, y: 90, x: 0 },
+            axisLength: 1.5, 
         } );
-        axis.setAttribute( "rotation" ,
-            { x: 0, y: 90, z: 0 }
-        );
-
         this.el.appendChild( axis );
     } 
 

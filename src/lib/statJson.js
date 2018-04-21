@@ -16,10 +16,10 @@ export function loadJSON( url, callback ) {
 
 }
 
-// Get column from an array of objects
+// Get column as an array from an array of objects
 export function getColumn( jsonData, attribute ) {
 
-    if ( Array.isArray( jsonData ) && typeof attribute === "string" ) {
+    if ( jsonData != null && typeof attribute === "string" ) {
 
         let result = [];
         jsonData.forEach( obj => {

@@ -1,93 +1,108 @@
-export function range( arr, min, max ) {
+// Module with some helpful methods for arrays with statistical data
 
-    let arrInRange = arr.filter( ( elem ) => {
+var stat = {
 
-        return elem >= min && elem <= max;
+    // Wrapper methods. We should be use chaining. 
 
-    } );
+    sortedLabels: function( arr, precision, suffix ) {
 
-    return arrInRange;
+        let result = arr.slice();
+        this.numericSort( result );
+        result = this.precisionStringArray( result, precision );
+        result = this.suffixArray( result, suffix );
+        return result;
 
-}
+    },    
 
-export function interpolate( arr, steps ) {
+    scaledArray: function( arr, scaleLength, length ) {
 
-    const MIN = Math.min( ...arr );
-    const MAX = Math.max( ...arr );
-    const STEP = (MAX - MIN) / steps;
+        const Max = Math.max( ...arr );
+        const Min = Math.min( ...arr ); 
+        let result = this.evenlySpacedArray( Min, Max, length );
+        result = this.scaleToLength( result, scaleLength );
+        return result;
 
-    let interpolatedArray = [];
-    for (let i = 0; i < steps + 1; i++ ) {
-        interpolatedArray.push( MIN + STEP * i );
+    },
+
+    scaledCategoricalArray: function( arr, scaleLength, offset ) {
+
+        const Length = arr.length;
+        let result = this.evenlySpacedArray( offset, scaleLength, Length ); 
+        return result;
+
+    },
+
+    // Array methods
+    
+    evenlySpacedArray: function( min, max, spaces ) {
+
+        const StepLength = ( max - min ) / ( spaces - 1 ); 
+        let result = [];
+        for( let i = 0; i < spaces; i++ ) {
+
+            result.push( min + StepLength * i );
+
+        }
+        return result;
+
+    },
+
+    scaleToLength: function( arr, length ) {
+
+        const Max = Math.max( ...arr ); 
+        const RATIO = length / Max;
+        let scaledArray = arr.map( elem => elem * RATIO );
+        return scaledArray;
+
+    },
+
+    numericSort: function( arr ) {
+
+        arr.sort( ( i, j ) => ( i - j ));
+
+    },
+
+    rangedArray: function( arr, min, max ) {
+
+        let arrInRange = arr.filter( ( elem ) => {
+
+            return elem >= min && elem <= max;
+
+        } );
+        return arrInRange;
+
+    },
+
+    convertToStringArray: function( arr ) {
+
+        return arr.map(String);
+
+    }, 
+
+    suffixArray: function( arr, suffix ) {
+
+        suffixArray = arr.map( elem => elem.concat( suffix ) );
+        return suffixArray;
+
+    },
+
+    longestString: function( arr ) {
+
+        let arrCopy = arr.slice();
+        let sortedArr = arrCopy.sort ( ( str1, str2 ) => {
+            return str1.length < str2.length;
+        } );
+        return sortedArr[0].length;
+
+    },
+
+    precisionStringArray: function ( arr, precision ) {
+
+        let precisionArray = arr.map( elem => elem.toFixed( precision ) );
+        return precisionArray;
+
     }
 
-    return interpolatedArray;
+};
 
-}
-
-export function stepArray( steps, stepLength ) {
-
-    let arr = [];
-    for ( let i = 0; i < steps * stepLength; i += stepLength ) {
-        arr.push( i );
-    }
-
-    return arr;
-
-}
-
-export function offset( off, arr ) {
-
-    let offsetArr = arr.map ( elem => elem + off );
-
-    return offsetArr;
-
-}
-
-export function scaleFit( arr, scale ) {
-
-    const MIN = Math.min( ...arr ); 
-    const MAX = Math.max( ...arr ); 
-    const RATIO = scale / (MAX - MIN);
-    let scaledArray = arr.map( elem => elem * RATIO );
-
-    return scaledArray;
-
-}
-
-export function sortNumeric( arr ) {
-
-    let arrCopy = arr.slice();
-    arrCopy.sort( (i, j) => (i - j) );
-
-    return arr;
-
-}
-
-export function decimalPrecision( arr, precision ) {
-
-    let precisionArray = arr.map ( elem => elem.toFixed(precision) );
-
-    return precisionArray;
-
-}
-
-export function suffix ( arr, s ) {
-
-    let suffixArray = [];
-    suffixArray = arr.map( elem => elem.concat( s ) );
-
-    return suffixArray;
-
-}
-
-export function longestString( arr ) {
-
-    let arrCopy = arr.slice();
-    let sortedArr = arrCopy.sort ( ( str1, str2 ) => {
-        return str1.length < str2.length;
-    } );
-
-    return sortedArr[0].length;
-
-}
+module.exports = stat;
