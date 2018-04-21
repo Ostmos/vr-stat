@@ -1,5 +1,6 @@
-import { loadJSON, getColumn } from "../lib/statJson";
-import * as stat from "../lib/stat";
+const stat = require("../lib/stat");
+const loadJSON = require("../lib/statJson").loadJSON;
+const getColumn = require("../lib/statJson").getColumn;
 
 AFRAME.registerComponent( "bar-chart-2", {
 
