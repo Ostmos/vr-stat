@@ -146,4 +146,16 @@ describe( "stat", function() {
 
     } );
 
+    describe( "stat.scaledArray", function() {
+
+        it( "Should create dummy numerical array from categorical array and scale them to fit a length", function() {
+
+            const Result = stat.scaledCategoricalArray( [ "l1", "l2", "l3", "l4", "l5" ], 2, 1 );
+            // "l1", "l2", "l3", "l4", "l5" => 1, 1.25, 1.5, 1.75, 2 
+            Assert.sameOrderedMembers( Result, [ 1, 1.25, 1.5, 1.75, 2 ] ); 
+
+        } );
+
+    } );
+
 } );

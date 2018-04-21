@@ -24,6 +24,14 @@ var stat = {
 
     },
 
+    scaledCategoricalArray: function( arr, scaleLength, offset ) {
+
+        const Length = arr.length;
+        let result = this.evenlySpacedArray( offset, scaleLength, Length ); 
+        return result;
+
+    },
+
     // Array methods
     
     evenlySpacedArray: function( min, max, spaces ) {
