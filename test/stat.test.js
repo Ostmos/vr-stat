@@ -146,7 +146,7 @@ describe( "stat", function() {
 
     } );
 
-    describe( "stat.scaledArray", function() {
+    describe( "stat.scaledCategoricalArray", function() {
 
         it( "Should create dummy numerical array from categorical array and scale them to fit a length", function() {
 
