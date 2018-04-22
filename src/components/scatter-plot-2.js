@@ -1,5 +1,7 @@
-const loadJSON = require("../lib/statJson").loadJSON;
-const getColumn = require("../lib/statJson").getColumn;
+const LoadJSON = require("../lib/statJson").loadJSON;
+const GetColumn = require("../lib/statJson").getColumn;
+const Range = require( "../charts/data" ).Range;
+const XYZDataSet = require( "../charts/data" ).XYZDataSet;
 
 AFRAME.registerComponent( "scatter-plot-2", {
 
@@ -17,11 +19,11 @@ AFRAME.registerComponent( "scatter-plot-2", {
         let data = this.data;
 
         let self = this;
-        loadJSON( this.data.src, jsonData => {
+        LoadJSON( this.data.src, jsonData => {
 
-            let x = getColumn( jsonData, data.xCol );
-            let y = getColumn( jsonData, data.yCol );
-            let z = getColumn( jsonData, data.zCol );
+            let x = GetColumn( jsonData, data.xCol );
+            let y = GetColumn( jsonData, data.yCol );
+            let z = GetColumn( jsonData, data.zCol );
 
             // TODO Clean this up
             function Range( x, y ) {
@@ -58,6 +60,7 @@ AFRAME.registerComponent( "scatter-plot-2", {
             this.el.appendChild( Grid );
         
             const PointCloud = document.createElement( "a-entity" );
+            PointCloud.setAttribute( "point-cloud", "" );
             this.el.appendChild( PointCloud );
 
 

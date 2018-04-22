@@ -1,16 +1,7 @@
 const Utils = require( "../lib/utils" );
 const SpriteText = require ( "../charts/sprite-text" ).SpriteText;
 const TextProperties = require ( "../charts/sprite-text" ).TextProperties;
-
-function DebugCube( component ) {
-        
-    const Geometry = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
-    const Material = new THREE.MeshBasicMaterial( {color: 0x000000 } );
-    const Cube = new THREE.Mesh( Geometry, Material );
-    Cube.position.set( 0, 0, 0 );
-    component.setObject3D("debugCube", Cube);
-
-}
+const Range = require ( "../charts/data" ).Range;
 
 function RectilinearGrid( steps, stepLength, layout) {
 
@@ -38,18 +29,6 @@ function RectilinearGrid( steps, stepLength, layout) {
 
 }
 
-function Range( start, end ) {
-
-    this.start = start;
-    this.end = end;
-
-}
-
-Range.prototype.evenStepLength = function( steps ) {
-
-    return ( this.end - this.start ) / ( steps - 1 );
-
-}
 
 function LabelAxis( start, direction, labelOffset, steps, stepLength, length, range, suffix ) {
 
