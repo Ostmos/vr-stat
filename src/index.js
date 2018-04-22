@@ -16,4 +16,5 @@ require("./components/controllers/bar-chart-listener");
 require("./components/value-display");
 require("./components/network-diagram");
 require("./components/axis");
+require("./components/numerical-grid");
 
