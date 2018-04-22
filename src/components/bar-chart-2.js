@@ -1,7 +1,8 @@
 const stat = require("../lib/stat");
 const loadJSON = require("../lib/statJson").loadJSON;
 const getColumn = require("../lib/statJson").getColumn;
-const SpriteText = require("../lib/SpriteText");
+const SpriteText = require ( "../charts/sprite-text" ).SpriteText;
+const TextProperties = require ( "../charts/sprite-text" ).TextProperties;
 
 AFRAME.registerComponent( "bar-chart-2", {
 

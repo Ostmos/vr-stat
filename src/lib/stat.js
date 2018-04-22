@@ -2,6 +2,19 @@
 
 var stat = {
 
+    getRange: function ( arr ) {
+
+        function Range( x, y ) {
+
+            this.x = x;
+            this.y = y;
+
+        }
+
+        return new Range( Math.min( ...arr ), Math.max( ...arr ) );
+
+    },
+
     // Wrapper methods. We should be use chaining. 
 
     sortedLabels: function( arr, precision, suffix ) {
