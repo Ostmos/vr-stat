@@ -1,44 +1,50 @@
-// Fetch JSON file
-export function loadJSON( url, callback ) {
+const StatJson = {
 
-    fetch( url )
-    .then( function( response ) {
+    // Fetch JSON file
+    loadJSON: function( url, callback ) {
 
-        // response.ok is true if the request was successful (2xx)
-        // we check this becuase client(4xx) and server(5xx) errors  
-        // are not treated as errors by fetch()
-        if ( response.ok ) return response.json();
+        fetch( url )
+        .then( function( response ) {
 
-        throw Error( "Error: " + response.statusText );
+            // response.ok is true if the request was successful (2xx)
+            // we check this becuase client(4xx) and server(5xx) errors  
+            // are not treated as errors by fetch()
+            if ( response.ok ) return response.json();
 
-    } )  
-    .then( jsonData => callback( jsonData ) );
+            throw Error( "Error: " + response.statusText );
 
-}
+        } )  
+        .then( jsonData => callback( jsonData ) );
 
-// Get column as an array from an array of objects
-export function getColumn( jsonData, attribute ) {
+    },
 
-    if ( jsonData != null && typeof attribute === "string" ) {
+    // Get a column from a json file with a table like structure
+    getColumn: function( jsonData, attribute ) {
 
-        let result = [];
-        jsonData.forEach( obj => {
+        if ( jsonData != null && typeof attribute === "string" ) {
 
-            Object.keys( obj ).forEach( key => {
+            let result = [];
+            jsonData.forEach( obj => {
 
-                if ( key === attribute ) {
+                Object.keys( obj ).forEach( key => {
 
-                    result.push( obj[ key ] );
+                    if ( key === attribute ) {
 
-                }
+                        result.push( obj[ key ] );
+
+                    }
+
+                } );
 
             } );
+            
+            return result;
 
-        } );
-        
-        return result;
+        }
 
     }
 
+
 }
 
+module.exports = StatJson;
