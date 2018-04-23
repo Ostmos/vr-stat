@@ -46,7 +46,7 @@ Data3.prototype.scaleToLength = function( dimensions ) {
 
 }
 
-function DataCategorical ( categories, values ) {
+function DataCategorical( categories, values ) {
 
     this.categories = categories;
     this.values = values;
@@ -60,6 +60,33 @@ DataCategorical.prototype.scaleToLength = function( length ) {
     const Ratio = length / this.range.end;
     this.values = this.values.map( elem => elem * Ratio );
 
+}
+
+// Series shouldn't be public in this case
+// just change this 
+function TimeSeries( time ) {
+
+    this.time = time;
+    this.series = [];
+    this.range = new Range( Number.MAX_VALUE, 0 );
+
+}
+
+TimeSeries.prototype.add = function( serie ) {
+
+    const Max = Math.max( ...serie );
+    const Min = Math.min( ...serie );
+
+    if ( this.range.start > Min ) {
+        this.range.start = Min;
+    }
+
+    if ( this.range.end < Max ) {
+        this.range.end = Max;
+    }
+
+    this.series.push( serie );
+    
 }
 
 function JSONLoader( ) {}
@@ -113,6 +140,7 @@ module.exports = {
     JSONLoader: JSONLoader,
     Data3: Data3,
     DataCategorical: DataCategorical,
-    Range: Range
+    Range: Range,
+    TimeSeries: TimeSeries
 
 };

@@ -22,4 +22,6 @@ require("./components/categorical-grid");
 require("./components/point-cloud");
 require("./components/bar-chart-2");
 require("./components/bars");
+require("./components/line-chart");
+
 

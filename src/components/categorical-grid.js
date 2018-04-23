@@ -15,7 +15,7 @@ AFRAME.registerComponent( "categorical-grid", {
         ySuffix: {type: "string" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
-        padding: { type: "number", default: 0.2 }
+        padding: { type: "number" }
     },
  
     init: function() {
