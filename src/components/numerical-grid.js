@@ -1,72 +1,7 @@
 const Utils = require( "../lib/utils" );
-const SmallText = require ( "../charts/sprite-text" ).smallText;
-const MediumText = require ( "../charts/sprite-text" ).mediumText;
-const Range = require ( "../charts/data" ).Range;
-
-function RectilinearGrid( steps, stepLength, layout) {
-
-        const Origin = new THREE.Vector2( -layout.x / 2, layout.y / 2 );
-
-        let Vertices = [];
-        for ( let i = 0; i < steps.y; i++ ) {
-
-            Vertices.push( Origin.x, 0, Origin.y - i * stepLength.y ); 
-            Vertices.push( Origin.x + layout.x, 0 , Origin.y - i * stepLength.y ); 
-
-        }
-        for ( let i = 0; i < steps.x; i++ ) {
-
-            Vertices.push( Origin.x + i * stepLength.x , 0, Origin.y ); 
-            Vertices.push( Origin.x + i * stepLength.x, 0 , Origin.y - layout.y ); 
-
-        }
-        const Vertices32 = new Float32Array( Vertices );
-
-        const Geometry = new THREE.BufferGeometry();
-        Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
-        const Material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
-        this.mesh = new THREE.LineSegments( Geometry, Material );
-
-}
-
-
-function LabelAxis( start, direction, labelOffset, steps, stepLength, length, range, suffix ) {
-
-        // Put this somewhere else
-        this.middle = start.clone().add( direction.clone().multiplyScalar( length / 2 ) );
-
-        const LabelValueStep = range.evenStepLength( steps ); 
-        console.log(this.middle);
-
-        let currentValue = range.start;
-        let text = "";
-        let scaledDirection = direction.multiplyScalar( stepLength );
-        let point = start.add( labelOffset );
-
-
-        this.mesh = new THREE.Group(); 
-
-        for( let i = 0; i < steps; i++ ) {
-            
-            text = ( currentValue ).toFixed( 2 ).concat( suffix );
-            let spriteText = SmallText( text );
-            spriteText.mesh.position.set( point.x, point.y, point.z );
-            this.mesh.add( spriteText.mesh );
-            point.add( direction );
-            currentValue += LabelValueStep;
-
-        }
-
-}
-
-LabelAxis.prototype.setTitle = function( title, offset, rotation ) {
-
-    const Text = new MediumText( title, rotation ).mesh; 
-    const Position = this.middle.add( offset );
-    Text.position.set( Position.x, Position.y, Position.z );
-    this.mesh.add( Text );
-
-}
+const Range = require( "../charts/data" ).Range;
+const RectilinearGrid = require( "../charts/grid" ).RectilinearGrid;
+const LabelAxis = require( "../charts/grid" ).LabelAxis;
 
 AFRAME.registerComponent( "numerical-grid", {
 

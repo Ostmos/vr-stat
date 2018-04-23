@@ -46,6 +46,22 @@ Data3.prototype.scaleToLength = function( dimensions ) {
 
 }
 
+function DataCategorical ( categories, values ) {
+
+    this.categories = categories;
+    this.values = values;
+
+    this.range = new Range( 0, Math.max( ...values ) );
+
+}
+
+DataCategorical.prototype.scaleToLength = function( length ) {
+
+    const Ratio = length / this.range.end;
+    this.values = this.values.map( elem => elem * Ratio );
+
+}
+
 function JSONLoader( ) {}
 
 // Fetch JSON file
@@ -96,6 +112,7 @@ module.exports = {
  
     JSONLoader: JSONLoader,
     Data3: Data3,
+    DataCategorical: DataCategorical,
     Range: Range
 
 };

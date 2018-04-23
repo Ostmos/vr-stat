@@ -1,44 +1,59 @@
-const stat = require("../lib/stat");
-const loadJSON = require("../lib/statJson").loadJSON;
-const getColumn = require("../lib/statJson").getColumn;
-const SpriteText = require ( "../charts/sprite-text" ).SpriteText;
-const TextProperties = require ( "../charts/sprite-text" ).TextProperties;
+const DataCategorical = require( "../charts/data" ).DataCategorical;
+const JSONLoader = require( "../charts/data" ).JSONLoader;
+const MediumText = require ( "../charts/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "bar-chart-2", {
 
     schema: {
         src: { type: "asset" },
-        xAxisCol: { type: "string" },
-        yAxisCol: { type: "string" },
-        height: { type: "number", default: 1.5 },
-        width: { type: "number", default: 1.5 },
-        title: { type: "string" },
+        title: {type: "string" },
+        dimensions: { type: "vec3", default: { x: 2, y: 2, z: 2 } },
+        ySteps: { type: "number", default: 7 },
+        xCol: { type: "string", default: "x" },
+        yCol: { type: "string", default: "y" },
+        ySuffix: { type: "string" },
+        xAxisLabel: { type: "string" },
+        yAxisLabel: { type: "string" },
     },
  
     init: function() {
+
         let data = this.data;
-
-        SpriteText.createText();
-        this.el.object3D.add(SpriteText.createText());
-        // Load json data and extract two columns as arrays
         let self = this;
-        loadJSON( this.data.src, jsonData => {
 
+        // Title
+        const Text = MediumText( data.title ).mesh;
+        const TextOffset = 0.2;
+        Text.position.set( 0, data.dimensions.y / 2 + TextOffset, 0 );
+        this.el.setObject3D( "title", Text );
+
+        // Load data
+        const Loader = new JSONLoader;
+        Loader.loadJSON( this.data.src, jsonData => {
+
+            const XCol = Loader.getColumn( jsonData, data.xCol );
+            const YCol = Loader.getColumn( jsonData, data.yCol );
+
+            let dataset = new DataCategorical( 
+                XCol,
+                YCol,
+            );
+
+            // 3D Grid
+            const Grid = document.createElement( "a-entity" );
+            Grid.setAttribute("categorical-grid", {
+
+                dimensions: data.dimensions,
+                ySteps: data.ySteps,
+                yRange: [dataset.range.start, dataset.range.end],
+                ySuffix: data.ySuffix,
+                xAxisLabel: data.xAxisLabel,
+                yAxisLabel: data.yAxisLabel,
+
+            });
+            this.el.appendChild( Grid );
         } );
 
     },
-
-    plot: function( xPositions, xLabels, yPositions, yLabels ) {
-
-        let axis = document.createElement( "a-entity" );
-        axis.setAttribute("axis", {
-            positions: yPositions,
-            labels: yLabels, 
-            textAligment: "right",
-            rotation: { x: 0, y: 90, x: 0 },
-            axisLength: 1.5, 
-        } );
-        this.el.appendChild( axis );
-    } 
 
 } );

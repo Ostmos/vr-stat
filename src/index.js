@@ -4,7 +4,6 @@ require("aframe-teleport-controls");
 
 // Components
 require("./components/bar-chart");
-require("./components/bar-chart-2");
 require("./components/scatter-plot");
 require("./components/tutorial-scatter-plot");
 require("./components/rotation-observer");
@@ -19,5 +18,7 @@ require("./components/axis");
 require("./components/scatter-plot-2");
 
 require("./components/numerical-grid");
+require("./components/categorical-grid");
 require("./components/point-cloud");
+require("./components/bar-chart-2");
 

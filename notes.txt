@@ -7,3 +7,11 @@ Data3(x[], y[], z[])
     scaledArrays
 Data2
     x, y
+
+Numerical grid
+
+Categorical grid
+    steps { x, y } 
+    yRange { },
+    ySuffix { },
+    
