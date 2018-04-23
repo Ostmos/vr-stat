@@ -19,17 +19,28 @@ function Data3 ( x, y, z ) {
         z: z
     }
 
-    this.xRange = new Range( Math.min( ...x ), Math.max( ...x ) );
-    this.yRange = new Range( Math.min( ...y ), Math.max( ...y ) );
-    this.zRange = new Range( Math.min( ...z ), Math.max( ...z ) );
+    this.ranges = {
+        x: new Range( Math.min( ...x ), Math.max( ...x ) ),
+        y: new Range( Math.min( ...y ), Math.max( ...y ) ),
+        z: new Range( Math.min( ...z ), Math.max( ...z ) )
+    }
 
 }
 
-Data3.prototype.scale = function( scale ) {
+Data3.prototype.fitRange = function() {
+
+    this.vectors.x = this.vectors.x.map( elem => elem + this.ranges.x.start ); 
+    this.vectors.y = this.vectors.y.map( elem => elem + this.ranges.y.start ); 
+    this.vectors.z = this.vectors.z.map( elem => elem + this.ranges.z.start ); 
+
+}
+
+Data3.prototype.scaleToLength = function( dimensions ) {
 
     Object.keys( this.vectors ).forEach( key => {
 
-        this.vectors[ key ].map( elem => elem * scale ); 
+            const Ratio = dimensions[key] / this.ranges[ key ].end;
+            this.vectors[ key ] = this.vectors[ key ].map( elem => elem * Ratio );
 
     } );
 

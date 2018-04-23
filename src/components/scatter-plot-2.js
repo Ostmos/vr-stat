@@ -5,7 +5,7 @@ AFRAME.registerComponent( "scatter-plot-2", {
 
     schema: {
         src: { type: "asset" },
-        dimensions: { type: "vec3", default: { x: 1, y: 1, z: 1 } },
+        dimensions: { type: "vec3", default: { x: 2, y: 2, z: 2 } },
         steps: { type: "vec3", default: { x: 7, y: 7, z: 7 } },
         xCol: { type: "string", default: "x" },
         yCol: { type: "string", default: "y" },
@@ -24,8 +24,6 @@ AFRAME.registerComponent( "scatter-plot-2", {
             const YCol = Loader.getColumn( jsonData, data.yCol );
             const ZCol = Loader.getColumn( jsonData, data.zCol );
 
-            console.log(XCol);
-
             let dataset = new Data3( 
                 XCol,
                 YCol,
@@ -37,21 +35,28 @@ AFRAME.registerComponent( "scatter-plot-2", {
 
                 dimensions: data.dimensions,
                 steps: data.steps,
-                xRange: [dataset.xRange.start, dataset.xRange.end],
-                yRange: [dataset.yRange.start, dataset.yRange.end],
-                zRange: [dataset.zRange.start, dataset.zRange.end],
+                xRange: [dataset.ranges.x.start, dataset.ranges.x.end],
+                yRange: [dataset.ranges.y.start, dataset.ranges.y.end],
+                zRange: [dataset.ranges.z.start, dataset.ranges.z.end],
                 xSuffix: "",
                 ySuffix: "",
                 zSuffix: "",
 
             });
             this.el.appendChild( Grid );
+
+            dataset.fitRange();
+            dataset.scaleToLength( data.dimensions );
         
             const PointCloud = document.createElement( "a-entity" );
             PointCloud.setAttribute( "point-cloud", {
                 
                 dimensions: data.dimensions ,
-                points: { x: [ 0.5 ], y: [ 0.5 ] , z: [ 0.5 ] }
+                points: { 
+                    x: dataset.vectors.x, 
+                    y: dataset.vectors.y,
+                    z: dataset.vectors.z 
+                }
 
             } );
             this.el.appendChild( PointCloud );

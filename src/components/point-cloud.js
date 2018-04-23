@@ -1,6 +1,8 @@
 const Data3 = require( "../charts/data" ).Data3;
 
-function PointCloud( xyzDataset, dimensions ) {
+function PointCloud( data, dimensions ) {
+
+    const Length = data.vectors.z.length;
 
     const D = dimensions;
     const Origin = new THREE.Vector3( 
@@ -8,8 +10,13 @@ function PointCloud( xyzDataset, dimensions ) {
     );
     const Geometry = new THREE.Geometry();
     
-    for(let i = 0; i < 100; i++){
-        // Geometry.vertices.push({x: 0.5 * i, y: 0.5, z: 0.5}); 
+    for(let i = 0; i < Length; i++){
+        Geometry.vertices.push(
+            {x: Origin.x + data.vectors.x[ i ],
+             y: Origin.y + data.vectors.y[ i ],
+             z: Origin.z + data.vectors.z[ i ]
+            } 
+        ); 
     }
     Geometry.vertices.push(Origin);
 
