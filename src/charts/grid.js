@@ -102,11 +102,42 @@ LabelAxis.prototype.setTitle = function( title, offset, rotation ) {
 
 }
 
+function CategoryAxis( start, direction, stepLength, length, categories, labelOffset ) {
+
+    // Put this somewhere else
+    this.middle = start.clone().add( direction.clone().multiplyScalar( length / 2 ) );
+
+    let scaledDirection = direction.multiplyScalar( stepLength );
+    let point = start.add( labelOffset );
+
+    this.mesh = new THREE.Group(); 
+
+    for( let i = 0; i < categories.length; i++ ) {
+        
+        let spriteText = SmallText( categories[ i ] );
+        spriteText.mesh.position.set( point.x, point.y, point.z );
+        this.mesh.add( spriteText.mesh );
+        point.add( direction );
+
+    }
+
+}
+
+CategoryAxis.prototype.setTitle = function( title, offset, rotation ) {
+
+    const Text = new MediumText( title, rotation ).mesh; 
+    const Position = this.middle.add( offset );
+    Text.position.set( Position.x, Position.y, Position.z );
+    this.mesh.add( Text );
+
+}
+
 module.exports =  {
 
     RectilinearGrid: RectilinearGrid,
     SimpleGrid: SimpleGrid, 
     CategoricalPlane: CategoricalPlane,
-    LabelAxis: LabelAxis
+    LabelAxis: LabelAxis,
+    CategoryAxis: CategoryAxis
 
 }

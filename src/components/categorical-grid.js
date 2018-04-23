@@ -2,6 +2,7 @@ const Utils = require( "../lib/utils" );
 const Range = require( "../charts/data" ).Range;
 const SimpleGrid = require( "../charts/grid" ).SimpleGrid;
 const CategoricalPlane = require( "../charts/grid" ).CategoricalPlane;
+const CategoryAxis = require( "../charts/grid" ).CategoryAxis;
 const LabelAxis = require( "../charts/grid" ).LabelAxis;
 
 AFRAME.registerComponent( "categorical-grid", {
@@ -14,15 +15,16 @@ AFRAME.registerComponent( "categorical-grid", {
         ySuffix: {type: "string" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
+        padding: { type: "number", default: 0.2 }
     },
  
     init: function() {
+
 
         let data = this.data;
         this.mesh = [];
 
         const Dim = data.dimensions;
-        console.log(Dim);
         const YStepLength = Dim.y / ( data.ySteps - 1 );
 
         const XYGrid = new SimpleGrid( data.ySteps, YStepLength, Dim ).mesh;
@@ -60,6 +62,23 @@ AFRAME.registerComponent( "categorical-grid", {
         this.mesh.push("yAxis");
         AxisY.setTitle( data.yAxisLabel, new THREE.Vector3( -0.2, 0, 0.4 ), Math.PI / 2 ); 
 
+        // X-axis
+        const Step = (Dim.x - data.padding * 2) / (data.categories.length - 1);
+        const AxisPositionX = new THREE.Vector3( ( -Dim.x / 2 ) + data.padding, -Dim.y / 2, Dim.z / 2);
+        const AxisDirectionX = new THREE.Vector3( 1, 0, 0 ).normalize();
+        const LabelOffsetX = new THREE.Vector3( 0, 0, 0.2 );
+        //start, direction, stepLength, length, categories, labelOffset
+        const AxisX = new CategoryAxis(
+            AxisPositionX,
+            AxisDirectionX,
+            Step,
+            Dim.x,
+            data.categories,
+            LabelOffsetX,
+        );
+        this.el.setObject3D( "xAxis", AxisX.mesh );
+        this.mesh.push("xAxis");
+        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, 0, 0.4 ) ); 
     },
 
     remove: function() {
