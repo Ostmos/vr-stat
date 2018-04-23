@@ -63,12 +63,6 @@ AFRAME.registerComponent( "scatter-plot-2", {
 
         } );
 
-        /*
-        range [0, 5] get from [min(x), max(x)]
-        Scales against dimensions afterwards
-        -offset => scalefit
-        */
-
     },
 
 } );

@@ -29,9 +29,9 @@ function Data3 ( x, y, z ) {
 
 Data3.prototype.fitRange = function() {
 
-    this.vectors.x = this.vectors.x.map( elem => elem + this.ranges.x.start ); 
-    this.vectors.y = this.vectors.y.map( elem => elem + this.ranges.y.start ); 
-    this.vectors.z = this.vectors.z.map( elem => elem + this.ranges.z.start ); 
+    this.vectors.x = this.vectors.x.map( elem => elem - this.ranges.x.start ); 
+    this.vectors.y = this.vectors.y.map( elem => elem - this.ranges.y.start ); 
+    this.vectors.z = this.vectors.z.map( elem => elem - this.ranges.z.start ); 
 
 }
 
