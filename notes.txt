@@ -1,0 +1,9 @@
+Data
+-------
+LoadJSON object
+Data3(x[], y[], z[])
+    x, y, z
+    xRange, yRange, zRange
+    scaledArrays
+Data2
+    x, y

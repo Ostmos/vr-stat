@@ -1,7 +1,5 @@
-const LoadJSON = require("../lib/statJson").loadJSON;
-const GetColumn = require("../lib/statJson").getColumn;
-const Range = require( "../charts/data" ).Range;
-const XYZDataSet = require( "../charts/data" ).XYZDataSet;
+const Data3 = require( "../charts/data" ).Data3;
+const JSONLoader = require( "../charts/data" ).JSONLoader;
 
 AFRAME.registerComponent( "scatter-plot-2", {
 
@@ -17,41 +15,31 @@ AFRAME.registerComponent( "scatter-plot-2", {
     init: function() {
 
         let data = this.data;
-
         let self = this;
-        LoadJSON( this.data.src, jsonData => {
 
-            let x = GetColumn( jsonData, data.xCol );
-            let y = GetColumn( jsonData, data.yCol );
-            let z = GetColumn( jsonData, data.zCol );
+        const Loader = new JSONLoader;
+        Loader.loadJSON( this.data.src, jsonData => {
 
-            // TODO Clean this up
-            function Range( x, y ) {
+            const XCol = Loader.getColumn( jsonData, data.xCol );
+            const YCol = Loader.getColumn( jsonData, data.yCol );
+            const ZCol = Loader.getColumn( jsonData, data.zCol );
 
-                this.x = x;
-                this.y = y;
+            console.log(XCol);
 
-            }
-
-            let xRange = new Range( Math.min( ...x ), Math.max( ...x ) );
-            let yRange = new Range( Math.min( ...y ), Math.max( ...y ) );
-            let zRange = new Range( Math.min( ...z ), Math.max( ...z ) );
-    
-
-            /*
-            range [0, 5] get from [min(x), max(x)]
-            Scales against dimensions afterwards
-            -offset => scalefit
-            */
+            let dataset = new Data3( 
+                XCol,
+                YCol,
+                ZCol
+            );
 
             const Grid = document.createElement( "a-entity" );
             Grid.setAttribute("numerical-grid", {
 
                 dimensions: data.dimensions,
                 steps: data.steps,
-                xRange: [ xRange.x, xRange.y ],
-                yRange: [ yRange.x, yRange.y ],
-                zRange: [ zRange.x, zRange.y ],
+                xRange: [dataset.xRange.start, dataset.xRange.end],
+                yRange: [dataset.yRange.start, dataset.yRange.end],
+                zRange: [dataset.zRange.start, dataset.zRange.end],
                 xSuffix: "",
                 ySuffix: "",
                 zSuffix: "",
@@ -60,12 +48,21 @@ AFRAME.registerComponent( "scatter-plot-2", {
             this.el.appendChild( Grid );
         
             const PointCloud = document.createElement( "a-entity" );
-            PointCloud.setAttribute( "point-cloud", "" );
-            this.el.appendChild( PointCloud );
+            PointCloud.setAttribute( "point-cloud", {
+                
+                dimensions: data.dimensions ,
+                points: { x: [ 0.5 ], y: [ 0.5 ] , z: [ 0.5 ] }
 
+            } );
+            this.el.appendChild( PointCloud );
 
         } );
 
+        /*
+        range [0, 5] get from [min(x), max(x)]
+        Scales against dimensions afterwards
+        -offset => scalefit
+        */
 
     },
 

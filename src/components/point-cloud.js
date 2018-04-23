@@ -1,4 +1,4 @@
-const XYZDataSet = require( "../charts/data" ).XYZDataSet;
+const Data3 = require( "../charts/data" ).Data3;
 
 function PointCloud( xyzDataset, dimensions ) {
 
@@ -28,7 +28,7 @@ AFRAME.registerComponent( "point-cloud", {
     init: function() {
 
         let data = this.data;
-        const PointData = new XYZDataSet( data.points.x, data.points.y, data.points.z ); 
+        const PointData = new Data3( data.points.x, data.points.y, data.points.z ); 
         const CloudMesh = new PointCloud( PointData, this.data.dimensions ).mesh;
         this.el.setObject3D( "cloudMesh", CloudMesh );
 
