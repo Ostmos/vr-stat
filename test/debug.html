@@ -10,9 +10,12 @@
 <body>
   <a-scene>
     <a-sky color="#ECECEC"></a-sky>
-    <a-entity numerical-grid position="-1.5 1 -3"></a-entity>
     <a-entity scatter-plot-2=
-        "src:url(../src/assets/statistics/salary_hours_job.json)"
+        "src:url(../src/assets/statistics/salary_hours_job.json);
+         title: Job searching time, salary and years spent coding professionally;
+         xAxisLabel: Job search time;
+         yAxisLabel: Salary;
+         zAxisLabel: Coding experince;""
         position="0 1 -3"></a-entity>
   </a-scene>
 

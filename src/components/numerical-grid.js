@@ -1,6 +1,6 @@
 const Utils = require( "../lib/utils" );
-const SpriteText = require ( "../charts/sprite-text" ).SpriteText;
-const TextProperties = require ( "../charts/sprite-text" ).TextProperties;
+const SmallText = require ( "../charts/sprite-text" ).smallText;
+const MediumText = require ( "../charts/sprite-text" ).mediumText;
 const Range = require ( "../charts/data" ).Range;
 
 function RectilinearGrid( steps, stepLength, layout) {
@@ -32,26 +32,39 @@ function RectilinearGrid( steps, stepLength, layout) {
 
 function LabelAxis( start, direction, labelOffset, steps, stepLength, length, range, suffix ) {
 
+        // Put this somewhere else
+        this.middle = start.clone().add( direction.clone().multiplyScalar( length / 2 ) );
+
         const LabelValueStep = range.evenStepLength( steps ); 
+        console.log(this.middle);
 
         let currentValue = range.start;
         let text = "";
         let scaledDirection = direction.multiplyScalar( stepLength );
         let point = start.add( labelOffset );
 
-        const Properties = new TextProperties();
+
         this.mesh = new THREE.Group(); 
 
         for( let i = 0; i < steps; i++ ) {
             
             text = ( currentValue ).toFixed( 2 ).concat( suffix );
-            let spriteText = new SpriteText( text, Properties );
+            let spriteText = SmallText( text );
             spriteText.mesh.position.set( point.x, point.y, point.z );
             this.mesh.add( spriteText.mesh );
             point.add( direction );
             currentValue += LabelValueStep;
 
         }
+
+}
+
+LabelAxis.prototype.setTitle = function( title, offset, rotation ) {
+
+    const Text = new MediumText( title, rotation ).mesh; 
+    const Position = this.middle.add( offset );
+    Text.position.set( Position.x, Position.y, Position.z );
+    this.mesh.add( Text );
 
 }
 
@@ -63,6 +76,9 @@ AFRAME.registerComponent( "numerical-grid", {
         xRange: { type: "array", default: [ 0, 5 ] },
         yRange: { type: "array", default: [ 5, 10 ] },
         zRange: { type: "array", default: [ 0, 5 ] },
+        xAxisLabel: { type: "string" },
+        yAxisLabel: { type: "string" },
+        zAxisLabel: { type: "string" },
         xSuffix: {type: "string" },
         ySuffix: {type: "string" },
         zSuffix: {type: "string" },
@@ -130,6 +146,7 @@ AFRAME.registerComponent( "numerical-grid", {
         );
         this.el.setObject3D( "xAxis", AxisX.mesh );
         this.meshes.push("xAxis");
+        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, 0, 0.4 ) ); 
 
         // Y-axis
         const AxisPositionY = new THREE.Vector3( -Dim.x / 2, -Dim.y / 2, Dim.z / 2);
@@ -148,6 +165,7 @@ AFRAME.registerComponent( "numerical-grid", {
         );
         this.el.setObject3D( "yAxis", AxisY.mesh );
         this.meshes.push("yAxis");
+        AxisY.setTitle( data.yAxisLabel, new THREE.Vector3( -0.2, 0, 0.4 ), Math.PI / 2 ); 
 
         // Z-axis
         const AxisPositionZ = new THREE.Vector3( Dim.x / 2, -Dim.y / 2, -Dim.z / 2);
@@ -166,6 +184,7 @@ AFRAME.registerComponent( "numerical-grid", {
         );
         this.el.setObject3D( "zAxis", AxisZ.mesh );
         this.meshes.push("zAxis");
+        AxisZ.setTitle( data.zAxisLabel, new THREE.Vector3( 0.4, 0, 0 ) ); 
 
     },
 
