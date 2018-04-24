@@ -14,7 +14,7 @@ AFRAME.registerComponent( "line-chart", {
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
         ySteps: {type: "number", default: 7},
-        lineSeperation: { type: "number", default: 0.5 }
+        ySuffix: {type: "string" },
     },
  
     init: function() {
@@ -53,6 +53,16 @@ AFRAME.registerComponent( "line-chart", {
 
             } );
             this.el.appendChild( Grid );
+
+            // Lines
+            dataSet.scaleToLength( data.dimensions.y );
+            const Lines = document.createElement( "a-entity" );
+            Lines.setAttribute("lines", {
+                dimensions: data.dimensions,
+                heights: dataSet.series,
+                labels: data.lineLabels
+            } ); 
+            this.el.appendChild( Lines );
 
         } );
 

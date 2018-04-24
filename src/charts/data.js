@@ -89,6 +89,18 @@ TimeSeries.prototype.add = function( serie ) {
     
 }
 
+TimeSeries.prototype.scaleToLength = function( length ) {
+
+    const Ratio = length / this.range.end;
+
+    for ( let i = 0; i < this.series.length; i++ ){ 
+
+        this.series[ i ] = this.series[ i ].map( elem => elem * Ratio );
+
+    }
+
+}
+
 function JSONLoader( ) {}
 
 // Fetch JSON file

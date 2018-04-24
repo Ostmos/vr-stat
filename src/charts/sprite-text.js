@@ -56,7 +56,7 @@ function SpriteText( text = "Lorem", properties ) {
 // Factory methods
 function smallText( text, rotation = 0 ) {
 
-    const Properties = new TextProperties( "Courier New", 36, "black", rotation);
+    const Properties = new TextProperties( "Courier New", 42, "black", rotation);
     return new SpriteText( text, Properties ); 
     
 }
