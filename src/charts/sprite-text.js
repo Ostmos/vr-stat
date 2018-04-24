@@ -13,7 +13,7 @@ TextProperties.prototype.toContextFont = function() {
 
 }
 
-function SpriteText( text = "Lorem", properties ) {
+function SpriteText( text = "Lorem", properties, panel ) {
 
     const Canvas = document.createElement( "canvas" );
     const Ctx = Canvas.getContext("2d");
@@ -38,6 +38,15 @@ function SpriteText( text = "Lorem", properties ) {
 
     Ctx.textAlign = "center";
     Ctx.textBaseline = "middle";
+
+    // Panel
+    if ( panel ) {
+
+        Ctx.fillStyle = "black";
+        Ctx.fillRect(0, Canvas.height / 4, Canvas.width, Canvas.height / 2);
+
+    }
+
     Ctx.fillStyle = properties.fontColor;
     Ctx.fillText( text, Canvas.width / 2, Canvas.height / 2 );
 
@@ -56,7 +65,7 @@ function SpriteText( text = "Lorem", properties ) {
 // Factory methods
 function smallText( text, rotation = 0 ) {
 
-    const Properties = new TextProperties( "Courier New", 42, "black", rotation);
+    const Properties = new TextProperties( "Courier New", 48, "black", rotation);
     return new SpriteText( text, Properties ); 
     
 }
@@ -75,10 +84,34 @@ function largeText( text, rotation = 0 ) {
 
 }
 
+function smallTextPanel( text, rotation = 0 ) {
+
+    const Properties = new TextProperties( "Courier New", 48, "white", rotation);
+    return new SpriteText( text, Properties, true ); 
+    
+}
+
+function mediumTextPanel( text, rotation = 0 ) {
+
+    const Properties = new TextProperties( "Courier New", 64, "white", rotation );
+    return new SpriteText( text, Properties, true ); 
+
+}
+
+function largeTextPanel( text, rotation = 0 ) {
+
+    const Properties = new TextProperties( "Courier New", 128, "white", rotation );
+    return new SpriteText( text, Properties, true ); 
+
+}
+
 module.exports = {
     TextProperties: TextProperties,
     SpriteText: SpriteText,
     smallText: smallText,
     mediumText: mediumText,
-    largeText: largeText
+    largeText: largeText,
+    smallTextPanel: smallTextPanel,
+    mediumTextPanel: mediumTextPanel,
+    largeTextPanel: largeTextPanel
 }
