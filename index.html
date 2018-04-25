@@ -19,7 +19,7 @@
     <!--World-->
     <a-sky color="#212F3C"></a-sky> <!-- prev. #add8e6 -->
     <a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow></a-entity>
-    <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
+    <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
 
     <!-- Models-->
     <!--<a-entity class="diagram"
@@ -34,8 +34,8 @@
               shadow
               rotation-observer></a-entity>
 
-    <a-entity bar-chart-2="src:url(./src/assets/statistics/language_popularity.json);
-                           xAxisCol: x; yAxisCol: y;"></a-entity>
+    <!-- <a-entity bar-chart-2="src:url(./src/assets/statistics/language_popularity.json);
+                           xAxisCol: x; yAxisCol: y;"></a-entity> -->
 
 
     <a-entity class="diagram"
@@ -59,8 +59,11 @@
               
 
     <!-- Lights -->
-    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: true; intensity: 1.0" position="3 3 -15"></a-entity>
+    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="3 3 -15"></a-entity>
+    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: false; shadowCameraVisible: false; intensity: 1.0" position="-3 3 -15"></a-entity>
+    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 -5"></a-entity>
     <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-52.717 43.812 -14.454"></a-entity>
 
     <a-entity id="rig" progressive-controls="maxLevel: point">
         <a-entity id="controller1" class="right-controller" 
