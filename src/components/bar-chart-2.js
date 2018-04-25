@@ -34,8 +34,9 @@ AFRAME.registerComponent( "bar-chart-2", {
         const Loader = new JSONLoader;
         Loader.loadJSON( this.data.src, jsonData => {
 
+            console.log(jsonData);
             const dataTable = new DataTable( jsonData ); 
-            console.log(dataTable);
+            dataTable.getColumn( 'test' );
 
             const XCol = Loader.getColumn( jsonData, data.xCol );
             const YCol = Loader.getColumn( jsonData, data.yCol );

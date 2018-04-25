@@ -25,4 +25,6 @@ require("./components/bars");
 require("./components/line-chart");
 require("./components/lines");
 
+require("aframe-canvas");
+
 
