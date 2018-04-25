@@ -59,6 +59,39 @@ DataTable.prototype = {
 
         this.table[ column ].push( value );
 
+    },
+
+    getRange: function( column ) {
+            
+        const range = new Range();
+
+        if ( this.hasColumn( column ) ) {
+
+            range.start = Math.max( ...this.table[ column ] );
+            range.end = Math.min ( ...this.table[ column ] );
+
+        }
+
+        return range;
+
+    }, 
+
+    hasColumn: function( column ) {
+
+        if ( column !== undefined ) {
+
+            return this.table.hasOwnProperty( column );
+
+        }
+
+        return false;
+
+    },
+
+    scaleColumnToLength: function( column, value ) {
+
+         
+
     }
 
 }
