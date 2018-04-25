@@ -9,13 +9,13 @@ AFRAME.registerComponent( "bar-chart-2", {
     schema: {
         src: { type: "asset" },
         title: {type: "string" },
-        dimensions: { type: "vec3", default: { x: 5, y: 2, z: 0.5 } },
-        ySteps: { type: "number", default: 7 },
-        xCol: { type: "string", default: "x" },
-        yCol: { type: "string", default: "y" },
-        ySuffix: { type: "string" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
+        size: { type: "vec3", default: { x: 5, y: 2, z: 0.5 } },
+        categories: { type: "string", default: "x" },
+        heights: { type: "string", default: "y" },
+        nbrOfheightsSteps: { type: "number", default: 7 },
+        heightsSuffix: { type: "string" },
         barWidth: { type: "number", default: 0.2 }
     },
  
@@ -25,58 +25,45 @@ AFRAME.registerComponent( "bar-chart-2", {
         let self = this;
 
         // Title
-        const Text = MediumText( data.title ).mesh;
-        const TextOffset = 0.2;
-        Text.position.set( 0, data.dimensions.y / 2 + TextOffset, 0 );
-        this.el.setObject3D( "title", Text );
+        const title = MediumText( data.title ).mesh;
+        const titleHeightOffset = 0.2;
+        const titleHeight = data.size.y / 2 + titleHeightOffset;
+        title.position.set( 0, titleHeight, 0 );
+        this.el.setObject3D( "title", title );
 
         // Load data
-        const Loader = new JSONLoader;
-        Loader.loadJSON( this.data.src, jsonData => {
+        new JSONLoader().loadJSON( this.data.src, jsonData => {
 
-            console.log(jsonData);
-            const dataTable = new DataTable( jsonData ); 
-            dataTable.getColumn( 'test' );
-
-            const XCol = Loader.getColumn( jsonData, data.xCol );
-            const YCol = Loader.getColumn( jsonData, data.yCol );
-
-            let dataset = new DataCategorical( 
-                XCol,
-                YCol,
-            );
-
-            console.log(dataset);
-
-            const Padding = 0.2;
+            const table = new DataTable( jsonData ); 
+            const heightsRange = table.getRange( data.heights );
+            const padding = 0.1;
 
             // 3D Grid
             const Grid = document.createElement( "a-entity" );
             Grid.setAttribute( "categorical-grid", {
 
-                dimensions: data.dimensions,
-                ySteps: data.ySteps,
-                yRange: [dataset.range.start, dataset.range.end],
-                ySuffix: data.ySuffix,
+                dimensions: data.size,
+                ySteps: data.nbrOfheightsSteps,
+                yRange: [ heightsRange.start, heightsRange.end ],
+                ySuffix: data.heightsSuffix,
                 xAxisLabel: data.xAxisLabel,
                 yAxisLabel: data.yAxisLabel,
-                categories: dataset.categories,
-                padding: Padding
+                categories: table.getColumn( data.categories ),
+                padding: padding
 
             } );
             this.el.appendChild( Grid );
 
             // Bars
-            dataset.scaleToLength( data.dimensions.y );
+            const scaledHeights = table.makeScaleFitArray( data.heights, data.size.y );
             const Bars = document.createElement( "a-entity" );
             Bars.setAttribute("bars", {
-                dimensions: data.dimensions,
+                dimensions: data.size,
                 width: data.barWidth,
-                dataHeights: dataset.values,
-                padding: Padding 
+                dataHeights: scaledHeights,
+                padding: padding 
             } ); 
             this.el.appendChild( Bars );
-
 
         } );
 
