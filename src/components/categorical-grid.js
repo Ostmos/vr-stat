@@ -8,11 +8,11 @@ const LabelAxis = require( "../charts/grid" ).LabelAxis;
 AFRAME.registerComponent( "categorical-grid", {
 
     schema: {
-        dimensions: { type: "vec3" },
+        size: { type: "vec3" },
         categories: { type: "array" },
-        ySteps: { type: "number", default: 7 },
-        yRange: { type: "array", default: [ 5, 10 ] },
-        ySuffix: {type: "string" },
+        heightRange: { type: "array", default: [ 5, 10 ] },
+        nbrOfHeightSteps: { type: "number", default: 7 },
+        heightsSuffix: {type: "string" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
         padding: { type: "number" }
@@ -24,17 +24,17 @@ AFRAME.registerComponent( "categorical-grid", {
         let data = this.data;
         this.mesh = [];
 
-        const Dim = data.dimensions;
-        const YStepLength = Dim.y / ( data.ySteps - 1 );
+        const Dim = data.size;
+        const YStepLength = Dim.y / ( data.nbrOfHeightSteps - 1 );
 
-        const XYGrid = new SimpleGrid( data.ySteps, YStepLength, Dim ).mesh;
+        const XYGrid = new SimpleGrid( data.nbrOfHeightSteps, YStepLength, Dim ).mesh;
         XYGrid.rotation.set( Math.PI / 2, 0, 0 );
         XYGrid.position.set( 0, 0, -Dim.z / 2 );
         this.el.setObject3D( "xyGrid", XYGrid );
 
         // Cleaner solution needed
         const ZYLayout = new THREE.Vector3( Dim.z, Dim.y, Dim.x );
-        const ZYGrid = new SimpleGrid( data.ySteps, YStepLength, ZYLayout ).mesh;
+        const ZYGrid = new SimpleGrid( data.nbrOfHeightSteps, YStepLength, ZYLayout ).mesh;
         ZYGrid.rotation.set( Math.PI / 2, 0, Math.PI / 2 );
         ZYGrid.position.set( -Dim.x / 2, 0, 0 );
         this.el.setObject3D( "zyGrid", ZYGrid );
@@ -46,17 +46,17 @@ AFRAME.registerComponent( "categorical-grid", {
         // Y-axis
         const AxisPositionY = new THREE.Vector3( -Dim.x / 2, -Dim.y / 2, Dim.z / 2);
         const AxisDirectionY = new THREE.Vector3( 0, 1, 0 ).normalize();
-        const RangeY = new Range( data.yRange[0], data.yRange[1] );
+        const RangeY = new Range( data.heightRange[0], data.heightRange[1] );
         const LabelOffsetY = new THREE.Vector3( -0.08, 0, 0.08 );
         const AxisY = new LabelAxis(
             AxisPositionY,
             AxisDirectionY,
             LabelOffsetY,
-            data.ySteps,
+            data.nbrOfHeightSteps,
             YStepLength,
             Dim.y,
             RangeY,
-            data.ySuffix
+            data.heightsSuffix
         );
         this.el.setObject3D( "yAxis", AxisY.mesh );
         this.mesh.push("yAxis");

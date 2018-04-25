@@ -34,5 +34,28 @@ TODO
 ------------
 Data
 Raycaster (Create geomtries around diagrams) bars => lines => scatter plot 
+
+Intersectionsystem
+
+    Create geometries for diagrams {
+        bar chart
+        line chart 
+        scatter plot
+    }
+
+    chart geometries => intersection system
+
+    seperate collisions with diagrams and bars/lines/points
+
+    Raycaster {
+        objects to check for Intersection
+    }
+    keep intersetion objects in a system {
+        add,
+        remove
+    }
+
+    <diagram rotatable moveable hoverable pointlabel>
+
 Events, keys, change to grab controllers
 Screenshots: teleporter, laser, grid
