@@ -1,102 +1,102 @@
 [
   {
-    "x": "JavaScript",
-    "y": 62.5
+    "language": "JavaScript",
+    "percentage": 62.5
   },
   {
-    "x": "SQL",
-    "y": 51.2
+    "language": "SQL",
+    "percentage": 51.2
   },
   {
-    "x": "Java",
-    "y": 39.7
+    "language": "Java",
+    "percentage": 39.7
   },
   {
-    "x": "C#",
-    "y": 34.1
+    "language": "C#",
+    "percentage": 34.1
   },
   {
-    "x": "Python",
-    "y": 32
+    "language": "Python",
+    "percentage": 32
   },
   {
-    "x": "PHP",
-    "y": 28.1
+    "language": "PHP",
+    "percentage": 28.1
   },
   {
-    "x": "C++",
-    "y": 22.3
+    "language": "C++",
+    "percentage": 22.3
   },
   {
-    "x": "C",
-    "y": 19
+    "language": "C",
+    "percentage": 19
   },
   {
-    "x": "TypeScript",
-    "y": 9.5
+    "language": "TypeScript",
+    "percentage": 9.5
   },
   {
-    "x": "Ruby",
-    "y": 9.1
+    "language": "Ruby",
+    "percentage": 9.1
   },
   {
-    "x": "Swift",
-    "y": 6.5
+    "language": "Swift",
+    "percentage": 6.5
   },
   {
-    "x": "Objective-C",
-    "y": 6.4
+    "language": "Objective-C",
+    "percentage": 6.4
   },
   {
-    "x": "VB.NET",
-    "y": 6.2
+    "language": "VB.NET",
+    "percentage": 6.2
   },
   {
-    "x": "Assembly",
-    "y": 5
+    "language": "Assembly",
+    "percentage": 5
   },
   {
-    "x": "R",
-    "y": 4.5
+    "language": "R",
+    "percentage": 4.5
   },
   {
-    "x": "Perl",
-    "y": 4.3
+    "language": "Perl",
+    "percentage": 4.3
   },
   {
-    "x": "VBA",
-    "y": 4.3
+    "language": "VBA",
+    "percentage": 4.3
   },
   {
-    "x": "Matlab",
-    "y": 4.3
+    "language": "Matlab",
+    "percentage": 4.3
   },
   {
-    "x": "Go",
-    "y": 4.3
+    "language": "Go",
+    "percentage": 4.3
   },
   {
-    "x": "Scala",
-    "y": 3.6
+    "language": "Scala",
+    "percentage": 3.6
   },
   {
-    "x": "Groovy",
-    "y": 3.3
+    "language": "Groovy",
+    "percentage": 3.3
   },
   {
-    "x": "CoffeeScript",
-    "y": 3.3
+    "language": "CoffeeScript",
+    "percentage": 3.3
   },
   {
-    "x": "Visual Basic 6",
-    "y": 2.9
+    "language": "Visual Basic 6",
+    "percentage": 2.9
   },
   {
-    "x": "Lua",
-    "y": 2.8
+    "language": "Lua",
+    "percentage": 2.8
   },
   {
-    "x": "Haskell",
-    "y": 1.8
+    "language": "Haskell",
+    "percentage": 1.8
   }
 ]

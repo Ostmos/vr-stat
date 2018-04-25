@@ -1,17 +1,38 @@
 Data
 -------
-LoadJSON object
-Data3(x[], y[], z[])
-    x, y, z
-    xRange, yRange, zRange
-    scaledArrays
-Data2
-    x, y
+Numerical
+Categorical
+TimeData
 
-Numerical grid
+Change all Const to const
 
-Categorical grid
-    steps { x, y } 
-    yRange { },
-    ySuffix { },
-    
+Dataset
+
+    Loader.loadJSON( this.data.src, jsonData => {
+
+        const dataSet = new DataSet( jsonData );
+        dataSet.filterColumns("Wassup", "Hello", "Hello", "TimeLine");
+        (Check if numerical(
+            range = dataSet.getRange("Wassup");
+        ))
+        dataSet.get(attribute).scaleLinerar(0.1)
+        range.start = 0;
+        range.end = 0; 
+
+    })
+
+    datset.get("aasdf", "asdfasd", "asdfasd");
+
+    Use 32 arrays?
+    chaining (refrence d3)
+    loadData
+    get
+    range
+    fitLength
+
+TODO
+------------
+Data
+Raycaster (Create geomtries around diagrams) bars => lines => scatter plot 
+Events, keys, change to grab controllers
+Screenshots: teleporter, laser, grid

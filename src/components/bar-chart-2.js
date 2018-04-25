@@ -2,6 +2,7 @@ const DataCategorical = require( "../charts/data" ).DataCategorical;
 const JSONLoader = require( "../charts/data" ).JSONLoader;
 const MediumText = require ( "../charts/sprite-text" ).mediumText;
 const DebugCube = require( "../lib/utils" ).DebugCube;
+const DataTable = require( "../charts/data-table" ).DataTable;
 
 AFRAME.registerComponent( "bar-chart-2", {
 
@@ -33,6 +34,9 @@ AFRAME.registerComponent( "bar-chart-2", {
         const Loader = new JSONLoader;
         Loader.loadJSON( this.data.src, jsonData => {
 
+            const dataTable = new DataTable( jsonData ); 
+            console.log(dataTable);
+
             const XCol = Loader.getColumn( jsonData, data.xCol );
             const YCol = Loader.getColumn( jsonData, data.yCol );
 
@@ -40,6 +44,8 @@ AFRAME.registerComponent( "bar-chart-2", {
                 XCol,
                 YCol,
             );
+
+            console.log(dataset);
 
             const Padding = 0.2;
 
