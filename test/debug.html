@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>VR-Stat</title>
-    <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="../build/vr-stat.bundle.js"></script>
 </head>
 
 <body>
   <a-scene>
-    <a-sky color="#ECECEC"></a-sky>
-    <a-entity scatter-plot-2=
+    <a-sky color="#FFFFFF"></a-sky>
+    <a-plane color="#555" position="0 -0.5 0" height="20" width="20" rotation="-90 0 0"></a-plane>
+    <a-entity scatter-plot=
         "src:url(../src/assets/statistics/salary_hours_job.json);
          title: Job searching time, salary and years spent coding professionally;
          xAxisLabel: Job search time;
@@ -18,14 +19,25 @@
          zAxisLabel: Coding experince;"
          position="-6 1 -3"></a-entity> 
     </a-entity>
-    <a-entity bar-chart-2="src:url(../src/assets/statistics/language_popularity.json);
-                           xAxisLabel: Languages; yAxisLabel: Popularity; xCol: language; yCol: percentage; title: Programming language popularity; ySuffix: %;"
-              position="6 1 -3"></a-entity>
+    <a-entity bar-chart="src:url(../src/assets/statistics/language_popularity.json);
+                           xAxisLabel: Languages; yAxisLabel: Popularity; categories: language;
+                           heights: percentage; heightsSuffix: %; title: Programming language popularity; ySuffix: %;"
+              position="6 1 -3" grabbable></a-entity>
     <a-entity line-chart="src:url(../src/assets/statistics/lines-dummy.json);
                           dimensions: 1, 2, 1; xAxisLabel: xLabel; yAxisLabel: yLabel; lineColumns: x, y, z; timeColumn: time; lineLabels: line1, line2, line3; title: Time series"
-              position="0 1 -3"></a-entity>
-  </a-scene>
+              position="0 1 -3" grabbable rotation-observer></a-entity>
 
+    <a-entity id="rig" progressive-controls="maxLevel: point">
+        <a-entity id="controller1" class="right-controller" 
+        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
+        raycaster="objects: .diagram"
+        line="color:blue"
+        rotation-controller></a-entity>
+        <a-entity id="controller2" class="left-controller" 
+                  teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
+                  raycaster="showLine:false; enabled: false;"></a-entity>
+    </a-entity>
+  </a-scene>
 </body>
 
 </html> 

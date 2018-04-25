@@ -4,7 +4,7 @@ const stat = require( "../src/lib/stat" );
 
 // TODO: Test for same ordered members that are almost equal with some 
 // precision delta
-describe( "stat", function() {
+/*describe( "stat", function() {
 
     describe( "stat.evenlySpacedArray", function() {
 
@@ -158,4 +158,4 @@ describe( "stat", function() {
 
     } );
 
-} );
+} );*/

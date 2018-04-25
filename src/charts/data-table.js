@@ -8,20 +8,20 @@ function Range( start = 0, end = 0 ) {
 
 function DataTable( jsonData ) {
 
-    this.table = {};
-    this.loadJson( jsonData );
+    this._table = {};
+    this.loadJsonArray( jsonData );
 
 }
 
 DataTable.prototype = {
 
-    loadJson: function( jsonData ) {
+    loadJsonArray: function( jsonData ) {
 
         if ( jsonData !== undefined ) {
 
             if ( !Array.isArray( jsonData ) ) {
 
-                console.error( "DataSet: jsonData is not an array of objects!" );
+                console.error( "DataTable: jsonData is not an array of objects!" );
 
             } else {
                 
@@ -49,15 +49,42 @@ DataTable.prototype = {
 
     },
 
-    addToColumn: function( column, value ) {
+    hasColumn: function( column ) {
 
-        if ( !this.table.hasOwnProperty( column ) ) {
+        if ( column !== undefined ) {
 
-            this.table[ column ] = [];
+            return this._table.hasOwnProperty( column );
 
         }
 
-        this.table[ column ].push( value );
+        console.error( "DataTable: no column found named: ", column );
+
+        return false;
+
+    },
+
+
+    addToColumn: function( column, value ) {
+
+        if ( !this._table.hasOwnProperty( column ) ) {
+
+            this._table[ column ] = [];
+
+        }
+
+        this._table[ column ].push( value );
+
+    },
+
+    getColumn: function( column ) {
+
+        if ( this.hasColumn( column ) ) {
+
+            return this._table[ column ];
+
+        }
+
+        return [];
 
     },
 
@@ -67,8 +94,8 @@ DataTable.prototype = {
 
         if ( this.hasColumn( column ) ) {
 
-            range.start = Math.max( ...this.table[ column ] );
-            range.end = Math.min ( ...this.table[ column ] );
+            range.start = Math.min ( ...this._table[ column ] );
+            range.end = Math.max( ...this._table[ column ] );
 
         }
 
@@ -76,21 +103,19 @@ DataTable.prototype = {
 
     }, 
 
-    hasColumn: function( column ) {
+    // Scales column as much as needed for the max value of the column
+    // to become the length. Should have a better name.
+    makeScaleFitArray: function( column, length ) {
 
-        if ( column !== undefined ) {
+        if ( this.hasColumn( column ) ) {
 
-            return this.table.hasOwnProperty( column );
+            const columnMaxValue = Math.max( ...this._table[ column ] );
+            const scale = length / columnMaxValue;
+            return this._table[ column ].map( elem => elem * scale );
 
-        }
+        } 
 
-        return false;
-
-    },
-
-    scaleColumnToLength: function( column, value ) {
-
-         
+        return [];
 
     }
 
