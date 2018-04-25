@@ -1,0 +1,61 @@
+Data
+-------
+Numerical
+Categorical
+TimeData
+
+Change all Const to const
+
+Dataset
+
+    Loader.loadJSON( this.data.src, jsonData => {
+
+        const dataSet = new DataSet( jsonData );
+        dataSet.filterColumns("Wassup", "Hello", "Hello", "TimeLine");
+        (Check if numerical(
+            range = dataSet.getRange("Wassup");
+        ))
+        dataSet.get(attribute).scaleLinerar(0.1)
+        range.start = 0;
+        range.end = 0; 
+
+    })
+
+    datset.get("aasdf", "asdfasd", "asdfasd");
+
+    Use 32 arrays?
+    chaining (refrence d3)
+    loadData
+    get
+    range
+    fitLength
+
+TODO
+------------
+Data
+Raycaster (Create geomtries around diagrams) bars => lines => scatter plot 
+
+Intersectionsystem
+
+    Create geometries for diagrams {
+        bar chart
+        line chart 
+        scatter plot
+    }
+
+    chart geometries => intersection system
+
+    seperate collisions with diagrams and bars/lines/points
+
+    Raycaster {
+        objects to check for Intersection
+    }
+    keep intersetion objects in a system {
+        add,
+        remove
+    }
+
+    <diagram rotatable moveable hoverable pointlabel>
+
+Events, keys, change to grab controllers
+Screenshots: teleporter, laser, grid

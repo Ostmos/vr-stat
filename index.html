@@ -1,74 +1,72 @@
 <!DOCTYPE html>
-<html>
 <head>
-  <meta charset="UTF-8">
-  <title>VR-Stat</title>
-    <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
 </head>
-
 <body>
-  <a-scene activate-vr avatar-recorder> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
-    <a-asset>
-      <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
-      <a-asset-item id="controller" src="src/assets/models/controller.gltf"></a-asset-item>
-      <img id="sky" src="src/assets/images/equi.png">
-    </a-asset>
+    <a-scene avatar-recorder>
+        <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
+        <a-asset-item id="controller" src="src/assets/models/controller.gltf"></a-asset-item>
 
-    <!--World-->
-    <a-sky color="#add8e6"></a-sky>
-    <a-entity id="room" position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf" shadow="receive=false"></a-entity>
-    <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
+        <!-- World -->
+        <a-sky color="#212F3C"></a-sky>
+        <a-entity position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf"></a-entity>
+        <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
 
-    <!-- Models-->
-    <a-entity class="diagram"
-              network-diagram></a-entity>
+         <!-- Lights -->
+        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="3 3 -15"></a-entity>
+        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 -5" target="contr"></a-entity>
+        <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-52.717 43.812 -14.454"></a-entity>
 
-    <a-entity class="diagram" 
-              bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)" 
-              position="10 -1 -20"
-              grabbable 
-              draggable
-              rotation-observer></a-entity>
+        <!-- Diagrams -->
+        <a-entity 
+        scatter-plot=
+            "
+            src: url(src/assets/statistics/salary_hours_job.json);
+            title: Job searching time, salary and years spent coding professionally;
+            xAxisLabel: Job search time;
+            yAxisLabel: Salary;
+            zAxisLabel: Coding experience;
+            "
+        position="-6 1 -15"
+        ></a-entity>
 
-    <a-entity class="diagram"
-              scatter-plot=
-                "src:url(./src/assets/statistics/salary_hours_job.json);
-                 xAxisScale: 0.15;
-                 yAxisScale: 0.00003;
-                 zAxisScale: 0.3;
-                 title: Relation between job searching time, salary and years spent coding professionally;
-                 xLabel: Hours spent look for a new job each month;
-                 yLabel: Salary;
-                 zLabel: Years spent coding professionally;
-                 xSuffix: h;
-                 ySuffix: $;
-                 zSuffix: y"
-              position="-10 -0.5 -20"
-              grabbable
-              draggable
-              rotation-observer></a-entity>
+        <a-entity 
+        bar-chart=
+            "
+            src:url(src/assets/statistics/language_popularity.json);
+            xAxisLabel: Languages; 
+            yAxisLabel: Popularity; 
+            categories: language;
+            heights: percentage;
+            heightsSuffix: %;
+            title: Programming language popularity; 
+            ySuffix: %;"
+        position="0 1 -15"
+        ></a-entity>
 
-    <!-- Lights -->
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 -10"></a-entity>
-    <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
-    <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
+        <a-entity
+        line-chart=
+            "
+            src:url(src/assets/statistics/lines-dummy.json);
+            dimensions: 1, 2, 1;
+            xAxisLabel: xLabel;
+            yAxisLabel: yLabel; 
+            lineColumns: x, y, z; 
+            timeColumn: time; 
+            lineLabels: line1, line2, line3; 
+            title: Time series
+            "
+        position="6 1 -15"
+        ></a-entity>
 
-    <a-entity id="rig" progressive-controls="maxLevel: point">
-        <a-entity id="controller1" class="right-controller" 
-        super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown"
-        raycaster="objects: .diagram"
-        line="color:blue"
-        rotation-controller></a-entity>
-        <a-entity id="controller2" class="left-controller" 
-                  teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
-                  raycaster="showLine:false; enabled: false;"></a-entity>
-    </a-entity>
-
-  </a-scene>
-
+        <!-- hand controls -->
+        <a-entity id="player">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+        </a-entity>
+    </a-scene>
 </body>
-
 </html>
