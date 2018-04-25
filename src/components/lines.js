@@ -42,7 +42,6 @@ function LineGroup( heights, dimensions, labels ) {
         this.mesh.add( new THREE.Line( Geometry, Material ) );
     }
 
-
 }
 
 AFRAME.registerComponent( "lines", {
