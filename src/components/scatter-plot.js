@@ -80,7 +80,7 @@ AFRAME.registerComponent('scatter-plot', {
                     map: texture,
                     side: THREE.DoubleSide,
                     transparent: true,
-                    color: 0x00000 
+                    color: 0xffffff 
                 }))
                 
                 fontLoader('./src/assets/fonts/dejavu/DejaVu-sdf.fnt', function(err, font) {

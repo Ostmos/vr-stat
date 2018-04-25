@@ -35,8 +35,8 @@ AFRAME.registerComponent("bar-chart", {
         let yValues = [];
 
         for (let i = 0; i < bars.length; i++) {
-            xLabels[i] = bars[i].x;
-            yValues[i] = bars[i].y;
+            xLabels[i] = bars[i].language;
+            yValues[i] = bars[i].percentage;
         }
 
         // Plane

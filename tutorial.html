@@ -148,11 +148,11 @@
       <a-sky color="#212F3C"></a-sky>
   
       <!-- Light -->
-      <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 10"></a-entity>
-      <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 10"></a-entity>
-      <a-entity light="type: point; color: #FFF; intensity: 0.3" position="5 2 -10"></a-entity>
-      <a-entity light="type: point; color: #FFF; intensity: 0.3" position="-5 2 -10"></a-entity>
-      <a-entity light="type: ambient; color: #FFF; intensity: 1" position="0 2 0"></a-entity>
+      <a-entity light="type: ambient; color: #FFF"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 1" position="-0.5 1 1" target="#target">
+        <a-entity id="target" positon="4.2 0 -15"></a-entity>
+      </a-entity>
+
 
       <!--Teleport-->
       <a-entity id="txtTeleport" position="0 1.7 -3" rotation="0 0 0" scale="0.5 0.5 0.5" visible="true">
@@ -215,6 +215,7 @@
           <a-entity id="controller2" class="left-controller" 
             teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
             raycaster="showLine:false; enabled:false"></a-entity>
+          <a-camera position="0 1.6 0"></a-camera>
         </a-entity>
      
     </a-scene>
