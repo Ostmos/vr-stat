@@ -1,5 +1,5 @@
 const Utils = require( "../lib/utils" );
-const Range = require( "../charts/data" ).Range;
+const Range = require( "../charts/data-table" ).Range;
 const SimpleGrid = require( "../charts/grid" ).SimpleGrid;
 const CategoricalPlane = require( "../charts/grid" ).CategoricalPlane;
 const CategoryAxis = require( "../charts/grid" ).CategoryAxis;

@@ -16,55 +16,75 @@ AFRAME.registerComponent( "bar-chart", {
         heights: { type: "string", default: "y" },
         nbrOfHeightSteps: { type: "number", default: 7 },
         heightsSuffix: { type: "string" },
-        barWidth: { type: "number", default: 0.2 }
+        barWidth: { type: "number", default: 0.2 },
+        axisToBarPadding: { type: "number", default: 0.1 }
     },
  
     init: function() {
 
-        let data = this.data;
+        this.makeTitle();
 
-        // Title
-        const title = mediumText( data.title ).mesh;
-        const titleHeightOffset = 0.2;
-        const titleHeight = data.size.y / 2 + titleHeightOffset;
-        title.position.set( 0, titleHeight, 0 );
-        this.el.setObject3D( "title", title );
-
-        // Load data
+        // Load json data
         new JSONLoader().loadJSON( this.data.src, jsonData => {
 
-            // Data table
+            // Convert json data to table form
             const table = new DataTable( jsonData ); 
-            const heightsRange = table.getRange( data.heights );
-            const axisToBarsPadding = 0.1;
 
-            // 3D categorical grid
-            const Grid = document.createElement( "a-entity" );
-            Grid.setAttribute( "categorical-grid", {
-                size: data.size,
-                categories: table.getColumn( data.categories ),
-                heightRange: [ heightsRange.start, heightsRange.end ],
-                nbrOfHeightSteps: data.nbrOfheightSteps,
-                heightsSuffix: data.heightsSuffix,
-                xAxisLabel: data.xAxisLabel,
-                yAxisLabel: data.yAxisLabel,
-                padding: axisToBarsPadding
-            } );
-            this.el.appendChild( Grid );
-
-            // Bars
-            const scaledHeights = table.makeScaleFitArray( data.heights, data.size.y );
-            const Bars = document.createElement( "a-entity" );
-            Bars.setAttribute("bars", {
-                size: data.size,
-                barWidth: data.barWidth,
-                heights: scaledHeights,
-                outSidePadding: axisToBarsPadding 
-            } ); 
-            this.el.appendChild( Bars );
+            this.makeGrid( table );
+            this.makeBars( table );
 
         } );
 
     },
+
+    makeTitle: function() {
+
+        // Title
+        const title = mediumText( this.data.title ).mesh;
+        const titleHeightOffset = 0.2;
+        const titleHeight = this.data.size.y / 2 + titleHeightOffset;
+        title.position.set( 0, titleHeight, 0 );
+        this.el.setObject3D( "title", title );
+
+    },
+
+    makeGrid: function( table ) {
+
+            // 3D categorical grid
+            const heightsRange = table.getRange( this.data.heights );
+
+            const grid = document.createElement( "a-entity" );
+            grid.setAttribute( "categorical-grid", {
+                size: this.data.size,
+                categories: table.getColumn( this.data.categories ),
+                heightRange: [ heightsRange.start, heightsRange.end ],
+                nbrOfHeightSteps: this.data.nbrOfheightSteps,
+                heightsSuffix: this.data.heightsSuffix,
+                xAxisLabel: this.data.xAxisLabel,
+                yAxisLabel: this.data.yAxisLabel,
+                padding: this.data.axisToBarPadding
+            } );
+            this.el.appendChild( grid );
+
+    },
+
+    makeBars: function( table ) {
+
+            // Bars
+            const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
+
+            const bars = document.createElement( "a-entity" );
+            bars.setAttribute("bars", {
+                size: this.data.size,
+                barWidth: this.data.barWidth,
+                heights: scaledHeights,
+                outSidePadding: this.data.axisToBarPadding 
+            } ); 
+            this.el.appendChild( bars );
+
+    }
+
+
+
 
 } );

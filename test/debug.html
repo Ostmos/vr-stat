@@ -24,7 +24,8 @@
                            heights: percentage; heightsSuffix: %; title: Programming language popularity; ySuffix: %;"
               position="6 1 -3" grabbable></a-entity>
     <a-entity line-chart="src:url(../src/assets/statistics/lines-dummy.json);
-                          dimensions: 1, 2, 1; xAxisLabel: xLabel; yAxisLabel: yLabel; lineColumns: x, y, z; timeColumn: time; lineLabels: line1, line2, line3; title: Time series"
+                          dimensions: 1, 2, 1; xAxisLabel: xLabel; yAxisLabel: yLabel; 
+                          lines: x, y, z; time: time; lineLabels: line1, line2, line3; title: Time series"
               position="0 1 -3" grabbable rotation-observer></a-entity>
 
     <a-entity id="rig" progressive-controls="maxLevel: point">

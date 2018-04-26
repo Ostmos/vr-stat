@@ -1,6 +1,6 @@
 const SmallText = require ( "../charts/sprite-text" ).smallText;
 const MediumText = require ( "../charts/sprite-text" ).mediumText;
-const Range = require ( "../charts/data" ).Range;
+const Range = require ( "../charts/data-table" ).Range;
 
 function RectilinearGrid( steps, stepLength, layout ) {
 
@@ -71,7 +71,7 @@ function LabelAxis( start, direction, labelOffset, steps, stepLength, length, ra
     // Put this somewhere else
     this.middle = start.clone().add( direction.clone().multiplyScalar( length / 2 ) );
 
-    const LabelValueStep = range.evenStepLength( steps ); 
+    const LabelValueStep = ( range.end - range.start ) / ( steps - 1 ); 
 
     let currentValue = range.start;
     let text = "";

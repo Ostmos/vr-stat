@@ -109,20 +109,39 @@ DataTable.prototype = {
 
         if ( this.hasColumn( column ) ) {
 
-            const columnMaxValue = Math.max( ...this._table[ column ] );
+            let columnMaxValue = Math.max( ...this._table[ column ] );
+            if ( columnMaxValue <= 0 ) {
+                columnMaxValue = 0.0001;
+            }                 
             const scale = length / columnMaxValue;
+
             return this._table[ column ].map( elem => elem * scale );
 
         } 
 
         return [];
 
+    },
+
+    // Floors whole array to the min value of the range
+    floorToMinValue: function( column ) {
+
+        if ( this.hasColumn( column ) ) {
+
+            const range = this.getRange( column );
+            
+            this._table[ column ] = this._table[ column ].map( elem => elem - range.start );
+
+        }
+
     }
 
 }
 
+
 module.exports = {
 
-    DataTable: DataTable
+    DataTable: DataTable,
+    Range: Range
 
 };
