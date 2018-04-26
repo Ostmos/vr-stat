@@ -50,21 +50,23 @@ AFRAME.registerComponent( "bar-chart", {
 
     makeGrid: function( table ) {
 
-            // 3D categorical grid
-            const heightsRange = table.getRange( this.data.heights );
+        // 3D categorical grid
+        const heightsRange = table.getRange( this.data.heights );
 
-            const grid = document.createElement( "a-entity" );
-            grid.setAttribute( "categorical-grid", {
-                size: this.data.size,
-                categories: table.getColumn( this.data.categories ),
-                heightRange: [ heightsRange.start, heightsRange.end ],
-                nbrOfHeightSteps: this.data.nbrOfheightSteps,
-                heightsSuffix: this.data.heightsSuffix,
-                xAxisLabel: this.data.xAxisLabel,
-                yAxisLabel: this.data.yAxisLabel,
-                padding: this.data.axisToBarPadding
-            } );
-            this.el.appendChild( grid );
+        this.el.setAttribute( "categorical-grid", {
+            size: this.data.size,
+            categories: table.getColumn( this.data.categories ),
+            heightRange: [ heightsRange.start, heightsRange.end ],
+            nbrOfHeightSteps: this.data.nbrOfheightSteps,
+            heightsSuffix: this.data.heightsSuffix,
+            xAxisLabel: this.data.xAxisLabel,
+            yAxisLabel: this.data.yAxisLabel,
+            padding: this.data.axisToBarPadding
+        } );
+
+        /* this.el.setAttribute( "bounding-box", {
+            size: { x: this.data.size.x, y: this.data.size.y, z: this.data.size.z }
+        } );* */
 
     },
 
@@ -72,15 +74,15 @@ AFRAME.registerComponent( "bar-chart", {
 
             // Bars
             const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
+            const values = table.getColumn( this.data.heights ).map( value => value + this.data.heightsSuffix );
 
-            const bars = document.createElement( "a-entity" );
-            bars.setAttribute("bars", {
+            this.el.setAttribute( "bars", {
                 size: this.data.size,
                 barWidth: this.data.barWidth,
-                heights: scaledHeights,
+                heights: scaledHeights, 
+                values: values,
                 outSidePadding: this.data.axisToBarPadding 
             } ); 
-            this.el.appendChild( bars );
 
     }
 

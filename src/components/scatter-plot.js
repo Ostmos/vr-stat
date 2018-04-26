@@ -56,8 +56,7 @@ AFRAME.registerComponent( "scatter-plot", {
         const zRange = table.getRange( this.data.zCol );
 
         // 3D Grid
-        const Grid = document.createElement( "a-entity" );
-        Grid.setAttribute("numerical-grid", {
+        this.el.setAttribute("numerical-grid", {
 
             dimensions: this.data.size,
             steps: this.data.steps,
@@ -72,7 +71,6 @@ AFRAME.registerComponent( "scatter-plot", {
             zSuffix: this.data.zSuffix,
 
         });
-        this.el.appendChild( Grid );
 
     },
 
@@ -87,8 +85,7 @@ AFRAME.registerComponent( "scatter-plot", {
         const zScaledPoints = table.makeScaleFitArray( this.data.zCol, this.data.size.z );
 
         // Points
-        const PointCloud = document.createElement( "a-entity" );
-        PointCloud.setAttribute( "point-cloud", {
+        this.el.setAttribute( "point-cloud", {
             
             dimensions: this.data.size ,
             points: { 
@@ -98,7 +95,6 @@ AFRAME.registerComponent( "scatter-plot", {
             }
 
         } );
-        this.el.appendChild( PointCloud );
 
     }
 

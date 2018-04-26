@@ -20,7 +20,6 @@ AFRAME.registerComponent( "categorical-grid", {
  
     init: function() {
 
-
         let data = this.data;
         this.mesh = [];
 

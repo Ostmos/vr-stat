@@ -64,8 +64,7 @@ AFRAME.registerComponent( "line-chart", {
 
         const times = table.getColumn( this.data.time );
         // 3D Grid
-        const grid = document.createElement( "a-entity" );
-        grid.setAttribute( "categorical-grid", {
+        this.el.setAttribute( "categorical-grid", {
             size: this.data.size,
             nbrOfHeightSteps: this.data.nbrOfHeightSteps,
             heightRange: [ allLinesRange.start, allLinesRange.end ],
@@ -74,7 +73,6 @@ AFRAME.registerComponent( "line-chart", {
             yAxisLabel: this.data.yAxisLabel,
             categories: times,
         } );
-        this.el.appendChild( grid );
 
 
     },
@@ -89,13 +87,11 @@ AFRAME.registerComponent( "line-chart", {
             scaledLines.push( scaledLine );
 
         } 
-        const lines = document.createElement( "a-entity" );
-        lines.setAttribute("lines", {
+        this.el.setAttribute("lines", {
             dimensions: this.data.size,
             heights: scaledLines,
             labels: this.data.lineLabels
         } ); 
-        this.el.appendChild( lines );
 
     }
 
