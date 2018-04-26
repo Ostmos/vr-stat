@@ -1,7 +1,29 @@
-Scatter plot
-    Particles: on/off
-Rotation
-Hover and get text
-Move diagram
+1. Events
+    Bar chart
+    ----------
+    Label
+    Rotation   
+    Position(super hands?)
 
-Shaders for stuff
+    Line chart
+    ----------
+    Intersection on line? Write raycaster?
+    Rotation
+    Position
+
+    Scatter plot
+    ----------
+    Intersection with points? Or just use entities/particles?
+    Rotation
+    Position
+
+2. Material
+    Bar
+    Line?
+    Particle
+
+3. Lights
+
+4. Tutorial
+
+5. Screenshots/Video
