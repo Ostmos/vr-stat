@@ -51,7 +51,6 @@ function SimpleGrid( steps, stepLength, layout ) {
     Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
     const Material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
     this.mesh = new THREE.LineSegments( Geometry, Material );
-    console.log(this.mesh);
 
 }
 

@@ -15,17 +15,18 @@ AFRAME.registerComponent( "bar", {
 
         const TEXT_PANEL_OFFSET = 0.1;
 
-        this.el.className = "bar";
+        this.el.className = "point";
 
         let self = this;
         let data = this.data;
 
         const geometry = new THREE.BoxGeometry( data.width, data.height, data.width );
-        const material = new THREE.MeshBasicMaterial( { color: 0x000 } );
+        const material = new THREE.MeshToonMaterial( {color: 0x604a4b } );
         const mesh = new THREE.Mesh( geometry, material );
         this.el.setObject3D( "bar", mesh );
 
         this.el.addEventListener( "stateadded", function (evt) {
+
 
             if ( evt.detail.state === "cursor-hovered" && data.value ) {
 

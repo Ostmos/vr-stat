@@ -64,9 +64,9 @@ AFRAME.registerComponent( "bar-chart", {
             padding: this.data.axisToBarPadding
         } );
 
-        /* this.el.setAttribute( "bounding-box", {
+        this.el.setAttribute( "bounding-box", {
             size: { x: this.data.size.x, y: this.data.size.y, z: this.data.size.z }
-        } );* */
+        } );
 
     },
 
@@ -83,6 +83,11 @@ AFRAME.registerComponent( "bar-chart", {
                 values: values,
                 outSidePadding: this.data.axisToBarPadding 
             } ); 
+
+    },
+
+    tick: function() {
+
 
     }
 
