@@ -1,5 +1,6 @@
 // Vendors
-require('aframe-teleport-controls');
+require("aframe-teleport-controls");
+require("super-hands")
 
 // Systems
 require("./systems/intersections-handler");

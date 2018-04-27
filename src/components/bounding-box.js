@@ -35,9 +35,11 @@ AFRAME.registerComponent( "bounding-box", {
             if ( evt.detail.state === "cursor-hovered" ) {
 
                 if ( self.el.parentElement !== undefined ) {
-                    self.el.parentElement.addState( "cursor-hovered" );
-                }
 
+                    self.el.parentElement.addState( "cursor-hovered" );
+
+                }
+                
             } 
 
         } );
@@ -47,7 +49,9 @@ AFRAME.registerComponent( "bounding-box", {
             if ( evt.detail.state === "cursor-hovered" ) {
 
                 if ( self.el.parentElement !== undefined ) {
+
                     self.el.parentElement.removeState( "cursor-hovered" );
+
                 }
 
             } 

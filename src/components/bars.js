@@ -29,6 +29,7 @@ AFRAME.registerComponent( "bar", {
 
             if ( evt.detail.state === "cursor-hovered" && data.value ) {
 
+                mesh.material.color.setHex( 0x600000 );
                 const textPanelMesh = miniTextPanel( data.value ).mesh;
                 textPanelMesh.position.set( 0, data.height / 2 + TEXT_PANEL_OFFSET, 0 );
                 self.el.setObject3D( "textPanel", textPanelMesh ); 
@@ -41,6 +42,7 @@ AFRAME.registerComponent( "bar", {
 
             if ( evt.detail.state === "cursor-hovered" ) {
 
+                mesh.material.color.setHex( 0x604a4b );
                 self.el.removeObject3D( "textPanel");
                 self.el.parentNode.removeState("cursor-hovered");
 
