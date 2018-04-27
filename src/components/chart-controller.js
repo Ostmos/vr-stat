@@ -1,32 +1,25 @@
-AFRAME.registerComponent("chart-controller", {
-
-    // TODO 
-    /*
-    Config: 
-        mouse + keyboard
-        oculus-touch-controllers        
-    */
+AFRAME.registerComponent('chart-controller', {
 
     init: function () {
 
-        let el = this.el;
+      const el = this.el;
+      const self = this;
 
-        el.addEventListener( "axismove", function (evt) {
+        this.el.addEventListener( "axismove" , function( evt ) {
 
-            el.emit("rotation", {x: evt.detail.axis[0], y: evt.detail.axis[1], z: evt.detail.axis[2]});
+            const yAxisRotation = evt.detail.axis[ 0 ] * Math.PI / 2;
+            const xAxisRotation = evt.detail.axis[ 1 ] * Math.PI / 2; 
 
-        });
-
-        el.addEventListener( "triggerdown", function (evt) {
-
+            self.el.emit('rotation', { xAxisRotation: xAxisRotation, yAxisRotation: yAxisRotation} );
 
         } );
 
-        el.addEventListener( "click", function() {
+        this.el.addEventListener( "triggerdown" , function( evt ) {
 
-            console.log("a");
+            // TODO save data point on controller
 
         } );
 
     },
-});
+
+  });
