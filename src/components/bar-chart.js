@@ -33,6 +33,10 @@ AFRAME.registerComponent( "bar-chart", {
             this.makeGrid( table );
             this.makeBars( table );
 
+            this.el.setAttribute("chart-event-listener", {
+                controller: "#right"
+            } );
+
         } );
 
     },
@@ -64,9 +68,10 @@ AFRAME.registerComponent( "bar-chart", {
             padding: this.data.axisToBarPadding
         } );
 
-        this.el.setAttribute( "bounding-box", {
-            size: { x: this.data.size.x, y: this.data.size.y, z: this.data.size.z }
-        } );
+        // It doesn't work to put the bounding box as an attribute directly apperntly
+        var entity = document.createElement('a-entity');
+        entity.setAttribute('bounding-box', {size: '5, 2, 0.5'});
+        this.el.appendChild(entity);
 
     },
 

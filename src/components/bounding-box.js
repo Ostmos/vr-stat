@@ -2,13 +2,15 @@ AFRAME.registerComponent( "bounding-box", {
 
     schema: {
         size: { type: "vec3" },
+        parent: { type: "selector" }
     },
 
     init: function() {
 
         this.el.className = "bounding-box";
+        let self = this;
 
-        const planeMaterial = new THREE.MeshBasicMaterial( { color: 0xF00, opacity: 0, transparent: true, side: THREE.DoubleSide } );
+        const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000, opacity: 0.0, transparent: true, side: THREE.DoubleSide } );
         const backPlaneGeometry = new THREE.PlaneGeometry( this.data.size.x, this.data.size.y );
         const backPlaneMesh = new THREE.Mesh( backPlaneGeometry, planeMaterial );
         backPlaneMesh.position.set( 0, 0, -this.data.size.z / 2 );
@@ -18,15 +20,23 @@ AFRAME.registerComponent( "bounding-box", {
         sidePlaneMesh.position.set( -this.data.size.x / 2, 0, 0 );
         sidePlaneMesh.rotation.set( 0, Math.PI / 2, 0 );
 
+        const bottomPlaneGeometry = new THREE.PlaneGeometry( this.data.size.x, this.data.size.z );
+        const bottomPlaneMesh = new THREE.Mesh( bottomPlaneGeometry, planeMaterial );
+        bottomPlaneMesh.rotation.set( -Math.PI / 2, 0, 0 );
+        bottomPlaneMesh.position.set( 0, -this.data.size.y / 2, 0 );
+
         this.el.setObject3D( "bounding-box-back", backPlaneMesh );
         this.el.setObject3D( "bounding-box-side", sidePlaneMesh );
+        this.el.setObject3D( "bounding-box-bottom", bottomPlaneMesh );
 
         this.el.addEventListener( "stateadded", function (evt) {
 
             // 0.7.0 evt.detail.state
             if ( evt.detail.state === "cursor-hovered" ) {
 
-                console.log('hover');
+                if ( self.el.parentElement !== undefined ) {
+                    self.el.parentElement.addState( "cursor-hovered" );
+                }
 
             } 
 
@@ -36,7 +46,9 @@ AFRAME.registerComponent( "bounding-box", {
 
             if ( evt.detail.state === "cursor-hovered" ) {
 
-                console.log('not hover');
+                if ( self.el.parentElement !== undefined ) {
+                    self.el.parentElement.removeState( "cursor-hovered" );
+                }
 
             } 
 

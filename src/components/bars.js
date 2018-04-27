@@ -27,13 +27,12 @@ AFRAME.registerComponent( "bar", {
 
         this.el.addEventListener( "stateadded", function (evt) {
 
-
             if ( evt.detail.state === "cursor-hovered" && data.value ) {
 
                 const textPanelMesh = miniTextPanel( data.value ).mesh;
                 textPanelMesh.position.set( 0, data.height / 2 + TEXT_PANEL_OFFSET, 0 );
-                self.el.setObject3D( "textPanel", textPanelMesh );
-
+                self.el.setObject3D( "textPanel", textPanelMesh ); 
+                self.el.parentNode.addState("cursor-hovered");
             } 
 
         } );
@@ -43,8 +42,29 @@ AFRAME.registerComponent( "bar", {
             if ( evt.detail.state === "cursor-hovered" ) {
 
                 self.el.removeObject3D( "textPanel");
+                self.el.parentNode.removeState("cursor-hovered");
 
             } 
+
+        } );
+
+        this.el.addEventListener( "axismove" , function( evt ) {
+
+            console.log(evt);
+
+
+        } );
+
+        this.el.addEventListener( "triggerdown" , function( evt ) {
+
+            console.log(evt);
+
+
+        } );
+
+        this.el.addEventListener( "axischanged", function( evt ) {
+
+            console.log( evt ); 
 
         } );
 
