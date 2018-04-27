@@ -39,10 +39,17 @@
           <a-cursor raycaster="objects: .bounding-box "></a-cursor>
         </a-camera>-->
 
-        <a-entity id="right">
+        <!--<a-entity id="right">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
             <a-entity id="xd" oculus-touch-controls="hand:right" laser-controls raycaster="objects: .point, .bounding-box ; far:5" chart-controller></a-entity>
+        </a-entity>-->
+
+        <a-entity id="player">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" 
+            laser-controls raycaster="objects: .point, .bounding-box ; far:5" chart-controller></a-entity>
         </a-entity>
 
         <a-entity light="type: ambient; color: #BBB"></a-entity>
