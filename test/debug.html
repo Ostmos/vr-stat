@@ -26,7 +26,8 @@
     <a-entity line-chart="src:url(../src/assets/statistics/lines-dummy.json);
                           dimensions: 1, 2, 1; xAxisLabel: xLabel; yAxisLabel: yLabel; 
                           lines: x, y, z; time: time; lineLabels: line1, line2, line3; title: Time series"
-              position="6 1 -3"></a-entity>
+              position="6 1 -3"
+              ></a-entity>
 
       <!-- hand controls <a-entity id="player">
           <!--<a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
@@ -48,8 +49,8 @@
         <a-entity id="player">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-            <a-entity oculus-touch-controls="hand:right" 
-            laser-controls raycaster="objects: .point, .bounding-box ; far:5" chart-controller></a-entity>
+            <a-entity id="right" oculus-touch-controls="hand:right" 
+            laser-controls raycaster="objects: .point, .bounding-box; far:5" chart-controller></a-entity>
         </a-entity>
 
         <a-entity light="type: ambient; color: #BBB"></a-entity>

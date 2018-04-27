@@ -1,6 +1,5 @@
 // Vendors
 require("aframe-teleport-controls");
-require("super-hands")
 
 // Systems
 require("./systems/intersections-handler");
@@ -21,5 +20,5 @@ require("./components/bar-chart-listener");
 require("./components/value-display");
 require("./components/bounding-box");
 
-require("./components/chart-controller");
 require("./components/chart-event-listener");
+require("./components/chart-controller");

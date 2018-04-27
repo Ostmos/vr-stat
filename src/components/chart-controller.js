@@ -11,8 +11,6 @@ AFRAME.registerComponent('chart-controller', {
         this.triggered = false;
         this.threeRaycaster = this.el.components.raycaster; 
         this.raycasterLength = this.threeRaycaster.raycaster.far;
-        console.log(this.threeRaycaster.raycaster.far);
-        console.log(this.threeRaycaster);
 
         this.el.addEventListener( "axismove" , function( evt ) {
 
@@ -56,6 +54,11 @@ AFRAME.registerComponent('chart-controller', {
                 let endPoint = new THREE.Vector3( 0, 0, 0 );
                 endPoint.copy( this.threeRaycaster.raycaster.ray.direction );
                 endPoint = endPoint.multiplyScalar( this.raycasterLength ).add( this.threeRaycaster.raycaster.ray.origin );
+
+                /*this.targetPosition.applyQuaternion(this.grabber.object3D.getWorldQuaternion())
+                .setLength(this.grabDistance).add(this.grabber.object3D.getWorldPosition()).add(this.grabOffset);
+
+                target.applyQuaternion(contoller.getWorldQuaternion).setLegnth(racasterlenght)add(controller.getWorldPosition.add(origin))*/
 
                 this.el.emit( "position", { pos: endPoint } );
 
