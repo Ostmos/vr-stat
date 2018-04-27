@@ -2,65 +2,81 @@ const SmallText = require ( "../charts/sprite-text" ).smallText;
 const MediumText = require ( "../charts/sprite-text" ).mediumText;
 const Range = require ( "../charts/data-table" ).Range;
 
-function RectilinearGrid( steps, stepLength, layout ) {
+function RectilinearGrid( steps, stepLength, size ) {
 
-    const Origin = new THREE.Vector2( -layout.x / 2, layout.y / 2 );
+    const origin = new THREE.Vector2( -size.x / 2, size.y / 2 );
 
-    let Vertices = [];
+    const vertices = [];
     for ( let i = 0; i < steps.y; i++ ) {
 
-        Vertices.push( Origin.x, 0, Origin.y - i * stepLength.y ); 
-        Vertices.push( Origin.x + layout.x, 0 , Origin.y - i * stepLength.y ); 
+        vertices.push( origin.x, 0, origin.y - i * stepLength.y ); 
+        vertices.push( origin.x + size.x, 0 , origin.y - i * stepLength.y ); 
 
     }
     for ( let i = 0; i < steps.x; i++ ) {
 
-        Vertices.push( Origin.x + i * stepLength.x , 0, Origin.y ); 
-        Vertices.push( Origin.x + i * stepLength.x, 0 , Origin.y - layout.y ); 
+        vertices.push( origin.x + i * stepLength.x , 0, origin.y ); 
+        vertices.push( origin.x + i * stepLength.x, 0 , origin.y - size.y ); 
 
     }
-    const Vertices32 = new Float32Array( Vertices );
+    const vertices32 = new Float32Array( vertices );
 
-    const Geometry = new THREE.BufferGeometry();
-    Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
-    const Material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
-    this.mesh = new THREE.LineSegments( Geometry, Material );
+    const geometry = new THREE.BufferGeometry();
+    geometry.addAttribute( "position", new THREE.BufferAttribute( vertices32, 3 ) );
+    const material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
+    this.mesh = new THREE.LineSegments( geometry, material );
 
 }
 
 // Should share some properties with Rectilinear grid
-function SimpleGrid( steps, stepLength, layout ) {
+function SimpleGrid( steps, stepLength, size ) {
 
     // This could be reused
-    const Origin = new THREE.Vector2( -layout.x / 2, layout.y / 2 );
+    const origin = new THREE.Vector2( -size.x / 2, size.y / 2 );
 
-    let Vertices = [];
+    const vertices = [];
     for ( let i = 0; i < steps; i++ ) {
 
-        Vertices.push( Origin.x, 0, Origin.y - i * stepLength ); 
-        Vertices.push( Origin.x + layout.x, 0 , Origin.y - i * stepLength ); 
+        vertices.push( origin.x, 0, origin.y - i * stepLength ); 
+        vertices.push( origin.x + size.x, 0 , origin.y - i * stepLength ); 
 
     }
-    Vertices.push( Origin.x, 0, Origin.y );
-    Vertices.push( Origin.x, 0, Origin.y - layout.y );
-    Vertices.push( Origin.x + layout.x, 0, Origin.y );
-    Vertices.push( Origin.x + layout.x , 0, Origin.y - layout.y );
-    const Vertices32 = new Float32Array( Vertices );
+    vertices.push( origin.x, 0, origin.y );
+    vertices.push( origin.x, 0, origin.y - size.y );
+    vertices.push( origin.x + size.x, 0, origin.y );
+    vertices.push( origin.x + size.x , 0, origin.y - size.y );
+    const vertices32 = new Float32Array( vertices );
 
-    const Geometry = new THREE.BufferGeometry();
-    Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
-    const Material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
-    this.mesh = new THREE.LineSegments( Geometry, Material );
+    const geometry = new THREE.BufferGeometry();
+    geometry.addAttribute( "position", new THREE.BufferAttribute( vertices32, 3 ) );
+    const material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
+    this.mesh = new THREE.LineSegments( geometry, material );
 
 }
 
-function CategoricalPlane( steps, stepLength, layout ) {
+function CategoricalPlane( steps, stepLength, size ) {
 
-    const Origin = new THREE.Vector2( -layout.x / 2, layout.z / 2 );
-    const Geometry = new THREE.PlaneGeometry( layout.x, layout.z );
-    const Material = new THREE.MeshBasicMaterial( { color: 0x2C2F33, side: THREE.DoubleSide } );
-    this.mesh = new THREE.Mesh( Geometry, Material );
-    this.mesh.rotation.set( -Math.PI / 2, 0, 0);
+    const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true, side: THREE.DoubleSide } );
+    const planeMaterial2 = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.9, transparent: true, side: THREE.DoubleSide } );
+    const backPlaneGeometry = new THREE.PlaneGeometry( size.x, size.y );
+    const backPlaneMesh = new THREE.Mesh( backPlaneGeometry, planeMaterial );
+    backPlaneMesh.position.set( 0, size.y / 2, -size.z / 2 );
+
+    const sidePlaneGeometry = new THREE.PlaneGeometry( size.z, size.y );
+    const sidePlaneMesh = new THREE.Mesh( sidePlaneGeometry, planeMaterial );
+    sidePlaneMesh.position.set( -size.x / 2, size.y / 2, 0 );
+    sidePlaneMesh.rotation.set( 0, Math.PI / 2, 0 );
+
+    const bottomPlaneGeometry = new THREE.PlaneGeometry( size.x, size.z );
+    const bottomPlaneMesh = new THREE.Mesh( bottomPlaneGeometry, planeMaterial2 );
+    bottomPlaneMesh.rotation.set( -Math.PI / 2, 0, 0 );
+
+    const group = new THREE.Group();
+    group.add( backPlaneMesh );
+    group.add( sidePlaneMesh );
+    group.add( bottomPlaneMesh );
+
+    this.mesh = group;
 
 }
 

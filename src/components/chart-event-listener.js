@@ -29,6 +29,11 @@ AFRAME.registerComponent('chart-event-listener', {
 
             if ( self.el.is( "cursor-hovered" ) ) {
 
+
+                var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 );
+                var material = new THREE.MeshBasicMaterial( {color: 0x000000} );
+                var cube = new THREE.Mesh( geometry, material );
+                self.el.setObject3D("c1", cube);
                 const newPos = evt.detail.pos;
                 console.log(newPos);
 

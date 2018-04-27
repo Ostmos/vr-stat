@@ -43,7 +43,7 @@ AFRAME.registerComponent('chart-controller', {
 
     },
 
-    tick: function() {
+    tock: function() {
         
         if ( this.triggered ) {
 
@@ -51,16 +51,11 @@ AFRAME.registerComponent('chart-controller', {
 
             if ( intersectedELs.length > 0 ) {
 
+                // This needs to be improved a lot
                 let endPoint = new THREE.Vector3( 0, 0, 0 );
                 endPoint.copy( this.threeRaycaster.raycaster.ray.direction );
-                endPoint = endPoint.multiplyScalar( this.raycasterLength ).add( this.threeRaycaster.raycaster.ray.origin );
-
-                /*this.targetPosition.applyQuaternion(this.grabber.object3D.getWorldQuaternion())
-                .setLength(this.grabDistance).add(this.grabber.object3D.getWorldPosition()).add(this.grabOffset);
-
-                target.applyQuaternion(contoller.getWorldQuaternion).setLegnth(racasterlenght)add(controller.getWorldPosition.add(origin))*/
-
-                this.el.emit( "position", { pos: endPoint } );
+                endPoint = endPoint.multiplyScalar( this.raycasterLength - 1 ).add( this.threeRaycaster.raycaster.ray.origin );
+                intersectedELs[0].parentNode.object3D.position.set(endPoint.x, endPoint.y, endPoint.z);
 
             }
 

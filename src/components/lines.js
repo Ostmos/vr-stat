@@ -14,6 +14,9 @@ function LineGroup( heights, dimensions, labels ) {
 
     let z = Origin.z;
     for ( let i = 0; i < heights.length; i++ ) {
+
+        const rcolor = 0xFFFFFF * Math.random();
+
         const Vertices = new Array();
 
         z = Origin.z - Spacing * i;
@@ -24,6 +27,7 @@ function LineGroup( heights, dimensions, labels ) {
 
             y = Origin.y + heights[ i ][ j ];
             Vertices.push( x, y, z ); 
+
             x += Step;
 
         }
@@ -31,14 +35,14 @@ function LineGroup( heights, dimensions, labels ) {
         // Label at end of line
         const LineLabel = SmallText( labels[ i ] );
         // Offset should be vector
-        LineLabel.mesh.position.set( x - Step + 0.1, y, z );
+        LineLabel.mesh.position.set( x - Step + 0.3, y, z );
         this.mesh.add(LineLabel.mesh);
 
 
         const Vertices32 = new Float32Array( Vertices );
         const Geometry = new THREE.BufferGeometry();
         Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
-        const Material = new THREE.LineBasicMaterial( { color: ( 0xFFFFFF * Math.random() ) } );
+        const Material = new THREE.LineBasicMaterial( { color: rcolor  } );
         this.mesh.add( new THREE.Line( Geometry, Material ) );
     }
 
