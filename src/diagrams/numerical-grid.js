@@ -1,7 +1,7 @@
 const Utils = require( "../lib/utils" );
-const Range = require( "../charts/data-table" ).Range;
-const RectilinearGrid = require( "../charts/grid" ).RectilinearGrid;
-const LabelAxis = require( "../charts/grid" ).LabelAxis;
+const Range = require( "../data/data-table" ).Range;
+const RectilinearGrid = require( "../diagrams/grid" ).RectilinearGrid;
+const LabelAxis = require( "../diagrams/grid" ).LabelAxis;
 
 AFRAME.registerComponent( "numerical-grid", {
 

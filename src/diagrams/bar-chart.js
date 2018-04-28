@@ -1,8 +1,7 @@
-const DataCategorical = require( "../charts/data" ).DataCategorical;
-const JSONLoader = require( "../charts/data" ).JSONLoader;
+const JSONLoader = require( "../data/data-loader" ).JSONLoader;
 const DebugCube = require( "../lib/utils" ).DebugCube;
-const DataTable = require( "../charts/data-table" ).DataTable;
-const mediumText = require ( "../charts/sprite-text" ).mediumText;
+const DataTable = require( "../data/data-table" ).DataTable;
+const mediumText = require ( "../text/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "bar-chart", {
 
@@ -90,13 +89,5 @@ AFRAME.registerComponent( "bar-chart", {
             } ); 
 
     },
-
-    tick: function() {
-
-
-    }
-
-
-
 
 } );

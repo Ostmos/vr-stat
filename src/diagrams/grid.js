@@ -1,6 +1,6 @@
-const SmallText = require ( "../charts/sprite-text" ).smallText;
-const MediumText = require ( "../charts/sprite-text" ).mediumText;
-const Range = require ( "../charts/data-table" ).Range;
+const SmallText = require ( "../text/sprite-text" ).smallText;
+const MediumText = require ( "../text/sprite-text" ).mediumText;
+const Range = require ( "../data/data-table" ).Range;
 
 function RectilinearGrid( steps, stepLength, size ) {
 

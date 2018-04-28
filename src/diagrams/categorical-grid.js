@@ -1,9 +1,9 @@
 const Utils = require( "../lib/utils" );
-const Range = require( "../charts/data-table" ).Range;
-const SimpleGrid = require( "../charts/grid" ).SimpleGrid;
-const CategoricalPlane = require( "../charts/grid" ).CategoricalPlane;
-const CategoryAxis = require( "../charts/grid" ).CategoryAxis;
-const LabelAxis = require( "../charts/grid" ).LabelAxis;
+const Range = require( "../data/data-table" ).Range;
+const SimpleGrid = require( "../diagrams/grid" ).SimpleGrid;
+const CategoricalPlane = require( "../diagrams/grid" ).CategoricalPlane;
+const CategoryAxis = require( "../diagrams/grid" ).CategoryAxis;
+const LabelAxis = require( "../diagrams/grid" ).LabelAxis;
 
 AFRAME.registerComponent( "categorical-grid", {
 

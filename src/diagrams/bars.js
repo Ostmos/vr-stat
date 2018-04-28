@@ -1,4 +1,4 @@
-const miniTextPanel = require( "../charts/sprite-text" ).miniTextPanel;
+const miniTextPanel = require( "../text/sprite-text" ).miniTextPanel;
 
 AFRAME.registerComponent( "bar", {
 
