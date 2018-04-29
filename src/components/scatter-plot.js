@@ -1,5 +1,5 @@
-const Data3 = require( "../charts/data" ).Data3;
 const JSONLoader = require( "../charts/data" ).JSONLoader;
+const DataTable = require( "../charts/data-table" ).DataTable;
 const MediumText = require ( "../charts/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "scatter-plot", {
@@ -7,14 +7,14 @@ AFRAME.registerComponent( "scatter-plot", {
     schema: {
         src: { type: "asset" },
         title: {type: "string" },
-        dimensions: { type: "vec3", default: { x: 2, y: 2, z: 2 } },
-        steps: { type: "vec3", default: { x: 7, y: 7, z: 7 } },
-        xCol: { type: "string", default: "x" },
-        yCol: { type: "string", default: "y" },
-        zCol: { type: "string", default: "z" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
         zAxisLabel: { type: "string" },
+        size: { type: "vec3", default: { x: 2, y:2, z: 2 } },
+        steps: { type: "vec3", default: { x: 6, y: 7, z: 6 } },
+        xCol: { type: "string", default: "x" },
+        yCol: { type: "string", default: "y" },
+        zCol: { type: "string", default: "z" },
         xSuffix: { type: "string" },
         ySuffix: { type: "string" },
         zSuffix: { type: "string" } 
@@ -25,64 +25,77 @@ AFRAME.registerComponent( "scatter-plot", {
         let data = this.data;
         let self = this;
 
-        // Title
-        const Text = MediumText( data.title ).mesh;
-        const TextOffset = 0.2;
-        Text.position.set( 0, data.dimensions.y / 2 + TextOffset, 0 );
-        this.el.setObject3D( "title", Text );
+        this.makeTitle();
 
         // Load data
-        const Loader = new JSONLoader;
-        Loader.loadJSON( this.data.src, jsonData => {
+        new JSONLoader().loadJSON( this.data.src, jsonData => {
 
-            const XCol = Loader.getColumn( jsonData, data.xCol );
-            const YCol = Loader.getColumn( jsonData, data.yCol );
-            const ZCol = Loader.getColumn( jsonData, data.zCol );
+            const table = new DataTable( jsonData );
 
-            let dataset = new Data3( 
-                XCol,
-                YCol,
-                ZCol
-            );
-
-            // 3D Grid
-            const Grid = document.createElement( "a-entity" );
-            Grid.setAttribute("numerical-grid", {
-
-                dimensions: data.dimensions,
-                steps: data.steps,
-                xRange: [dataset.ranges.x.start, dataset.ranges.x.end],
-                yRange: [dataset.ranges.y.start, dataset.ranges.y.end],
-                zRange: [dataset.ranges.z.start, dataset.ranges.z.end],
-                xAxisLabel: data.xAxisLabel,
-                yAxisLabel: data.yAxisLabel,
-                zAxisLabel: data.zAxisLabel,
-                xSuffix: data.xSuffix,
-                ySuffix: data.ySuffix,
-                zSuffix: data.zSuffix,
-
-            });
-            this.el.appendChild( Grid );
-
-            dataset.fitRange();
-            dataset.scaleToLength( data.dimensions );
-        
-            // Points
-            const PointCloud = document.createElement( "a-entity" );
-            PointCloud.setAttribute( "point-cloud", {
-                
-                dimensions: data.dimensions ,
-                points: { 
-                    x: dataset.vectors.x, 
-                    y: dataset.vectors.y,
-                    z: dataset.vectors.z 
-                }
-
-            } );
-            this.el.appendChild( PointCloud );
+            this.makeGrid( table );
+            this.makePoints( table );
 
         } );
 
     },
+
+    makeTitle: function() {
+
+        // Title
+        const Text = MediumText( this.data.title ).mesh;
+        const TextOffset = 0.2;
+        Text.position.set( 0, this.data.size.y / 2 + TextOffset, 0 );
+        this.el.setObject3D( "title", Text );
+
+    },
+
+    makeGrid: function( table ) {
+
+        const xRange = table.getRange( this.data.xCol );
+        const yRange = table.getRange( this.data.yCol );
+        const zRange = table.getRange( this.data.zCol );
+
+        // 3D Grid
+        this.el.setAttribute("numerical-grid", {
+
+            dimensions: this.data.size,
+            steps: this.data.steps,
+            xRange: [xRange.start, xRange.end],
+            yRange: [yRange.start, yRange.end],
+            zRange: [zRange.start, zRange.end],
+            xAxisLabel: this.data.xAxisLabel,
+            yAxisLabel: this.data.yAxisLabel,
+            zAxisLabel: this.data.zAxisLabel,
+            xSuffix: this.data.xSuffix,
+            ySuffix: this.data.ySuffix,
+            zSuffix: this.data.zSuffix,
+
+        });
+
+    },
+
+    makePoints( table ) {
+
+        table.floorToMinValue( this.data.xCol );
+        table.floorToMinValue( this.data.yCol );
+        table.floorToMinValue( this.data.zCol );
+
+        const xScaledPoints = table.makeScaleFitArray( this.data.xCol, this.data.size.x );
+        const yScaledPoints = table.makeScaleFitArray( this.data.yCol, this.data.size.y );
+        const zScaledPoints = table.makeScaleFitArray( this.data.zCol, this.data.size.z );
+
+        // Points
+        this.el.setAttribute( "point-cloud", {
+            
+            dimensions: this.data.size ,
+            points: { 
+                x: xScaledPoints, 
+                y: yScaledPoints,
+                z: zScaledPoints
+            }
+
+        } );
+
+    }
 
 } );

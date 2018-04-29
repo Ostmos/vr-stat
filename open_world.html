@@ -17,8 +17,8 @@
 
     <!--World-->
     <a-sky color="#212F3C"></a-sky> <!-- prev. #add8e6 -->
-    <a-entity geometry="primitive=plane" material="color:#0d194c; opacity: 0.5" scale="70 70 0" position="0 -1.6 0" rotation="-90 0 0"></a-entity>
-    <a-entity position="-1 0.3 -2" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
+    <a-entity geometry="primitive: plane; width:50; height:50" material="color:#0d194c; opacity: 0.5" scale="70 70 0" position="0 -1.6 0" rotation="-90 0 0" shadow></a-entity>
+    <a-entity position="-1 0.3 -2" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
 
     <!-- Models-->
     <!--<a-entity class="diagram"
@@ -51,12 +51,17 @@
               grabbable
               draggable
               rotation-observer
-              bar-chart-listener></a-entity>
+              bar-chart-listener
+              shadow></a-entity>
               
 
     <!-- Lights -->
-    <a-entity light="type: hemisphere; color: #3b6852; groundColor: #ffeba7; intensity: 1.0" position="3 3 -15"></a-entity>
-    <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
+    <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.6; castShadow: true;" position="-0.5 20 -10" target="#target">
+      <a-entity id="target" position="3 0 -15"></a-entity>
+    </a-entity>
+    <!-- <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 0.8" position="3 4 -15"></a-entity>
+    <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: false; shadowCameraVisible: false; intensity: 0.8" position="-3 4 -15" target="contr"></a-entity> -->
 
     <a-entity id="rig" progressive-controls="maxLevel: point">
         <a-entity id="controller1" class="right-controller" 

@@ -84,6 +84,13 @@ function largeText( text, rotation = 0 ) {
 
 }
 
+function miniTextPanel( text, rotation = 0 ) {
+
+    const Properties = new TextProperties( "Courier New", 36, "white", rotation);
+    return new SpriteText( text, Properties, true ); 
+    
+}
+
 function smallTextPanel( text, rotation = 0 ) {
 
     const Properties = new TextProperties( "Courier New", 48, "white", rotation);
@@ -111,6 +118,7 @@ module.exports = {
     smallText: smallText,
     mediumText: mediumText,
     largeText: largeText,
+    miniTextPanel: miniTextPanel,
     smallTextPanel: smallTextPanel,
     mediumTextPanel: mediumTextPanel,
     largeTextPanel: largeTextPanel
