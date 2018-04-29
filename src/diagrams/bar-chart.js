@@ -32,9 +32,7 @@ AFRAME.registerComponent( "bar-chart", {
             this.makeGrid( table );
             this.makeBars( table );
 
-            this.el.setAttribute("chart-event-listener", {
-                controller: "#right"
-            } );
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -76,17 +74,39 @@ AFRAME.registerComponent( "bar-chart", {
 
     makeBars: function( table ) {
 
-            // Bars
-            const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
-            const values = table.getColumn( this.data.heights ).map( value => value + this.data.heightsSuffix );
+        // Bars
+        const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
+        const values = table.getColumn( this.data.heights ).map( value => value + this.data.heightsSuffix );
 
-            this.el.setAttribute( "bars", {
-                size: this.data.size,
-                barWidth: this.data.barWidth,
-                heights: scaledHeights, 
-                values: values,
-                outSidePadding: this.data.axisToBarPadding 
-            } ); 
+        const bars = document.createElement( "a-entity" );
+        bars.setAttribute( "bars", {
+            size: this.data.size,
+            barWidth: this.data.barWidth,
+            heights: scaledHeights, 
+            values: values,
+            outSidePadding: this.data.axisToBarPadding 
+        } ); 
+        let self = this.el;
+        bars.addEventListener( "stateadded", function( evt ) { 
+
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                self.addState( "cursor-hovered" );
+
+            }
+            
+        } );
+        bars.addEventListener( "stateremoved", function( evt ) { 
+
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                self.removeState( "cursor-hovered" );
+
+            }
+
+        } );
+
+        this.el.appendChild(bars);
 
     },
 

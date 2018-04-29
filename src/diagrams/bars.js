@@ -2,20 +2,20 @@ const miniTextPanel = require( "../text/sprite-text" ).miniTextPanel;
 
 AFRAME.registerComponent( "bar", {
 
-    multilple: true,
+    multiple: true,
 
     schema: { 
         width: { type: "number" },
         height: { type: "number" },
         value: { type: "string" },
-        color: { type: "color" }
+        color: { type: "color" },
     },
 
     init: function() {
 
         const TEXT_PANEL_OFFSET = 0.1;
 
-        this.el.className = "point";
+        this.el.className = "hoverable";
 
         let self = this;
         let data = this.data;
@@ -23,50 +23,32 @@ AFRAME.registerComponent( "bar", {
         const geometry = new THREE.BoxGeometry( data.width, data.height, data.width );
         const material = new THREE.MeshToonMaterial( {color: 0x604a4b } );
         const mesh = new THREE.Mesh( geometry, material );
-        this.el.setObject3D( "bar", mesh );
+        const pos = data.position;
 
-        this.el.addEventListener( "stateadded", function (evt) {
+        this.el.setObject3D( this.attrName, mesh );
 
-            if ( evt.detail.state === "cursor-hovered" && data.value ) {
+        this.el.setAttribute( "pop-up-label", {
+            text: data.value,
+            position: { x: 0, y: data.height / 2 + 0.12, z: 0 }
+        } );
 
-                mesh.material.color.setHex( 0x600000 );
-                const textPanelMesh = miniTextPanel( data.value ).mesh;
-                textPanelMesh.position.set( 0, data.height / 2 + TEXT_PANEL_OFFSET, 0 );
-                self.el.setObject3D( "textPanel", textPanelMesh ); 
-                self.el.parentNode.addState("cursor-hovered");
-            } 
+        this.el.addEventListener( "stateadded", function( evt ) {
+
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                material.color.setHex( 0x604fff );
+
+            }
 
         } );
 
-        this.el.addEventListener( "stateremoved", function (evt) {
+        this.el.addEventListener( "stateremoved", function( evt ) {
 
-            if ( evt.detail.state === "cursor-hovered" ) {
+            if ( evt.detail.state == "cursor-hovered" ) {
 
-                mesh.material.color.setHex( 0x604a4b );
-                self.el.removeObject3D( "textPanel");
-                self.el.parentNode.removeState("cursor-hovered");
+                material.color.setHex( 0x604a4b );
 
-            } 
-
-        } );
-
-        this.el.addEventListener( "axismove" , function( evt ) {
-
-            console.log(evt);
-
-
-        } );
-
-        this.el.addEventListener( "triggerdown" , function( evt ) {
-
-            console.log(evt);
-
-
-        } );
-
-        this.el.addEventListener( "axischanged", function( evt ) {
-
-            console.log( evt ); 
+            }
 
         } );
 
@@ -98,7 +80,7 @@ AFRAME.registerComponent( "bars", {
             entity.setAttribute( "bar", {
                 width: data.barWidth / 2,
                 height: data.heights[ i ],
-                value: data.values[ i ]
+                value: data.values[ i ],
             });
             entity.setAttribute("position", {
                  x: start.x + i * step, y: start.y + data.heights[ i ] / 2, z: 0 

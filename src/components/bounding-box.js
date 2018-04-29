@@ -7,7 +7,7 @@ AFRAME.registerComponent( "bounding-box", {
 
     init: function() {
 
-        this.el.className = "bounding-box";
+        this.el.className = "hoverable";
         let self = this;
 
         const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000, opacity: 0.0, transparent: true, side: THREE.DoubleSide } );

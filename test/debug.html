@@ -46,12 +46,22 @@
             <a-entity id="xd" oculus-touch-controls="hand:right" laser-controls raycaster="objects: .point, .bounding-box ; far:5" chart-controller></a-entity>
         </a-entity>-->
 
-        <a-entity id="player">
+        <!--<a-entity id="player">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
             <a-entity id="right" oculus-touch-controls="hand:right" 
             laser-controls raycaster="objects: .point, .bounding-box; far:5" chart-controller></a-entity>
-        </a-entity>
+        </a-entity>-->
+        <a-entity class="lol"></a-entity>
+        <a-entity class="lol"></a-entity>
+        <a-entity camera look-controls position="0 1.9 0" wasd-controls>
+            <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
+                      raycaster="objects: .hoverable"  
+                      position="0 0 -1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; shader: flat">
+            </a-entity>
+          </a-entity>
 
         <a-entity light="type: ambient; color: #BBB"></a-entity>
         <a-entity bar light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>

@@ -14,8 +14,11 @@ require("./diagrams/point-cloud");
 require("./diagrams/categorical-grid");
 require("./diagrams/numerical-grid");
 
+require("./listeners/pop-up-label");
+
 // Controllers
 require("./controllers/chart-controller");
+require("./listeners/rotation-component");
 
 require("./components/cursor-listener");
 require("./components/controller-display");
@@ -23,4 +26,4 @@ require("./components/bar-chart-listener");
 require("./components/value-display");
 require("./components/bounding-box");
 
-require("./components/chart-event-listener");
+// require("./components/chart-event-listener");

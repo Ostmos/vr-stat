@@ -15,50 +15,60 @@ TextProperties.prototype.toContextFont = function() {
 
 function SpriteText( text = "Lorem", properties, panel ) {
 
-    const Canvas = document.createElement( "canvas" );
-    const Ctx = Canvas.getContext("2d");
-    let CanvasSize = 128;
-    Canvas.width = CanvasSize;
-    Canvas.height = CanvasSize;
-    Ctx.font = properties.toContextFont(); 
+    let canvasSize = 128;
+
+    this.canvas = document.createElement( "canvas" );
+    this.ctx = this.canvas.getContext("2d");
+    this.canvas.width = canvasSize;
+    this.canvas.height = canvasSize;
+    this.ctx.font = properties.toContextFont(); 
 
     let scale = 1;
-    const TextWidth = Ctx.measureText( text ).width;
-    if ( TextWidth > CanvasSize ) {
+    const TextWidth = this.ctx.measureText( text ).width;
+    if ( TextWidth > canvasSize ) {
 
-        while (TextWidth > CanvasSize * scale ) {
+        while (TextWidth > canvasSize * scale ) {
             scale *= 2;
         }
 
-        Canvas.width = CanvasSize * scale;
-        Canvas.height = CanvasSize * scale;
-        Ctx.font = properties.toContextFont();
+        this.canvas.width = canvasSize * scale;
+        this.canvas.height = canvasSize * scale;
+        this.ctx.font = properties.toContextFont();
 
     }
 
-    Ctx.textAlign = "center";
-    Ctx.textBaseline = "middle";
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
 
     // Panel
     if ( panel ) {
 
-        Ctx.fillStyle = "black";
-        Ctx.fillRect(0, Canvas.height / 4, Canvas.width, Canvas.height / 2);
+        this.ctx.fillStyle = "black";
+        this.ctx.fillRect(0, this.canvas.height / 4, this.canvas.width, this.canvas.height / 2);
 
     }
 
-    Ctx.fillStyle = properties.fontColor;
-    Ctx.fillText( text, Canvas.width / 2, Canvas.height / 2 );
+    this.ctx.fillStyle = properties.fontColor;
+    this.ctx.fillText( text, this.canvas.width / 2, this.canvas.height / 2 );
 
 
-    const Texture = new THREE.CanvasTexture( Canvas );
+    const Texture = new THREE.CanvasTexture( this.canvas );
     const SpriteMaterial = new THREE.SpriteMaterial( { map: Texture, rotation: properties.rotation } );
     this.mesh = new THREE.Sprite( SpriteMaterial ); 
     this.mesh.scale.set(scale * 0.2, scale * 0.2, scale * 0.2);
    
     // Use for debug 
-    // Ctx.rect(0, 0, Canvas.width, Canvas.height);
-    // Ctx.stroke(); 
+    // this.ctx.rect(0, 0, this.canvas.width, canvas.height);
+    // this.ctx.stroke(); 
+
+}
+
+SpriteText.prototype.write = function( text ) {
+
+    const width = this.canvas.width;
+    const height = this.canvas.height;
+    this.ctx.clearRect( 0, 0, width, height );
+    this.ctx.fillText( text, this.canvas.width / 2, this.canvas.height / 2 );
 
 }
 
