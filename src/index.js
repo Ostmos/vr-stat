@@ -1,18 +1,24 @@
 // Vendors
 require("aframe-teleport-controls");
 
-// Systems
-require("./systems/intersections-handler");
+// Diagrams
+require("./diagrams/bar-chart");
+require("./diagrams/bars");
 
-// Charts
-require("./components/bar-chart");
-require("./components/scatter-plot");
-require("./components/line-chart");
-require("./components/numerical-grid");
-require("./components/categorical-grid");
-require("./components/point-cloud");
-require("./components/bars");
-require("./components/lines");
+require("./diagrams/line-chart");
+require("./diagrams/lines");
+
+require("./diagrams/scatter-plot");
+require("./diagrams/point-cloud");
+
+require("./diagrams/categorical-grid");
+require("./diagrams/numerical-grid");
+
+require("./listeners/pop-up-label");
+
+// Controllers
+require("./controllers/chart-controller");
+require("./listeners/rotation-component");
 
 require("./components/cursor-listener");
 require("./components/controller-display");
@@ -20,5 +26,4 @@ require("./components/bar-chart-listener");
 require("./components/value-display");
 require("./components/bounding-box");
 
-require("./components/chart-event-listener");
-require("./components/chart-controller");
+// require("./components/chart-event-listener");

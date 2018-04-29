@@ -1,6 +1,6 @@
-const JSONLoader = require( "../charts/data" ).JSONLoader;
-const DataTable = require( "../charts/data-table" ).DataTable;
-const MediumText = require ( "../charts/sprite-text" ).mediumText;
+const JSONLoader = require( "../data/data-loader" ).JSONLoader;
+const DataTable = require( "../data/data-table" ).DataTable;
+const MediumText = require ( "../text/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "scatter-plot", {
 

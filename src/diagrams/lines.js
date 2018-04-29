@@ -1,4 +1,4 @@
-const SmallText = require( "../charts/sprite-text" ).smallTextPanel;
+const SmallText = require( "../text/sprite-text" ).smallTextPanel;
 
 function LineGroup( heights, dimensions, labels ) {
 

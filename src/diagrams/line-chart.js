@@ -1,8 +1,7 @@
-const TimeSeries = require( "../charts/data" ).TimeSeries;
-const JSONLoader = require( "../charts/data" ).JSONLoader;
-const DataTable = require( "../charts/data-table" ).DataTable;
-const Range = require( "../charts/data-table" ).Range;
-const MediumText = require ( "../charts/sprite-text" ).mediumText;
+const JSONLoader = require( "../data/data-loader" ).JSONLoader;
+const DataTable = require( "../data/data-table" ).DataTable;
+const Range = require( "../data/data-table" ).Range;
+const MediumText = require ( "../text/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "line-chart", {
 

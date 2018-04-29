@@ -1,8 +1,7 @@
-const DataCategorical = require( "../charts/data" ).DataCategorical;
-const JSONLoader = require( "../charts/data" ).JSONLoader;
+const JSONLoader = require( "../data/data-loader" ).JSONLoader;
 const DebugCube = require( "../lib/utils" ).DebugCube;
-const DataTable = require( "../charts/data-table" ).DataTable;
-const mediumText = require ( "../charts/sprite-text" ).mediumText;
+const DataTable = require( "../data/data-table" ).DataTable;
+const mediumText = require ( "../text/sprite-text" ).mediumText;
 
 AFRAME.registerComponent( "bar-chart", {
 
@@ -33,9 +32,7 @@ AFRAME.registerComponent( "bar-chart", {
             this.makeGrid( table );
             this.makeBars( table );
 
-            this.el.setAttribute("chart-event-listener", {
-                controller: "#right"
-            } );
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -71,32 +68,46 @@ AFRAME.registerComponent( "bar-chart", {
         // It doesn't work to put the bounding box as an attribute directly apperntly
         var entity = document.createElement('a-entity');
         entity.setAttribute('bounding-box', {size: '5, 2, 0.5'});
-        this.el.appendChild(entity);
+        // this.el.appendChild(entity);
 
     },
 
     makeBars: function( table ) {
 
-            // Bars
-            const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
-            const values = table.getColumn( this.data.heights ).map( value => value + this.data.heightsSuffix );
+        // Bars
+        const scaledHeights = table.makeScaleFitArray( this.data.heights, this.data.size.y );
+        const values = table.getColumn( this.data.heights ).map( value => value + this.data.heightsSuffix );
 
-            this.el.setAttribute( "bars", {
-                size: this.data.size,
-                barWidth: this.data.barWidth,
-                heights: scaledHeights, 
-                values: values,
-                outSidePadding: this.data.axisToBarPadding 
-            } ); 
+        const bars = document.createElement( "a-entity" );
+        bars.setAttribute( "bars", {
+            size: this.data.size,
+            barWidth: this.data.barWidth,
+            heights: scaledHeights, 
+            values: values,
+            outSidePadding: this.data.axisToBarPadding 
+        } ); 
+        let self = this.el;
+        bars.addEventListener( "stateadded", function( evt ) { 
+
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                self.addState( "cursor-hovered" );
+
+            }
+
+        } );
+        bars.addEventListener( "stateremoved", function( evt ) { 
+
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                self.removeState( "cursor-hovered" );
+
+            }
+
+        } );
+
+        this.el.appendChild(bars);
 
     },
-
-    tick: function() {
-
-
-    }
-
-
-
 
 } );
