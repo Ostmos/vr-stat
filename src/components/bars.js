@@ -1,36 +1,111 @@
-function BarRow( heights, width, dimensions, step, padding ) {
+const miniTextPanel = require( "../charts/sprite-text" ).miniTextPanel;
 
-    const Start = new THREE.Vector3( -dimensions.x / 2 + padding, -dimensions.y / 2, 0 );
-    this.mesh = new THREE.Group(); 
+AFRAME.registerComponent( "bar", {
 
-    for (let i = 0; i < heights.length; i++ ) {
+    multilple: true,
 
-        const Geometry = new THREE.BoxGeometry( width / 2, heights[ i ], width / 2 );        
-        const Material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        const Mesh = new THREE.Mesh( Geometry, Material )
-        Mesh.position.set( Start.x + i * step, Start.y + heights[ i ] / 2, 0 );
-        this.mesh.add( Mesh );
+    schema: { 
+        width: { type: "number" },
+        height: { type: "number" },
+        value: { type: "string" },
+        color: { type: "color" }
+    },
+
+    init: function() {
+
+        const TEXT_PANEL_OFFSET = 0.1;
+
+        this.el.className = "point";
+
+        let self = this;
+        let data = this.data;
+
+        const geometry = new THREE.BoxGeometry( data.width, data.height, data.width );
+        const material = new THREE.MeshToonMaterial( {color: 0x604a4b } );
+        const mesh = new THREE.Mesh( geometry, material );
+        this.el.setObject3D( "bar", mesh );
+
+        this.el.addEventListener( "stateadded", function (evt) {
+
+            if ( evt.detail.state === "cursor-hovered" && data.value ) {
+
+                mesh.material.color.setHex( 0x600000 );
+                const textPanelMesh = miniTextPanel( data.value ).mesh;
+                textPanelMesh.position.set( 0, data.height / 2 + TEXT_PANEL_OFFSET, 0 );
+                self.el.setObject3D( "textPanel", textPanelMesh ); 
+                self.el.parentNode.addState("cursor-hovered");
+            } 
+
+        } );
+
+        this.el.addEventListener( "stateremoved", function (evt) {
+
+            if ( evt.detail.state === "cursor-hovered" ) {
+
+                mesh.material.color.setHex( 0x604a4b );
+                self.el.removeObject3D( "textPanel");
+                self.el.parentNode.removeState("cursor-hovered");
+
+            } 
+
+        } );
+
+        this.el.addEventListener( "axismove" , function( evt ) {
+
+            console.log(evt);
+
+
+        } );
+
+        this.el.addEventListener( "triggerdown" , function( evt ) {
+
+            console.log(evt);
+
+
+        } );
+
+        this.el.addEventListener( "axischanged", function( evt ) {
+
+            console.log( evt ); 
+
+        } );
 
     }
 
-}
+} );
 
 AFRAME.registerComponent( "bars", {
 
     schema: {
-        dimensions: { type: "vec3" },
-        width: { type: "number" },
-        dataHeights: { type: "array" },
-        padding: { type: "number" }
+        size: { type: "vec3" },
+        barWidth: { type: "number" },
+        heights: { type: "array" },
+        value: { type: "array" },
+        outSidePadding: { type: "number" }
     },
  
-    init: function() {
+    init: function() {     
+
         let data = this.data;
-        const Step = ( data.dimensions.x - data.padding * 2 ) / ( data.dataHeights.length - 1 );
 
-        const bars = new BarRow( data.dataHeights, data.width, data.dimensions, Step, data.padding );
-        this.el.setObject3D( "bars", bars.mesh );
+        const step = ( data.size.x - data.outSidePadding * 2 ) / ( data.heights.length - 1 );
+        const start = new THREE.Vector3( -data.size.x / 2 + data.outSidePadding, -data.size.y / 2, 0 );
+        this.mesh = new THREE.Group(); 
 
+        for (let i = 0; i < data.heights.length; i++ ) {
+
+            const entity = document.createElement( "a-entity");
+            entity.setAttribute( "bar", {
+                width: data.barWidth / 2,
+                height: data.heights[ i ],
+                value: data.values[ i ]
+            });
+            entity.setAttribute("position", {
+                 x: start.x + i * step, y: start.y + data.heights[ i ] / 2, z: 0 
+            } );
+            this.el.appendChild(entity);
+
+        }
 
     }
 

@@ -1,38 +1,29 @@
-Data
--------
-Numerical
-Categorical
-TimeData
+1. Events
+    Bar chart
+    ----------
+    Label
+    Rotation   
+    Position(super hands?)
 
-Change all Const to const
+    Line chart
+    ----------
+    Intersection on line? Write raycaster?
+    Rotation
+    Position
 
-Dataset
+    Scatter plot
+    ----------
+    Intersection with points? Or just use entities/particles?
+    Rotation
+    Position
 
-    Loader.loadJSON( this.data.src, jsonData => {
+2. Material
+    Bar
+    Line?
+    Particle
 
-        const dataSet = new DataSet( jsonData );
-        dataSet.filterColumns("Wassup", "Hello", "Hello", "TimeLine");
-        (Check if numerical(
-            range = dataSet.getRange("Wassup");
-        ))
-        dataSet.get(attribute).scaleLinerar(0.1)
-        range.start = 0;
-        range.end = 0; 
+3. Lights
 
-    })
+4. Tutorial
 
-    datset.get("aasdf", "asdfasd", "asdfasd");
-
-    Use 32 arrays?
-    chaining (refrence d3)
-    loadData
-    get
-    range
-    fitLength
-
-TODO
-------------
-Data
-Raycaster (Create geomtries around diagrams) bars => lines => scatter plot 
-Events, keys, change to grab controllers
-Screenshots: teleporter, laser, grid
+5. Screenshots/Video

@@ -1,8 +1,6 @@
-const Data3 = require( "../charts/data" ).Data3;
-
 function PointCloud( data, dimensions ) {
 
-    const Length = data.vectors.z.length;
+    const Length = data.z.length;
 
     const D = dimensions;
     const Origin = new THREE.Vector3( 
@@ -12,9 +10,9 @@ function PointCloud( data, dimensions ) {
     
     for(let i = 0; i < Length; i++){
         Geometry.vertices.push(
-            {x: Origin.x + data.vectors.x[ i ],
-             y: Origin.y + data.vectors.y[ i ],
-             z: Origin.z + data.vectors.z[ i ]
+            {x: Origin.x + data.x[ i ],
+             y: Origin.y + data.y[ i ],
+             z: Origin.z + data.z[ i ]
             } 
         ); 
     }
@@ -33,10 +31,8 @@ AFRAME.registerComponent( "point-cloud", {
     },
  
     init: function() {
-
         let data = this.data;
-        const PointData = new Data3( data.points.x, data.points.y, data.points.z ); 
-        const CloudMesh = new PointCloud( PointData, this.data.dimensions ).mesh;
+        const CloudMesh = new PointCloud( this.data.points, this.data.dimensions ).mesh;
         this.el.setObject3D( "cloudMesh", CloudMesh );
 
     }
