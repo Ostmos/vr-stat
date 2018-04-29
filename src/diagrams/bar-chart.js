@@ -68,7 +68,7 @@ AFRAME.registerComponent( "bar-chart", {
         // It doesn't work to put the bounding box as an attribute directly apperntly
         var entity = document.createElement('a-entity');
         entity.setAttribute('bounding-box', {size: '5, 2, 0.5'});
-        this.el.appendChild(entity);
+        // this.el.appendChild(entity);
 
     },
 
@@ -94,7 +94,7 @@ AFRAME.registerComponent( "bar-chart", {
                 self.addState( "cursor-hovered" );
 
             }
-            
+
         } );
         bars.addEventListener( "stateremoved", function( evt ) { 
 

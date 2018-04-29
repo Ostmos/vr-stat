@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="build/vr-stat.bundle.js"></script>
 </head>
 <body>
@@ -10,14 +10,15 @@
 
         <!-- World -->
         <a-sky color="#212F3C"></a-sky>
-        <a-entity position="0 -1.6 -28" scale="2 1.5 2" gltf-model="#room-gltf"></a-entity>
-        <a-entity position="-2 0.3 -4" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer></a-entity>
+        <a-entity position="0 -1.6 0" scale="2 1.5 2" gltf-model="#room-gltf" shadow></a-entity>
+        <a-entity position="-2 0.3 5" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
 
          <!-- Lights -->
-        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="3 3 -15"></a-entity>
-        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 -5" target="contr"></a-entity>
-        <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-52.717 43.812 -14.454"></a-entity>
+        <!--<a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="3 3 -15"></a-entity>-->
+        <!--<a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 -5" target="contr"></a-entity>-->
+        <!--<a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>-->
+        <!--<a-entity light="type: directional; color: #FFF; castShadow: true; intensity: 1" position="-52.717 43.812 -14.454"></a-entity>-->
+        <a-entity light="type: point; castShadow: true; shadowCameraVisible: true; color: #FFF; intensity: 0.5" position="3 5 -2"></a-entity>
 
         <!-- Diagrams -->
         <a-entity 
@@ -29,7 +30,8 @@
             yAxisLabel: Salary;
             zAxisLabel: Coding experience;
             "
-        position="-6 1 -15"
+        position="-6 1 -5"
+        shadow
         ></a-entity>
 
         <a-entity 
@@ -43,7 +45,8 @@
             heightsSuffix: %;
             title: Programming language popularity; 
             ySuffix: %;"
-        position="0 1 -15"
+        position="0 1 -5"
+        shadow
         ></a-entity>
 
         <a-entity
@@ -58,11 +61,12 @@
             lineLabels: line1, line2, line3; 
             title: Time series;
             "
-        position="6 1 -15"
+        position="6 1 -5"
+        shadow
         ></a-entity>
 
         <!-- hand controls -->
-        <a-entity id="player">
+        <a-entity id="player" position="0 0 15">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
             <a-entity oculus-touch-controls="hand:right" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
