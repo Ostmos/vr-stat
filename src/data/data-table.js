@@ -57,12 +57,25 @@ DataTable.prototype = {
 
         }
 
-        console.error( "DataTable: no column found named: ", column );
+        console.log( "DataTable: no column found named: ", column );
 
         return false;
 
     },
 
+    hasColumns: function( columns ) {
+
+        if ( columns === undefined || !Array.isArray( columns ) ) { return false; }
+
+        columns.forEach( column => {
+
+            if ( !this.hasColumn( column ) ) { return false; }
+
+        } );
+
+        return true;
+
+    },
 
     addToColumn: function( column, value ) {
 
@@ -111,7 +124,9 @@ DataTable.prototype = {
 
             let columnMaxValue = Math.max( ...this._table[ column ] );
             if ( columnMaxValue <= 0 ) {
+
                 columnMaxValue = 0.0001;
+            
             }                 
             const scale = length / columnMaxValue;
 
@@ -122,6 +137,44 @@ DataTable.prototype = {
         return [];
 
     },
+
+    makeScaleFitMatrix: function( columns, length ) {
+
+        if ( !this.hasColumns( columns ) || length === undefined ) { return; }
+
+        let matrixMax = 0;
+
+        for ( let i = 0; i < columns.length; i ++ ) {
+
+            let columnArray = this.getColumn( columns[ i ] );
+            let columnMax = Math.max( ...columnArray );
+
+            if ( columnMax > matrixMax ) {
+
+                matrixMax = columnMax;
+
+            }
+
+        } 
+
+        if ( matrixMax <= 0 ) {
+        
+            matrixMax = 0.0001;
+        
+        }
+        const scale = length / matrixMax;
+
+        let resultMatrix = [];
+
+        for ( let i = 0; i < columns.length; i ++ ) {
+
+            resultMatrix[ i ] = this._table[ columns[ i ] ].map( elem => elem * scale );
+
+        }
+
+        return resultMatrix;
+
+    }, 
 
     // Floors whole array to the min value of the range
     floorToMinValue: function( column ) {

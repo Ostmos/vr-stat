@@ -1,67 +1,150 @@
 const SmallText = require( "../text/sprite-text" ).smallTextPanel;
 
-function LineGroup( heights, dimensions, labels ) {
+AFRAME.registerComponent( "line-point", {
 
-    const Spacing = dimensions.z / ( heights.length - 1);
+    schema: {
+        label: { type: "string", default: "lorem" },
+        color: { type: "color", default: 0x000000 },
+        hoverColor: { type: "color", default: 0xffffff }
+    },
 
-    // Change this 
-    const Length = heights[ 0 ].length;
-    const Step = dimensions.x / ( Length - 1 );
+    init: function() {
 
-    const Origin = new THREE.Vector3( -dimensions.x / 2, -dimensions.y / 2, dimensions.z / 2 );
+        this.el.className = "hoverable";
 
-    this.mesh = new THREE.Group();
+        this.CUBE_SIZE = 0.04;
+        this.cubeColor = this.data.color;
+        this.cubeHoverColor = this.data.hoverColor;
+        this.cubeMaterial = new THREE.MeshBasicMaterial( { color: this.cubeColor } );
 
-    let z = Origin.z;
-    for ( let i = 0; i < heights.length; i++ ) {
+        this.makeCube();
+        this.attachHoverLabel();
 
-        const rcolor = 0xFFFFFF * Math.random();
+        this.onStateAdded = this.onStateAdded.bind(this);
+        this.onStateRemoved = this.onStateRemoved.bind(this);
 
-        const Vertices = new Array();
+        this.el.addEventListener( "stateadded", this.onStateAdded );
+        this.el.addEventListener( "stateremoved", this.onStateRemoved );
 
-        z = Origin.z - Spacing * i;
-        let x = Origin.x;
-        let y = 0;
+    },
 
-        for ( let j = 0; j < heights[ i ].length; j++ ) {
+    onStateAdded: function( evt ) {
 
-            y = Origin.y + heights[ i ][ j ];
-            Vertices.push( x, y, z ); 
+            if ( evt.detail.state == "cursor-hovered" ) {
 
-            x += Step;
+                this.cubeMaterial.color.setHex( this.cubeHoverColor );
 
-        }
+            }
 
-        // Label at end of line
-        const LineLabel = SmallText( labels[ i ] );
-        // Offset should be vector
-        LineLabel.mesh.position.set( x - Step + 0.3, y, z );
-        this.mesh.add(LineLabel.mesh);
+    },
 
+    onStateRemoved: function( evt ) {
 
-        const Vertices32 = new Float32Array( Vertices );
-        const Geometry = new THREE.BufferGeometry();
-        Geometry.addAttribute( 'position', new THREE.BufferAttribute( Vertices32, 3 ) );
-        const Material = new THREE.LineBasicMaterial( { color: rcolor  } );
-        this.mesh.add( new THREE.Line( Geometry, Material ) );
+            if ( evt.detail.state == "cursor-hovered" ) {
+
+                this.cubeMaterial.color.setHex( this.cubeColor );
+
+            }
+
+    },
+
+    attachHoverLabel: function() {
+
+        this.el.setAttribute( "pop-up-label", {
+            text: this.data.label,
+            position: { x: 0, y: this.CUBE_SIZE * 1.5, z: 0 }
+        } );
+
+    },
+
+    makeCube: function() {
+
+        const size = this.CUBE_SIZE;
+        const cubeGeometry = new THREE.BoxGeometry( size, size, size );
+        const cubeMesh = new THREE.Mesh( cubeGeometry, this.cubeMaterial );
+        this.el.setObject3D( "cube", cubeMesh );
+
     }
 
-}
+} );
 
 AFRAME.registerComponent( "lines", {
 
     schema: {
-        dimensions: { type: "vec3" },
+        size: { type: "vec3" },
         heights: { type: "array" },
-        labels: { type: "array" }
+        pointLabels: { type: "array" },
+        lineLabels: { type: "array" }
     },
  
     init: function() {
         
         let data = this.data;
 
-        const Lines = new LineGroup( data.heights, data.dimensions, data.labels );
-        this.el.setObject3D("lines", Lines.mesh);
+        this.makeLines();
+
+    },
+
+    makeLines: function() {
+
+        const heights = this.data.heights;
+        const size = this.data.size;
+        let pointLabels = this.data.pointLabels;
+
+        // Step length between each line on the z-axis
+        const NBR_OF_LINES = heights.length;
+        const LINE_STEP =  size.z / ( NBR_OF_LINES - 1 );
+
+        // TODO: make more reliable 
+        // Step length between each point on the x-axis
+        const NBR_OF_POINTS = heights[ 0 ].length;
+        const POINT_STEP = size.x / ( NBR_OF_POINTS - 1 );
+
+        const X_START = -size.x / 2;
+        const Y_START = -size.y / 2; 
+        const Z_START = size.z / 2;
+
+        const lineGroup = new THREE.Group();
+
+        let x, y, z;
+
+        for ( let i = 0; i < NBR_OF_LINES; i ++ ) {
+
+            x = X_START;
+            z = Z_START - LINE_STEP * i;  
+            const linePoints = [];
+            var lineMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff * Math.random() } );
+
+            for ( let j = 0; j < NBR_OF_POINTS; j ++ ) {
+
+                y = Y_START + heights[ i ][ j ];
+                linePoints.push( x, y, z ); 
+                this.makePointCube( x, y, z, pointLabels[ i ][ j ] );
+                x += POINT_STEP;
+
+            }
+
+            // Create a typed array for better performance
+            const bufferGeometry = new THREE.BufferGeometry();
+            const linePoints32 = new Float32Array( linePoints );
+            // 3 values for each vertex: x, y, z
+            const bufferAttribute = new THREE.BufferAttribute( linePoints32, 3 );
+            bufferGeometry.addAttribute( 'position', bufferAttribute );
+            const mesh = new THREE.Line( bufferGeometry, lineMaterial );
+            lineGroup.add( mesh );
+        
+        }
+
+        this.el.setObject3D( "lineGroup", lineGroup );
+            
+    },
+
+    makePointCube: function( x, y, z, label ) {
+
+        const cube = document.createElement( "a-entity" );
+        cube.setAttribute( "line-point", { label: label } );
+        cube.setAttribute( "position", { x: x, y: y, z: z} );
+        this.el.appendChild( cube );
 
     }
 

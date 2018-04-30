@@ -15,7 +15,7 @@ AFRAME.registerComponent( "line-chart", {
         lineLabels: { type: "array" },
         time: { type: "string" },
         nbrOfHeightSteps: {type: "number", default: 7},
-        heightsSuffix: {type: "string" },
+        heightsSuffix: {type: "string", default: "%" },
     },
  
     init: function() {
@@ -78,18 +78,22 @@ AFRAME.registerComponent( "line-chart", {
 
     makeLines: function( table ) {
 
-        // Lines
-        const scaledLines = [];
+        const scaledLines = table.makeScaleFitMatrix( this.data.lines, this.data.size.y );
+        const pointLabels = [];
         for ( let i = 0; i < this.data.lines.length; i++ ) {
 
-            const scaledLine = table.makeScaleFitArray( this.data.lines[ i ], this.data.size.y );
-            scaledLines.push( scaledLine );
+            const lineColumn = this.data.lines[ i ];
+            let points = table.getColumn( lineColumn );
+            points = points.map( elem => elem + this.data.heightsSuffix );
+            pointLabels.push( points );
 
         } 
-        this.el.setAttribute("lines", {
-            dimensions: this.data.size,
+
+        this.el.setAttribute( "lines", {
+            size: this.data.size,
             heights: scaledLines,
-            labels: this.data.lineLabels
+            pointLabels: pointLabels,
+            lineLabels: this.data.lineLabels
         } ); 
 
     }

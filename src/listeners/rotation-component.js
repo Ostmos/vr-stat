@@ -15,8 +15,6 @@ AFRAME.registerComponent( "rotation-component", {
         document.addEventListener('keydown', (event) => {
             const keyName = event.key;
 
-            console.log(self.el.is("cursor-hovered"));
-
             if ( keyName === "r" && self.el.is( "cursor-hovered" ) ) {
 
                 self.el.object3D.rotation.set( Math.random() * Math.PI / 2, 0, 0 );
@@ -30,8 +28,6 @@ AFRAME.registerComponent( "rotation-component", {
 
             if ( evt.detail.state == "cursor-hovered" ) {
 
-                console.log('hovered');
-
             }
 
         } );
@@ -39,8 +35,6 @@ AFRAME.registerComponent( "rotation-component", {
         el.addEventListener( "stateremoved", function( evt ) {
 
             if ( evt.detail.state == "cursor-hovered" ) {
-
-                console.log('not hovered');
 
             }
 
