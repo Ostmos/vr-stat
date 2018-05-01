@@ -54,32 +54,6 @@ function SimpleGrid( steps, stepLength, size ) {
 
 }
 
-function CategoricalPlane( steps, stepLength, size ) {
-
-    const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true, side: THREE.DoubleSide } );
-    const planeMaterial2 = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.9, transparent: true, side: THREE.DoubleSide } );
-    const backPlaneGeometry = new THREE.PlaneGeometry( size.x, size.y );
-    const backPlaneMesh = new THREE.Mesh( backPlaneGeometry, planeMaterial );
-    backPlaneMesh.position.set( 0, size.y / 2, -size.z / 2 );
-
-    const sidePlaneGeometry = new THREE.PlaneGeometry( size.z, size.y );
-    const sidePlaneMesh = new THREE.Mesh( sidePlaneGeometry, planeMaterial );
-    sidePlaneMesh.position.set( -size.x / 2, size.y / 2, 0 );
-    sidePlaneMesh.rotation.set( 0, Math.PI / 2, 0 );
-
-    const bottomPlaneGeometry = new THREE.PlaneGeometry( size.x, size.z );
-    const bottomPlaneMesh = new THREE.Mesh( bottomPlaneGeometry, planeMaterial2 );
-    bottomPlaneMesh.rotation.set( -Math.PI / 2, 0, 0 );
-
-    const group = new THREE.Group();
-    group.add( backPlaneMesh );
-    group.add( sidePlaneMesh );
-    group.add( bottomPlaneMesh );
-
-    this.mesh = group;
-
-}
-
 
 function LabelAxis( start, direction, labelOffset, steps, stepLength, length, range, suffix ) {
 
@@ -152,7 +126,6 @@ module.exports =  {
 
     RectilinearGrid: RectilinearGrid,
     SimpleGrid: SimpleGrid, 
-    CategoricalPlane: CategoricalPlane,
     LabelAxis: LabelAxis,
     CategoryAxis: CategoryAxis
 

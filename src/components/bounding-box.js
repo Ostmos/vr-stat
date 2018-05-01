@@ -10,7 +10,7 @@ AFRAME.registerComponent( "bounding-box", {
         this.el.className = "hoverable";
         let self = this;
 
-        const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000, opacity: 0.0, transparent: true, side: THREE.DoubleSide } );
+        const planeMaterial = new THREE.MeshBasicMaterial( { color: 0x000, opacity: 0.2, transparent: true, side: THREE.FrontSide, depthWrite: false, depthTest: false } );
         const backPlaneGeometry = new THREE.PlaneGeometry( this.data.size.x, this.data.size.y );
         const backPlaneMesh = new THREE.Mesh( backPlaneGeometry, planeMaterial );
         backPlaneMesh.position.set( 0, 0, -this.data.size.z / 2 );

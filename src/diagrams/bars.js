@@ -15,8 +15,6 @@ AFRAME.registerComponent( "bar", {
 
         const TEXT_PANEL_OFFSET = 0.1;
 
-        this.el.className = "hoverable";
-
         let self = this;
         let data = this.data;
 

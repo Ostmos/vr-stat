@@ -128,7 +128,7 @@ AFRAME.registerComponent( "lines", {
             const bufferGeometry = new THREE.BufferGeometry();
             const linePoints32 = new Float32Array( linePoints );
             // 3 values for each vertex: x, y, z
-            const bufferAttribute = new THREE.BufferAttribute( linePoints32, 3 );
+            const bufferAttribute = new THREE.Float32BufferAttribute( linePoints32, 3 );
             bufferGeometry.addAttribute( 'position', bufferAttribute );
             const mesh = new THREE.Line( bufferGeometry, lineMaterial );
             lineGroup.add( mesh );

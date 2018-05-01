@@ -15,7 +15,7 @@ AFRAME.registerComponent( "rotation-component", {
         document.addEventListener('keydown', (event) => {
             const keyName = event.key;
 
-            if ( keyName === "r" && self.el.is( "cursor-hovered" ) ) {
+            if ( keyName === "r" && self.el.is( "rotatable" ) ) {
 
                 self.el.object3D.rotation.set( Math.random() * Math.PI / 2, 0, 0 );
 

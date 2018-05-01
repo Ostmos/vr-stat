@@ -23,6 +23,7 @@ AFRAME.registerComponent( "scatter-plot", {
     init: function() {
 
         let data = this.data;
+        this.size = data.size;
         let self = this;
 
         this.makeTitle();
@@ -34,6 +35,9 @@ AFRAME.registerComponent( "scatter-plot", {
 
             this.makeGrid( table );
             this.makePoints( table );
+            this.makePanelBox();
+
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -95,6 +99,30 @@ AFRAME.registerComponent( "scatter-plot", {
             }
 
         } );
+
+    },
+
+    makePanelBox: function() {
+
+        const self = this;
+
+        const panelBox = document.createElement("a-entity");
+        panelBox.setAttribute( "panel-box", {
+            size: { x: this.size.x, y: this.size.y, z: this.size.z },
+            bottomOpacity: 0.05,
+        } );
+        panelBox.className = "hoverable";
+        panelBox.addEventListener( "stateadded", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.addState("rotatable");
+            }
+        } );
+        panelBox.addEventListener( "stateremoved", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.removeState("rotatable");
+            }
+        } );
+        this.el.appendChild( panelBox );
 
     }
 

@@ -19,6 +19,10 @@ AFRAME.registerComponent( "line-chart", {
     },
  
     init: function() {
+        
+        this.size = this.data.size;
+
+        this.makeTitle();
 
         new JSONLoader().loadJSON( this.data.src, jsonData => {
 
@@ -26,6 +30,9 @@ AFRAME.registerComponent( "line-chart", {
 
             this.makeGrid( table );
             this.makeLines( table );
+            this.makePanelBox();
+
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -95,6 +102,29 @@ AFRAME.registerComponent( "line-chart", {
             pointLabels: pointLabels,
             lineLabels: this.data.lineLabels
         } ); 
+
+    },
+
+    makePanelBox: function() {
+
+        const self = this;
+
+        const panelBox = document.createElement("a-entity");
+        panelBox.setAttribute( "panel-box", {
+            size: { x: this.size.x, y: this.size.y, z: this.size.z },
+        } );
+        panelBox.className = "hoverable";
+        panelBox.addEventListener( "stateadded", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.addState("rotatable");
+            }
+        } );
+        panelBox.addEventListener( "stateremoved", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.removeState("rotatable");
+            }
+        } );
+        this.el.appendChild( panelBox );
 
     }
 

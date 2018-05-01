@@ -8,6 +8,8 @@ require("./diagrams/bars");
 require("./diagrams/line-chart");
 require("./diagrams/lines");
 
+require("./diagrams/panel-box");
+
 require("./diagrams/scatter-plot");
 require("./diagrams/point-cloud");
 
