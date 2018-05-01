@@ -5,20 +5,19 @@
 </head>
 <body>
     <a-scene avatar-recorder>
-        <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal.gltf"></a-asset-item>
+        <a-asset-item id="room-gltf" src="src/assets/models/museum_minimal_XS.gltf"></a-asset-item>
         <a-asset-item id="controller" src="src/assets/models/controller.gltf"></a-asset-item>
 
         <!-- World -->
         <a-sky color="#212F3C"></a-sky>
-        <a-entity position="0 -1.6 0" scale="2 1.5 2" gltf-model="#room-gltf" shadow></a-entity>
-        <a-entity position="-2 0.3 5" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
+        <a-entity position="0 -1.6 0" scale="1 1 1" gltf-model="#room-gltf" shadow></a-entity>
+        <a-entity position="-2 0.3 10" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
 
          <!-- Lights -->
-        <!--<a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="3 3 -15"></a-entity>-->
-        <!--<a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 -5" target="contr"></a-entity>-->
-        <!--<a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>-->
-        <!--<a-entity light="type: directional; color: #FFF; castShadow: true; intensity: 1" position="-52.717 43.812 -14.454"></a-entity>-->
-        <a-entity light="type: point; castShadow: true; shadowCameraVisible: true; color: #FFF; intensity: 0.5" position="3 5 -2"></a-entity>
+        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 12.4"></a-entity>
+        <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
+        <a-entity light="type: directional; color: #FFF; castShadow: false; intensity: 1" position="-52 26 52"></a-entity>
+        <a-entity light="type: directional; color: #FFF; castShadow: false; intensity: 1" position="0 -42 0"></a-entity>
 
         <!-- Diagrams -->
         <a-entity 
@@ -30,7 +29,7 @@
             yAxisLabel: Salary;
             zAxisLabel: Coding experience;
             "
-        position="-6 1 -5"
+        position="-6 1 0"
         shadow
         ></a-entity>
 
@@ -45,7 +44,7 @@
             heightsSuffix: %;
             title: Programming language popularity; 
             ySuffix: %;"
-        position="0 1 -5"
+        position="0 1 0"
         shadow
         ></a-entity>
 
@@ -61,7 +60,7 @@
             lineLabels: line1, line2, line3; 
             title: Time series;
             "
-        position="6 1 -5"
+        position="6 1 0"
         shadow
         ></a-entity>
 
