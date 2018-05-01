@@ -1,29 +1,5 @@
-1. Events
-    Bar chart
-    ----------
-    Label
-    Rotation   
-    Position(super hands?)
-
-    Line chart
-    ----------
-    Intersection on line? Write raycaster?
-    Rotation
-    Position
-
-    Scatter plot
-    ----------
-    Intersection with points? Or just use entities/particles?
-    Rotation
-    Position
-
-2. Material
-    Bar
-    Line?
-    Particle
-
-3. Lights
-
-4. Tutorial
-
-5. Screenshots/Video
+1. Tutorial system
+2. Room/Open-world screenshots
+3. Hover, rotation, shadow screenshots
+4. Controllers for move
+5. Move screenshots
