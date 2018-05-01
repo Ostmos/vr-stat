@@ -19,7 +19,7 @@ AFRAME.registerComponent( "bar", {
         let data = this.data;
 
         const geometry = new THREE.BoxGeometry( data.width, data.height, data.width );
-        const material = new THREE.MeshToonMaterial( {color: 0x604a4b } );
+        const material = new THREE.MeshToonMaterial( {color: 0xF05053 } );
         const mesh = new THREE.Mesh( geometry, material );
         const pos = data.position;
 
@@ -34,7 +34,7 @@ AFRAME.registerComponent( "bar", {
 
             if ( evt.detail.state == "cursor-hovered" ) {
 
-                material.color.setHex( 0x604fff );
+                material.color.setHex( 0xF6903D );
 
             }
 
@@ -44,7 +44,7 @@ AFRAME.registerComponent( "bar", {
 
             if ( evt.detail.state == "cursor-hovered" ) {
 
-                material.color.setHex( 0x604a4b );
+                material.color.setHex( 0xF05053 );
 
             }
 

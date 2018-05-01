@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="../build/vr-stat.bundle.js"></script>
+</head>
+<body>
+    <a-scene>
+        <a-asset-item id="room-gltf" src="../assets/models/museum_minimal_XS.gltf"></a-asset-item>
+        <a-asset-item id="controller" src="../assets/models/controller.gltf"></a-asset-item>
+
+        <!-- World -->
+        <a-sky color="#212F3C"></a-sky>
+        <a-entity position="0 -1.6 0" scale="1 1 1" gltf-model="#room-gltf" shadow></a-entity>
+        <a-entity position="-2 0.3 10" rotation="0 225 0" scale="0.008 0.008 0.008" gltf-model="#controller" grabbable draggable rotation-observer shadow></a-entity>
+
+         <!-- Lights -->
+        <a-entity light="type: point; color: #3b6852; groundColor: #ffeba7; castShadow: true; shadowCameraVisible: false; intensity: 1.0" position="0 3 12.4"></a-entity>
+        <a-entity light="type: ambient; color: #FFF; intensity: 0.6" position="-5 2 -10"></a-entity>
+        <a-entity light="type: directional; color: #FFF; castShadow: false; intensity: 0.1" position="-52 26 52"></a-entity>
+        <a-entity light="type: directional; color: #FFF; castShadow: false; intensity: 0.1" position="0 -42 0"></a-entity>
+
+        <!-- Diagrams -->
+        <a-entity 
+        scatter-plot=
+            "
+            src: url(../assets/statistics/salary_hours_job.json);
+            title: Job searching time, salary and years spent coding professionally;
+            xAxisLabel: Job search time;
+            yAxisLabel: Salary;
+            zAxisLabel: Coding experience;
+            steps: 10 10 10;
+            size: 2 5 2;
+            "
+        position="-6 1 0"
+        shadow
+        ></a-entity>
+
+        <a-entity 
+        bar-chart=
+            "
+            src:url(../assets/statistics/language_popularity.json);
+            title: Programming language popularity; 
+            xAxisLabel: Languages; 
+            yAxisLabel: Popularity; 
+            categories: language;
+            heights: percentage;
+            heightsSuffix: %;"
+        position="0 1 0"
+        shadow
+        ></a-entity>
+
+        <a-entity
+        line-chart=
+            "
+            src:url(../assets/statistics/lines-dummy.json);
+            dimensions: 1, 2, 1;
+            xAxisLabel: xLabel;
+            yAxisLabel: yLabel; 
+            lines: x, y, z; 
+            time: time; 
+            lineLabels: line1, line2, line3; 
+            title: Time series;
+            "
+        position="6 1 0"
+        shadow
+        ></a-entity>
+
+        <!-- VR-CONTROLLERS -->
+        <!-- <a-entity id="player" position="0 0 15">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+        </a-entity>-->
+
+        <!-- NO VR-CONTROLLERS -->
+        <a-entity camera look-controls position="0 1.9 15" wasd-controls>
+            <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
+                      raycaster="objects: .hoverable"  
+                      position="0 0 -1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; shader: flat">
+            </a-entity>
+        </a-entity>
+
+    </a-scene>
+</body>
+</html>

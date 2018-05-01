@@ -10,7 +10,7 @@ AFRAME.registerComponent( "scatter-plot", {
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
         zAxisLabel: { type: "string" },
-        size: { type: "vec3", default: { x: 2, y:2, z: 2 } },
+        size: { type: "vec3", default: { x: 2, y: 2, z: 2 } },
         steps: { type: "vec3", default: { x: 6, y: 7, z: 6 } },
         xCol: { type: "string", default: "x" },
         yCol: { type: "string", default: "y" },
@@ -109,7 +109,8 @@ AFRAME.registerComponent( "scatter-plot", {
         const panelBox = document.createElement("a-entity");
         panelBox.setAttribute( "panel-box", {
             size: { x: this.size.x, y: this.size.y, z: this.size.z },
-            bottomOpacity: 0.05,
+            bottomOpacity: 0.0,
+            sidesOpacity: 0.0,
         } );
         panelBox.className = "hoverable";
         panelBox.addEventListener( "stateadded", function( evt ) { 

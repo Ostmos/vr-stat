@@ -108,6 +108,7 @@ AFRAME.registerComponent( "bar-chart", {
         const panelBox = document.createElement("a-entity");
         panelBox.setAttribute( "panel-box", {
             size: { x: this.size.x, y: this.size.y, z: this.size.z },
+            sidesOpacity: 0
         } );
         panelBox.className = "hoverable";
         panelBox.addEventListener( "stateadded", function( evt ) { 

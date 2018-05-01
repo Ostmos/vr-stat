@@ -5,7 +5,7 @@ AFRAME.registerComponent( "line-point", {
     schema: {
         label: { type: "string", default: "lorem" },
         color: { type: "color", default: 0x000000 },
-        hoverColor: { type: "color", default: 0xffffff }
+        hoverColor: { type: "color", default: 0xF6903D }
     },
 
     init: function() {

@@ -18,11 +18,10 @@ function PointCloud( data, dimensions, pointTexture ) {
     }
     Geometry.vertices.push(Origin);
 
-    // let material = new THREE.PointsMaterial( { size: 0.05, color: 0x000000 } );
     // Will not work in index
-    var sprite = new THREE.TextureLoader().load( "../src/assets/textures/sphere.png" );
+    var sprite = new THREE.TextureLoader().load( "../assets/textures/sphere_large.png" );
     let material = new THREE.PointsMaterial( { size: 0.05, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
-    material.color.setHSL( 1.0, 0.3, 0.7 );
+    material.color.setHex( 0xb2b2ff );
 
     this.mesh = new THREE.Points(Geometry, material);
 
