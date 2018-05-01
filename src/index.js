@@ -26,6 +26,5 @@ require("./components/cursor-listener");
 require("./components/controller-display");
 require("./components/bar-chart-listener");
 require("./components/value-display");
-require("./components/bounding-box");
 
 // require("./components/chart-event-listener");

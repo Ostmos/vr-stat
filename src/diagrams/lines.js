@@ -115,6 +115,8 @@ AFRAME.registerComponent( "lines", {
             const linePoints = [];
             var lineMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff * Math.random() } );
 
+            this.makeLineLabel(  x + POINT_STEP * NBR_OF_POINTS, heights[ i ][ NBR_OF_POINTS - 1 ], z, this.data.lineLabels[ i ] );
+
             for ( let j = 0; j < NBR_OF_POINTS; j ++ ) {
 
                 y = Y_START + heights[ i ][ j ];
@@ -145,6 +147,15 @@ AFRAME.registerComponent( "lines", {
         cube.setAttribute( "line-point", { label: label } );
         cube.setAttribute( "position", { x: x, y: y, z: z} );
         this.el.appendChild( cube );
+
+    },
+
+    makeLineLabel: function( x, y, z, label ) {
+
+        const text = SmallText( label ).mesh;
+        const OFFSET = 0.0;
+        text.position.set( x + OFFSET, y - this.data.size.y / 2, z );
+        this.el.setObject3D( label, text );
 
     }
 

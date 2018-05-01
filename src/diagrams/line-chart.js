@@ -15,7 +15,7 @@ AFRAME.registerComponent( "line-chart", {
         lineLabels: { type: "array" },
         time: { type: "string" },
         nbrOfHeightSteps: {type: "number", default: 7},
-        heightsSuffix: {type: "string", default: "%" },
+        heightsSuffix: {type: "string" },
     },
  
     init: function() {

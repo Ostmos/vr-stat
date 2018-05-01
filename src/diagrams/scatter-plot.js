@@ -17,7 +17,8 @@ AFRAME.registerComponent( "scatter-plot", {
         zCol: { type: "string", default: "z" },
         xSuffix: { type: "string" },
         ySuffix: { type: "string" },
-        zSuffix: { type: "string" } 
+        zSuffix: { type: "string" }, 
+        hoverableSpheres: { type: "boolean" }
     },
  
     init: function() {
@@ -88,17 +89,48 @@ AFRAME.registerComponent( "scatter-plot", {
         const yScaledPoints = table.makeScaleFitArray( this.data.yCol, this.data.size.y );
         const zScaledPoints = table.makeScaleFitArray( this.data.zCol, this.data.size.z );
 
-        // Points
-        this.el.setAttribute( "point-cloud", {
-            
-            dimensions: this.data.size ,
-            points: { 
-                x: xScaledPoints, 
-                y: yScaledPoints,
-                z: zScaledPoints
-            }
 
-        } );
+        // Points
+        if ( !this.data.hoverableSpheres ) {
+
+            this.el.setAttribute( "sprite-point-cloud", {
+                
+                size: this.data.size ,
+                points: { 
+                    x: xScaledPoints, 
+                    y: yScaledPoints,
+                    z: zScaledPoints
+                }
+
+            } );
+
+        } else {
+
+            const xPoints = table.getColumn( this.data.xCol );
+            const yPoints = table.getColumn( this.data.yCol );
+            const zPoints = table.getColumn( this.data.zCol );
+
+            // Points
+            const ent = document.createElement("a-entity");
+            ent.className = "hoverable";
+            ent.setAttribute( "sphere-point-cloud", {
+                
+                size: this.data.size ,
+                points: { 
+                    x: xScaledPoints, 
+                    y: yScaledPoints,
+                    z: zScaledPoints
+                },
+                labelPoints: {
+                    x: xPoints,
+                    y: yPoints,
+                    z: zPoints
+                }
+
+            } );
+            this.el.appendChild( ent );
+
+        }
 
     },
 
