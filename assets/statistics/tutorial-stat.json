@@ -1,0 +1,34 @@
+[
+  {
+    "language": "Bar 1",
+    "percentage": 45.5
+  },
+  {
+    "language": "Bar 2",
+    "percentage": 40.2
+  },
+  {
+    "language": "Bar 3",
+    "percentage": 39.7
+  },
+  {
+    "language": "Bar 4",
+    "percentage": 37.1
+  },
+  {
+    "language": "Bar 5",
+    "percentage": 29.5
+  },
+  {
+    "language": "Bar 6",
+    "percentage": 25.2
+  },
+  {
+    "language": "Bar 7",
+    "percentage": 10.7
+  },
+  {
+    "language": "Bar 8",
+    "percentage": 10.1
+  }
+]

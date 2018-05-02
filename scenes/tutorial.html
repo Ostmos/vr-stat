@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>vr-stat - tutorial</title>
+  <title>VR-Stat - tutorial</title>
     
-    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
     <script src="../build/vr-stat.bundle.js"></script>
     
     <script>AFRAME.registerComponent('camera-listener', {
@@ -12,6 +12,7 @@
           //var cameraEl = this.el.sceneEl.camera.el;
           var cameraEl = document.querySelector('#rig');
           var circleEl = document.querySelector('#circle');
+          var soundEl = document.querySelector('#bing');
 
           var cameraPosZ = cameraEl.getAttribute('position').z;
 
@@ -42,7 +43,7 @@
           //Link componenet
 
           var linkMuseum = document.querySelector('#museumPortal');
-          var linkNoRoom = document.querySelector('#noRoomPortal');
+          var linkNoRoom = document.querySelector('#openWorldPortal');
 
 
           // Scene 1
@@ -62,6 +63,8 @@
               controllerMove.setAttribute('visible', true);
               moveDiagram.setAttribute('visible', true);
 
+              soundEl.components.sound.playSound();
+
           }
 
           // Scene 2
@@ -71,6 +74,8 @@
           }
 
           if(moved){
+            soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
+            
             circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
 
             circleEl.setAttribute('visible', true);
@@ -78,6 +83,8 @@
             controllerRotate.setAttribute('visible', true);
             textRotate.setAttribute('visible', true);
             textHover.setAttribute('visible',true);
+
+            soundEl.component.sound.playSound();
 
           }
 
@@ -89,6 +96,8 @@
           
 
           if(rotated){
+            soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
+            
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
             // textRotate.setAttribute('visible', false);
             // textHover.setAttribute('visible',false);
@@ -96,26 +105,17 @@
             linkMuseum.setAttribute('visible', true);
             linkNoRoom.setAttribute('visible', true);
 
+            soundEl.component.sound.playSound();
+
           }
           
         }
     })
     </script>
-
-    <!-- <script>
-      AFRAME.registerComponent('portal', {
-          init: function(){
-              var linkEl = document.querySelector('a-link');
-              linkEl.addEventListener('click', function (){
-                linkEl.navigate('index.html');
-              });
-          }
-      });
-    </script> -->
 </head>
 
 <body>
-    <a-scene> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
+    <a-scene stats > <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
       <a-asset>
         <a-asset-item id="modelTestRoom" src="../assets/models/tutorial_room.gltf"></a-asset-item>
         <a-asset-item id="modelCircle" src="../assets/models/circle.gltf"></a-asset-item>
@@ -132,25 +132,24 @@
         <img id="imgMove" src="../assets/images/move_text_white.png">
         <img id="imgHover" src="../assets/images/hover_text_white.png">
         <img id="imgRotate" src="../assets/images/rotate_text_white.png">
-        <!-- <img id="imgPortal" src="src/assets/images/portal_text.png"> -->
         <img id="imgMuseum" src="../assets/images/index360View.png">
+        <audio id="bing" src="../assets/sounds/bing.wav" preload="auto"></audio>
       </a-asset>
   
       <!--World-->
-      <!-- <a-entity id="modelTutorial" position="0 0 0" scale="1 1 1" gltf-model="#modelTestRoom" shadow></a-entity> -->
-      <!-- <a-plane position="0 0 0" color="#0d194c" rotation="-90 0 0" scale="50 50 1" side="front"></a-plane> -->
-      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#1c2733; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0"></a-entity>
+      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#1c2733; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0" shadow></a-entity>
       <a-entity id="circle" camera-listener visible="true" position="-0.5 0 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
-      <!--<a-entity id="portal" link="href: index.html; title:Enter room; image: #imgBoard; color: black" visible="true" position="0 2 -2" scale="1 1 1"></a-entity>-->
-      <a-link id="museumPortal" href="room.html" image="#imgMuseum" title="Right index finger to go to the Museum" visible="false" position="2.2 1.5 -20" scale="1 1 1" hoverable></a-link>
-      <a-link id="noRoomPortal" href="open-world.html" image="#imgMuseum" title="Right index finger to the open space" visible="false" position="6.6 1.5 -20" scale="1 1 1" hoverable></a-link>
+      <a-link id="museumPortal" href="index.html" image="#imgMuseum" title="Right index finger to go to the Museum" visible="false" position="2.2 1.5 -20" scale="1 1 1" hoverable></a-link>
+      <a-link id="openWorldPortal" href="open_world.html" image="#imgOpenWorld" title="Right index finger to the open space" visible="false" position="6.6 1.5 -20" scale="1 1 1" hoverable></a-link>
   
       <a-sky color="#212F3C"></a-sky>
+
+      <a-entity sound="src: #bing" position="3.1 0.5 -8"></a-entity>
   
       <!-- Light -->
       <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 20 -10" target="#target">
-        <a-entity id="target" positon="4.2 0 -15"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6; shadowCameraVisible: false; castShadow: true" position="-1 1 2"> <!-- target="#target" -->
+        <!-- <a-entity id="target" positon="4.2 0 -15"></a-entity> -->
       </a-entity>
 
 
@@ -158,45 +157,56 @@
       <a-entity id="txtTeleport" position="0 1.7 -3" rotation="0 0 0" scale="0.5 0.5 0.5" visible="true">
         <a-image src="#imgTeleport" width="3" height="1" side="front"></a-image>
       </a-entity>
-      <a-entity id="modelTeleportController" visible="true" rotation="-40 150 0" position="-0.5 1.2 -2.5" scale="0.003 0.003 0.003" gltf-model="#modelTeleport" camera-listener></a-entity>
+      <a-entity id="modelTeleportController" visible="true" shadow rotation="-40 150 0" position="-0.5 1.2 -2.5" scale="0.003 0.003 0.003" gltf-model="#modelTeleport" camera-listener></a-entity>
 
       <!-- Move -->
       <a-entity id="txtMove" position="-0.4 1.7 -6" rotation="0 0 0" scale="0.5 0.5 0.5" visible="false"  camera-listener>
         <a-image src="#imgMove" width="3" height="1" side="front"></a-image>
       </a-entity>
      <!--  <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="3 1 -9" camera-listener bar-chart="yScale: 0.05; title: This is a diagram!; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
-      <a-entity id="modelMoveController" visible="false" rotation="-10 150 0" position="0.4 1.2 -4.2" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
+      <a-entity id="modelMoveController" visible="false" shadow rotation="-10 150 0" position="0.4 1.2 -4.2" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
       <a-entity id="move"
-                class="diagram" 
-                bar-chart="yScale: 0.025; title: Move me!; suffix: %; src:url(../assets/statistics/tutorial-stats.json)" 
+                class="diagram"
+                bar-chart="
+                src:url(../assets/statistics/tutorial-stat.json);
+                title: Move me!; 
+                xAxisLabel: x-axis; 
+                yAxisLabel: y-axis; 
+                categories: language;
+                heights: percentage;
+                heightsSuffix: %;
+                size: 2 1.5 0.5 "
                 position="3.1 0.5 -8"
-                grabbable 
-                draggable
-                rotation-observer
                 camera-listener
                 visible="false"
-                rotation="0 0 0"></a-entity>
+                rotation="0 -30 0"
+                shadow></a-entity>
       <!-- <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart="title:I am a diagram!" bar-chart-listener position="3.5 0.5 -9" scale="1 1 1" rotation="0 270 0" camera-listener></a-entity> -->
 
       <!-- Rotate -->
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Rotate me" bar-chart-listener scale="1 1 1" position="3.5 0.5 -14"  rotation="0 270 0" camera-listener></a-entity> -->      
       <a-entity id="rotate" 
-        class="diagram" 
-        bar-chart="yScale:0.025;title:Rotate me!;suffix:%;src:../assets/statistics/tutorial-stats.json" 
-        position="15 0.5 -14" 
-        grabbable 
-        draggable
-        rotation-observer
-        camera-listener
-        visible="false"
-        rotation="0 -45 0"></a-entity>
+                class="diagram"
+                bar-chart="
+                src:url(../assets/statistics/tutorial-stat.json);
+                title: Rotate me!; 
+                xAxisLabel: x-axis; 
+                yAxisLabel: y-axis; 
+                categories: language;
+                heights: percentage;
+                heightsSuffix: %;
+                size: 2 1.5 0.5 "
+                position="15 0.5 -14" 
+                camera-listener
+                visible="false"
+                rotation="0 -45 0"></a-entity>
       <a-entity id="txtRotate" position="10.655 2 -12" scale="0.5 0.5 0.5" camera-listener visible="false">
         <a-image src="#imgRotate" width="3" height="1" side="both"></a-image>
       </a-entity>
       <a-entity id="txtHover" position="10.655 1.5 -12" scale="0.5 0.5 0.5" camera-listener visible="false">
         <a-image src="#imgHover" width="3" height="0.5" side="both"></a-image>
       </a-entity>
-      <a-entity id="modelRotateController" rotation="-30 170 0" position="11 1 -10.6" scale="0.003 0.003 0.003" gltf-model="../assets/models/rotate_controller.gltf" camera-listener visible="false"></a-entity>
+      <a-entity id="modelRotateController" shadow rotation="-30 170 0" position="11 1 -10.6" scale="0.003 0.003 0.003" gltf-model="#modelRotate" camera-listener visible="false"></a-entity>
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
   
       <!-- Scale -->
