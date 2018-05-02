@@ -25,7 +25,7 @@ AFRAME.registerComponent( "laser-controls-2", {
         el.setAttribute( "laser-controls", "" );
         el.setAttribute( "raycaster", {
             objects: ".hoverable, a-link",
-            far: 5
+            far: 10 
         } );
 
         this.raycaster = el.components.raycaster;
@@ -72,7 +72,7 @@ AFRAME.registerComponent( "laser-controls-2", {
             this.el.addState( this.GRABBING_STATE );
 
             THREE.SceneUtils.attach( this.moveParent.object3D, this.el.sceneEl.object3D, this.el.object3D );
-            this.moveParent.object3D.position.set(0, -1.5, -3);
+
 
         }
 
