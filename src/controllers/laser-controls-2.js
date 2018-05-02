@@ -19,6 +19,7 @@ AFRAME.registerComponent( "laser-controls-2", {
         }
 
         this.GRABBING_STATE = "grabbing";
+        this.ROTATION_STATE = "rotating";
 
         const el = this.el;
 
@@ -38,12 +39,19 @@ AFRAME.registerComponent( "laser-controls-2", {
         this.el.addEventListener( "axismove" , this.onRotation ); 
         this.el.addEventListener( "buttondown", this.onButtonDown );
         this.el.addEventListener( "buttonup", this.onButtonUp );
-
     },
 
     onRotation: function( evt ) {
 
         if ( this.el.is( this.GRABBING_STATE )) { return; }
+
+        this.el.addState( this.ROTATION_STATE );
+
+        if ( evt.detail.axis[ 0 ] == 0 && evt.detail.axis[ 1 ] == 0 ) {
+
+            this.el.removeState( this.ROTATION_STATE );
+
+        } 
 
         const intersectedEl = this.els[ 0 ];
         if( intersectedEl === undefined ) { return; }
@@ -89,6 +97,7 @@ AFRAME.registerComponent( "laser-controls-2", {
         this.intersectedEl = intersectedEl;
         this.moveParent = moveParent;
 
+        this.el.removeState( this.ROTATION_STATE );
         this.el.addState( this.GRABBING_STATE );
 
         THREE.SceneUtils.attach( this.moveParent.object3D, this.el.sceneEl.object3D, this.el.object3D );

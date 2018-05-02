@@ -18,7 +18,7 @@
         },
 
         tick: function () {
-          //var cameraEl = this.el.sceneEl.camera.el;
+          ///var cameraEl = this.el.sceneEl.camera.el;
           var cameraEl = document.querySelector('#player');
           var circleEl = document.querySelector('#circle');
           var soundEl = document.querySelector('#bing');
@@ -59,25 +59,15 @@
 
           // Scene 1
           if(cameraPosZ<-2){
-            var cameraMoved = true;
-          }
+            circleEl.setAttribute('visible', false);
+            textTele.setAttribute('visible', false);
+            controllerTeleport.setAttribute('visible', false);
 
-          if(cameraMoved && !this.scene1){
-             this.scene1 = true;
-              console.log("scene1");
-              // circleEl.setAttribute('position', {x: -1, y: 0, z: -9.8});
+            textMove.setAttribute('visible', true);
+            controllerMove.setAttribute('visible', true);
+            moveDiagram.setAttribute('visible', true);
 
-              /* txtMove.parentNode.removeChild(txtMove); */
-              circleEl.setAttribute('visible', false);
-              textTele.setAttribute('visible', false);
-              controllerTeleport.setAttribute('visible', false);
-
-              textMove.setAttribute('visible', true);
-              controllerMove.setAttribute('visible', true);
-              moveDiagram.setAttribute('visible', true);
-
-             soundEl.components.sound.playSound();
-
+            //soundEl.components.sound.playSound();
           }
 
           // Scene 2
@@ -88,7 +78,6 @@
 
           if(moved && !this.scene2){
            this.scene2 = true;
-              console.log("scene2");
             soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
             
             circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
@@ -99,7 +88,7 @@
             textRotate.setAttribute('visible', true);
             textHover.setAttribute('visible',true);
 
-           soundEl.components.sound.playSound();
+           //soundEl.components.sound.playSound();
 
           }
 
@@ -112,7 +101,6 @@
 
           if(rotated && !this.scene3){
            this.scene3 = true;
-              console.log("scene3");
             soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
             
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
@@ -122,7 +110,7 @@
             linkMuseum.setAttribute('visible', true);
             linkNoRoom.setAttribute('visible', true);
 
-           soundEl.components.sound.playSound();
+           //soundEl.components.sound.playSound();
 
           }
           
@@ -132,7 +120,7 @@
 </head>
 
 <body>
-    <a-scene stats > <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
+    <a-scene stats tutorial> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
       <a-asset>
         <a-asset-item id="modelTestRoom" src="../assets/models/tutorial_room.gltf"></a-asset-item>
         <a-asset-item id="modelCircle" src="../assets/models/circle.gltf"></a-asset-item>
@@ -150,7 +138,7 @@
         <img id="imgHover" src="../assets/images/hover_text_white.png">
         <img id="imgRotate" src="../assets/images/rotate_text_white.png">
         <img id="imgMuseum" src="../assets/images/index360View.png">
-        <audio id="bingsrc" src="../assets/sounds/bing.mp3" preload="auto"></audio>
+        <!--<audio id="bingsrc" src="../assets/sounds/bing.mp3" preload="auto"></audio>-->
       </a-asset>
   
       <!--World-->
@@ -161,7 +149,7 @@
   
       <a-sky color="#212F3C"></a-sky>
 
-      <a-entity id="bing" sound="src: #bingsrc" position="3.1 0.5 -8"></a-entity>
+      <!--<a-entity id="bing" sound="src: #bingsrc" position="3.1 0.5 -8"></a-entity>-->
   
       <!-- Light -->
       <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
@@ -199,6 +187,7 @@
                 visible="false"
                 rotation="0 -30 0"
                 shadow
+                rotate-trigger
                 ></a-entity>
       <!-- <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart="title:I am a diagram!" bar-chart-listener position="3.5 0.5 -9" scale="1 1 1" rotation="0 270 0" camera-listener></a-entity> -->
 
@@ -227,13 +216,6 @@
       </a-entity>
       <a-entity id="modelRotateController" shadow rotation="-30 170 0" position="11 1 -10.6" scale="0.003 0.003 0.003" gltf-model="#modelRotate" camera-listener visible="false"></a-entity>
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
-  
-      <!-- Scale -->
-      <!-- <a-entity id="scale" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Scale me" bar-chart-listener scale="1 1 1" position="0.7 0.5 -21" camera-listener></a-entity>
-      <a-entity id="modelScaleController" visible="false" rotation="-10 170 0" position=" 1.9 -19" scale="0.003 0.003 0.003" gltf-model="#modelScale" camera-listener></a-entity>
-      <a-entity id="txtScale" position="1.3 2 -48" rotation="0 10 0" scale="1.9 1.9 1.9" visible="false"  camera-listener>
-        <a-image src="#imgScale" width="3" height="1" side="front"></a-image>
-      </a-entity> -->
 
       <!-- Correct controllers I think -->
       
@@ -249,10 +231,10 @@
         </a-entity>-->
 
         <!-- VR-CONTROLLERS -->
-        <a-entity id="player" position="0 0 0">
+        <a-entity id="player" position="0 0 0" move-trigger>
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
-            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-            <a-entity oculus-touch-controls="hand:right" laser-controls-2 ></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;" move-trigger></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2 tutorial-controller ></a-entity>
         </a-entity>
      
     </a-scene>
