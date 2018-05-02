@@ -12,6 +12,7 @@
           //var cameraEl = this.el.sceneEl.camera.el;
           var cameraEl = document.querySelector('#rig');
           var circleEl = document.querySelector('#circle');
+          var soundEl = document.querySelector('#bing');
 
           var cameraPosZ = cameraEl.getAttribute('position').z;
 
@@ -62,6 +63,8 @@
               controllerMove.setAttribute('visible', true);
               moveDiagram.setAttribute('visible', true);
 
+              soundEl.components.sound.playSound();
+
           }
 
           // Scene 2
@@ -71,6 +74,8 @@
           }
 
           if(moved){
+            soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
+            
             circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
 
             circleEl.setAttribute('visible', true);
@@ -78,6 +83,8 @@
             controllerRotate.setAttribute('visible', true);
             textRotate.setAttribute('visible', true);
             textHover.setAttribute('visible',true);
+
+            soundEl.component.sound.playSound();
 
           }
 
@@ -89,12 +96,16 @@
           
 
           if(rotated){
+            soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
+            
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
             // textRotate.setAttribute('visible', false);
             // textHover.setAttribute('visible',false);
 
             linkMuseum.setAttribute('visible', true);
             linkNoRoom.setAttribute('visible', true);
+
+            soundEl.component.sound.playSound();
 
           }
           
@@ -127,7 +138,6 @@
         <a-asset-item id="modelRotate" src="src/assets/models/rotate_controller.gltf"></a-asset-item>
   
         <img id="imgSky" src="src/assets/images/equi.png">
-        <img id="imgBoard" src="src/assets/images/museum_board_white.png">
         <img id="imgTeleport" src="src/assets/images/teleport_text_white.png">
         <img id="imgMove" src="src/assets/images/move_text_white.png">
         <img id="imgHover" src="src/assets/images/hover_text_white.png">
@@ -135,18 +145,18 @@
         <!-- <img id="imgPortal" src="src/assets/images/portal_text.png"> -->
         <img id="imgMuseum" src="src/assets/images/index360View.png">
         <img id="imgOpenWorld" src="src/assets/images/openworld360View.png">
+        <audio id="bing" src="src/assets/sounds/bing.wav" preload="auto"></audio>
       </a-asset>
   
       <!--World-->
-      <!-- <a-entity id="modelTutorial" position="0 0 0" scale="1 1 1" gltf-model="#modelTestRoom" shadow></a-entity> -->
-      <!-- <a-plane position="0 0 0" color="#0d194c" rotation="-90 0 0" scale="50 50 1" side="front"></a-plane> -->
       <a-entity geometry="primitive: plane; width:50; height:50" material="color:#1c2733; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0"></a-entity>
       <a-entity id="circle" camera-listener visible="true" position="-0.5 0 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
-      <!--<a-entity id="portal" link="href: index.html; title:Enter room; image: #imgBoard; color: black" visible="true" position="0 2 -2" scale="1 1 1"></a-entity>-->
       <a-link id="museumPortal" href="index.html" image="#imgMuseum" title="Right index finger to go to the Museum" visible="false" position="2.2 1.5 -20" scale="1 1 1" hoverable></a-link>
       <a-link id="openWorldPortal" href="open_world.html" image="#imgOpenWorld" title="Right index finger to the open space" visible="false" position="6.6 1.5 -20" scale="1 1 1" hoverable></a-link>
   
       <a-sky color="#212F3C"></a-sky>
+
+      <a-entity sound="src: #bing" position="3.1 0.5 -8"></a-entity>
   
       <!-- Light -->
       <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
