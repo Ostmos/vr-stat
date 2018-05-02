@@ -10,19 +10,21 @@ AFRAME.registerComponent( "scatter-plot", {
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
         zAxisLabel: { type: "string" },
-        size: { type: "vec3", default: { x: 2, y:2, z: 2 } },
+        size: { type: "vec3", default: { x: 2, y: 2, z: 2 } },
         steps: { type: "vec3", default: { x: 6, y: 7, z: 6 } },
         xCol: { type: "string", default: "x" },
         yCol: { type: "string", default: "y" },
         zCol: { type: "string", default: "z" },
         xSuffix: { type: "string" },
         ySuffix: { type: "string" },
-        zSuffix: { type: "string" } 
+        zSuffix: { type: "string" }, 
+        hoverableSpheres: { type: "boolean" }
     },
  
     init: function() {
 
         let data = this.data;
+        this.size = data.size;
         let self = this;
 
         this.makeTitle();
@@ -34,6 +36,9 @@ AFRAME.registerComponent( "scatter-plot", {
 
             this.makeGrid( table );
             this.makePoints( table );
+            this.makePanelBox();
+
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -84,17 +89,73 @@ AFRAME.registerComponent( "scatter-plot", {
         const yScaledPoints = table.makeScaleFitArray( this.data.yCol, this.data.size.y );
         const zScaledPoints = table.makeScaleFitArray( this.data.zCol, this.data.size.z );
 
-        // Points
-        this.el.setAttribute( "point-cloud", {
-            
-            dimensions: this.data.size ,
-            points: { 
-                x: xScaledPoints, 
-                y: yScaledPoints,
-                z: zScaledPoints
-            }
 
+        // Points
+        if ( !this.data.hoverableSpheres ) {
+
+            this.el.setAttribute( "sprite-point-cloud", {
+                
+                size: this.data.size ,
+                points: { 
+                    x: xScaledPoints, 
+                    y: yScaledPoints,
+                    z: zScaledPoints
+                }
+
+            } );
+
+        } else {
+
+            const xPoints = table.getColumn( this.data.xCol );
+            const yPoints = table.getColumn( this.data.yCol );
+            const zPoints = table.getColumn( this.data.zCol );
+
+            // Points
+            const ent = document.createElement("a-entity");
+            ent.className = "hoverable";
+            ent.setAttribute( "sphere-point-cloud", {
+                
+                size: this.data.size ,
+                points: { 
+                    x: xScaledPoints, 
+                    y: yScaledPoints,
+                    z: zScaledPoints
+                },
+                labelPoints: {
+                    x: xPoints,
+                    y: yPoints,
+                    z: zPoints
+                }
+
+            } );
+            this.el.appendChild( ent );
+
+        }
+
+    },
+
+    makePanelBox: function() {
+
+        const self = this;
+
+        const panelBox = document.createElement("a-entity");
+        panelBox.setAttribute( "panel-box", {
+            size: { x: this.size.x, y: this.size.y, z: this.size.z },
+            bottomOpacity: 0.0,
+            sidesOpacity: 0.0,
         } );
+        panelBox.className = "hoverable";
+        panelBox.addEventListener( "stateadded", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.addState("rotatable");
+            }
+        } );
+        panelBox.addEventListener( "stateremoved", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.removeState("rotatable");
+            }
+        } );
+        this.el.appendChild( panelBox );
 
     }
 

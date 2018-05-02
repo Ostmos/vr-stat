@@ -1,6 +1,6 @@
 const assert = require( "chai" ).assert; 
 const chai = require( "chai" );
-const DataTable = require( "../src/charts/data-table" ).DataTable;
+const DataTable = require( "../src/data/data-table" ).DataTable;
 
 // TODO, test console.error
 describe( "DataTable", function() {

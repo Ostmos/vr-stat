@@ -19,6 +19,10 @@ AFRAME.registerComponent( "line-chart", {
     },
  
     init: function() {
+        
+        this.size = this.data.size;
+
+        this.makeTitle();
 
         new JSONLoader().loadJSON( this.data.src, jsonData => {
 
@@ -26,6 +30,9 @@ AFRAME.registerComponent( "line-chart", {
 
             this.makeGrid( table );
             this.makeLines( table );
+            this.makePanelBox();
+
+            this.el.setAttribute( "rotation-component", "" );
 
         } );
 
@@ -78,19 +85,47 @@ AFRAME.registerComponent( "line-chart", {
 
     makeLines: function( table ) {
 
-        // Lines
-        const scaledLines = [];
+        const scaledLines = table.makeScaleFitMatrix( this.data.lines, this.data.size.y );
+        const pointLabels = [];
         for ( let i = 0; i < this.data.lines.length; i++ ) {
 
-            const scaledLine = table.makeScaleFitArray( this.data.lines[ i ], this.data.size.y );
-            scaledLines.push( scaledLine );
+            const lineColumn = this.data.lines[ i ];
+            let points = table.getColumn( lineColumn );
+            points = points.map( elem => elem + this.data.heightsSuffix );
+            pointLabels.push( points );
 
         } 
-        this.el.setAttribute("lines", {
-            dimensions: this.data.size,
+
+        this.el.setAttribute( "lines", {
+            size: this.data.size,
             heights: scaledLines,
-            labels: this.data.lineLabels
+            pointLabels: pointLabels,
+            lineLabels: this.data.lineLabels
         } ); 
+
+    },
+
+    makePanelBox: function() {
+
+        const self = this;
+
+        const panelBox = document.createElement("a-entity");
+        panelBox.setAttribute( "panel-box", {
+            size: { x: this.size.x, y: this.size.y, z: this.size.z },
+            sidesOpacity: 0
+        } );
+        panelBox.className = "hoverable";
+        panelBox.addEventListener( "stateadded", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.addState("rotatable");
+            }
+        } );
+        panelBox.addEventListener( "stateremoved", function( evt ) { 
+            if ( evt.detail.state == "cursor-hovered" ) {
+                self.el.removeState("rotatable");
+            }
+        } );
+        this.el.appendChild( panelBox );
 
     }
 

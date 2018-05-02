@@ -9,6 +9,10 @@
 
 <body>
   <a-scene stats>
+    <a-assets>
+        <a-mixin id="red" material="color: red"></a-mixin>
+    </a-assets>
+
     <a-sky color="#FFFFFF"></a-sky>
     <a-entity scatter-plot=
         "src:url(../src/assets/statistics/salary_hours_job.json);
@@ -52,8 +56,6 @@
             <a-entity id="right" oculus-touch-controls="hand:right" 
             laser-controls raycaster="objects: .point, .bounding-box; far:5" chart-controller></a-entity>
         </a-entity>-->
-        <a-entity class="lol"></a-entity>
-        <a-entity class="lol"></a-entity>
         <a-entity camera look-controls position="0 1.9 0" wasd-controls>
             <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
                       raycaster="objects: .hoverable"  

@@ -1,7 +1,6 @@
 const Utils = require( "../lib/utils" );
 const Range = require( "../data/data-table" ).Range;
 const SimpleGrid = require( "../diagrams/grid" ).SimpleGrid;
-const CategoricalPlane = require( "../diagrams/grid" ).CategoricalPlane;
 const CategoryAxis = require( "../diagrams/grid" ).CategoryAxis;
 const LabelAxis = require( "../diagrams/grid" ).LabelAxis;
 
@@ -37,10 +36,6 @@ AFRAME.registerComponent( "categorical-grid", {
         ZYGrid.rotation.set( Math.PI / 2, 0, Math.PI / 2 );
         ZYGrid.position.set( -Dim.x / 2, 0, 0 );
         this.el.setObject3D( "zyGrid", ZYGrid );
-
-        const XZPlane = new CategoricalPlane( data.categories.length, 0.4, Dim ).mesh; 
-        XZPlane.position.set( 0, -Dim.y / 2, 0 );
-        this.el.setObject3D( "xzPlane", XZPlane );
 
         // Y-axis
         const AxisPositionY = new THREE.Vector3( -Dim.x / 2, -Dim.y / 2, Dim.z / 2);
