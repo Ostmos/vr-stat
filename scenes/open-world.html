@@ -5,7 +5,7 @@
     <script src="../build/vr-stat.bundle.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene stats>
         <!-- World -->
         <a-sky color="#ECECEC"></a-sky>
         <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
@@ -61,7 +61,7 @@
         <a-entity id="player" position="0 0 5">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-            <a-entity oculus-touch-controls="hand:right" laser-controls-2 raycaster="objects: .hoverable; far: 10"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2></a-entity>
         </a-entity>
 
         <!-- NO VR-CONTROLLERS -->

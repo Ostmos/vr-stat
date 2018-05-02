@@ -43,6 +43,8 @@ AFRAME.registerComponent( "laser-controls-2", {
 
     onRotation: function( evt ) {
 
+        if ( this.el.is( this.GRABBING_STATE )) { return; }
+
         const intersectedEl = this.els[ 0 ];
         if( intersectedEl === undefined ) { return; }
 
@@ -60,19 +62,7 @@ AFRAME.registerComponent( "laser-controls-2", {
 
         if ( evt.detail.id === this.BUTTONS.TRIGGER ) {
 
-            const intersectedEl = this.els[ 0 ];
-            if ( intersectedEl === undefined ) { return; }
-
-            const moveParent = this.findParent( intersectedEl, "chart" );
-            if ( moveParent == undefined ) { return; }
-
-            this.intersectedEl = intersectedEl;
-            this.moveParent = moveParent;
-
-            this.el.addState( this.GRABBING_STATE );
-
-            THREE.SceneUtils.attach( this.moveParent.object3D, this.el.sceneEl.object3D, this.el.object3D );
-
+            this.onMoveStart();
 
         }
 
@@ -81,21 +71,40 @@ AFRAME.registerComponent( "laser-controls-2", {
     onButtonUp: function( evt ) {
 
         if ( evt.detail.id === this.BUTTONS.TRIGGER ) {
-            
-            this.el.object3D.updateMatrixWorld();
-            THREE.SceneUtils.detach( this.moveParent.object3D, this.el.object3D, this.el.sceneEl.object3D );
 
-            this.intersectedEl = undefined;
-            this.moveParent = undefined;
+            this.onMoveEnd();
 
-            this.el.removeState( this.GRABBING_STATE );
         }
 
     },
 
-    onMove: function() {
+    onMoveStart: function() {
 
-        
+        const intersectedEl = this.els[ 0 ];
+        if ( intersectedEl === undefined ) { return; }
+
+        const moveParent = this.findParent( intersectedEl, "chart" );
+        if ( moveParent == undefined ) { return; }
+
+        this.intersectedEl = intersectedEl;
+        this.moveParent = moveParent;
+
+        this.el.addState( this.GRABBING_STATE );
+
+        THREE.SceneUtils.attach( this.moveParent.object3D, this.el.sceneEl.object3D, this.el.object3D );
+
+    },
+
+
+    onMoveEnd: function() {
+            
+        this.el.object3D.updateMatrixWorld();
+        THREE.SceneUtils.detach( this.moveParent.object3D, this.el.object3D, this.el.sceneEl.object3D );
+
+        this.intersectedEl = undefined;
+        this.moveParent = undefined;
+
+        this.el.removeState( this.GRABBING_STATE );
 
     },
 

@@ -5,7 +5,7 @@
     <script src="../build/vr-stat.bundle.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene stats>
         <a-asset-item id="room-gltf" src="../assets/models/museum_minimal_XS.gltf"></a-asset-item>
         <a-asset-item id="controller" src="../assets/models/controller.gltf"></a-asset-item>
 
@@ -70,7 +70,7 @@
         <a-entity id="player" position="0 0 15">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-            <a-entity oculus-touch-controls="hand:right" laser-controls-2 raycaster="objects: .hoverable; far: 5"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2></a-entity>
         </a-entity>
 
         <!-- NO VR-CONTROLLERS -->
