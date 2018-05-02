@@ -58,21 +58,21 @@
         ></a-entity>
 
         <!-- VR-CONTROLLERS -->
-        <!-- <a-entity id="player" position="0 0 15">
+        <a-entity id="player" position="0 0 5">
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-            <a-entity oculus-touch-controls="hand:right" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
-        </a-entity>-->
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2 raycaster="objects: .hoverable; far: 5"></a-entity>
+        </a-entity>
 
         <!-- NO VR-CONTROLLERS -->
-        <a-entity camera look-controls position="0 1.9 4" wasd-controls>
+        <!--<a-entity camera look-controls position="0 1.9 4" wasd-controls>
             <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
                       raycaster="objects: .hoverable"  
                       position="0 0 -1"
                       geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
                       material="color: black; shader: flat">
             </a-entity>
-        </a-entity>
+        </a-entity>-->
     </a-scene>
 </body>
 </html>

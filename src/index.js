@@ -20,6 +20,7 @@ require("./listeners/pop-up-label");
 
 // Controllers
 require("./controllers/chart-controller");
+require("./components/laser-controls-2");
 require("./listeners/rotation-component");
 
 require("./components/cursor-listener");

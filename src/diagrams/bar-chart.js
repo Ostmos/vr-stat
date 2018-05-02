@@ -21,6 +21,8 @@ AFRAME.registerComponent( "bar-chart", {
  
     init: function() {
 
+        this.el.className = "chart";
+
         this.size = this.data.size;
 
         this.makeTitle();
@@ -84,7 +86,7 @@ AFRAME.registerComponent( "bar-chart", {
             barWidth: this.data.barWidth,
             heights: scaledHeights, 
             values: values,
-            outSidePadding: this.data.axisToBarPadding 
+            outSidePadding: this.data.axisToBarPadding,
         } ); 
         bars.className = "hoverable";
         bars.addEventListener( "stateadded", function( evt ) { 

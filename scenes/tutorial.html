@@ -4,13 +4,22 @@
   <meta charset="UTF-8">
   <title>VR-Stat - tutorial</title>
     
-    <script src="https://cdn.rawgit.com/Ostmos/aframe/4c94b5d3/dist/aframe-master.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
     <script src="../build/vr-stat.bundle.js"></script>
     
     <script>AFRAME.registerComponent('camera-listener', {
+
+        init: function() {
+
+          this.scene1 = false;
+          this.scene2 = false;
+          this.scene3 = false;
+
+        },
+
         tick: function () {
           //var cameraEl = this.el.sceneEl.camera.el;
-          var cameraEl = document.querySelector('#rig');
+          var cameraEl = document.querySelector('#player');
           var circleEl = document.querySelector('#circle');
           var soundEl = document.querySelector('#bing');
 
@@ -23,6 +32,9 @@
           var controllerMove = document.querySelector('#modelMoveController');
           var moveDiagram = document.querySelector('#move');
 
+          /*var moveDiagramPosX = moveDiagram.getAttribute('position').x;
+          var moveDiagramPosY = moveDiagram.getAttribute('position').y;
+          var moveDiagramPosZ = moveDiagram.getAttribute('position').z;*/
           var moveDiagramPosX = moveDiagram.getAttribute('position').x;
           var moveDiagramPosY = moveDiagram.getAttribute('position').y;
           var moveDiagramPosZ = moveDiagram.getAttribute('position').z;
@@ -45,13 +57,14 @@
           var linkMuseum = document.querySelector('#museumPortal');
           var linkNoRoom = document.querySelector('#openWorldPortal');
 
-
           // Scene 1
           if(cameraPosZ<-2){
             var cameraMoved = true;
           }
 
-          if(cameraMoved){
+          if(cameraMoved && !this.scene1){
+             this.scene1 = true;
+              console.log("scene1");
               // circleEl.setAttribute('position', {x: -1, y: 0, z: -9.8});
 
               /* txtMove.parentNode.removeChild(txtMove); */
@@ -63,7 +76,7 @@
               controllerMove.setAttribute('visible', true);
               moveDiagram.setAttribute('visible', true);
 
-              soundEl.components.sound.playSound();
+             soundEl.components.sound.playSound();
 
           }
 
@@ -73,7 +86,9 @@
             moved = true;
           }
 
-          if(moved){
+          if(moved && !this.scene2){
+           this.scene2 = true;
+              console.log("scene2");
             soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
             
             circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
@@ -84,7 +99,7 @@
             textRotate.setAttribute('visible', true);
             textHover.setAttribute('visible',true);
 
-            soundEl.component.sound.playSound();
+           soundEl.components.sound.playSound();
 
           }
 
@@ -95,7 +110,9 @@
           }
           
 
-          if(rotated){
+          if(rotated && !this.scene3){
+           this.scene3 = true;
+              console.log("scene3");
             soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
             
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
@@ -105,7 +122,7 @@
             linkMuseum.setAttribute('visible', true);
             linkNoRoom.setAttribute('visible', true);
 
-            soundEl.component.sound.playSound();
+           soundEl.components.sound.playSound();
 
           }
           
@@ -133,18 +150,18 @@
         <img id="imgHover" src="../assets/images/hover_text_white.png">
         <img id="imgRotate" src="../assets/images/rotate_text_white.png">
         <img id="imgMuseum" src="../assets/images/index360View.png">
-        <audio id="bing" src="../assets/sounds/bing.wav" preload="auto"></audio>
+        <audio id="bingsrc" src="../assets/sounds/bing.mp3" preload="auto"></audio>
       </a-asset>
   
       <!--World-->
-      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#1c2733; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0" shadow></a-entity>
+      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#000000; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0" shadow></a-entity>
       <a-entity id="circle" camera-listener visible="true" position="-0.5 0 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
       <a-link id="museumPortal" href="index.html" image="#imgMuseum" title="Right index finger to go to the Museum" visible="false" position="2.2 1.5 -20" scale="1 1 1" hoverable></a-link>
       <a-link id="openWorldPortal" href="open_world.html" image="#imgOpenWorld" title="Right index finger to the open space" visible="false" position="6.6 1.5 -20" scale="1 1 1" hoverable></a-link>
   
       <a-sky color="#212F3C"></a-sky>
 
-      <a-entity sound="src: #bing" position="3.1 0.5 -8"></a-entity>
+      <a-entity id="bing" sound="src: #bingsrc" position="3.1 0.5 -8"></a-entity>
   
       <!-- Light -->
       <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
@@ -180,7 +197,8 @@
                 camera-listener
                 visible="false"
                 rotation="0 -30 0"
-                shadow></a-entity>
+                shadow
+                ></a-entity>
       <!-- <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart="title:I am a diagram!" bar-chart-listener position="3.5 0.5 -9" scale="1 1 1" rotation="0 270 0" camera-listener></a-entity> -->
 
       <!-- Rotate -->
@@ -218,7 +236,7 @@
 
       <!-- Correct controllers I think -->
       
-        <a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
+        <!--<a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
           <a-entity id="controller1" class="right-controller" 
             super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
             rotation-controller
@@ -227,6 +245,13 @@
             teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
             raycaster="showLine:false; enabled:false"></a-entity>
           <a-camera position="0 1.6 0"></a-camera>
+        </a-entity>-->
+
+        <!-- VR-CONTROLLERS -->
+        <a-entity id="player" position="0 0 0">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2 ></a-entity>
         </a-entity>
      
     </a-scene>

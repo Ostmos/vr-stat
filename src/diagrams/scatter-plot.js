@@ -22,6 +22,8 @@ AFRAME.registerComponent( "scatter-plot", {
     },
  
     init: function() {
+        
+        this.el.className = "chart";
 
         let data = this.data;
         this.size = data.size;

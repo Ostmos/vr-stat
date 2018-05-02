@@ -87,6 +87,8 @@ AFRAME.registerComponent( "bars", {
 
         }
 
+        console.log(this.el.object3DMap);
+
     }
 
 } );

@@ -20,6 +20,8 @@ AFRAME.registerComponent( "line-chart", {
  
     init: function() {
         
+        this.el.className = "chart";
+        
         this.size = this.data.size;
 
         this.makeTitle();
