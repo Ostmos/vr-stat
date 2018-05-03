@@ -21,7 +21,7 @@ require( "./diagrams/data-point" );
 
 // Controllers
 require( "./controllers/laser-controls-2" );
-require( "./components/value-display" );
+require( "./controllers/value-display" );
 
 require( "./components/controller-display" );
 require( "./components/bar-chart-listener" );

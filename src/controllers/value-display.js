@@ -3,21 +3,38 @@ AFRAME.registerComponent( "value-display", {
     schema: {
         width: {type: "number", default: 0.18 },
         height: {type: "number", default: 0.07 },
-        wrapCount: {type: "number", default: 20 },
+        wrapCount: {type: "number", default: 30 },
         bgColor: {type: "color", default: "#000" },
         textColor: {type: "color", default: 0xFFFFFF }
     },
 
     init: function() {
 
+        this.SAVE_BUTTON = 2;
+
         this.onReceivedValue = this.onReceivedValue.bind( this );
 
         this.el.sceneEl.addEventListener( "pointhovered", this.onReceivedValue );
+
+        this.onButtonDown = this.onButtonDown.bind( this );
+        this.el.addEventListener( "buttondown" , this.onButtonDown ); 
+
+        this.savedValue = "";
 
         this.makeDisplay();
 
     },
 
+    onButtonDown: function( evt ) {
+
+        if ( evt.detail.id === this.SAVE_BUTTON ) {
+
+            this.savedValue = this.currentValue;
+            this.updateDisplay();
+
+        }
+
+    },
 
     makeDisplay: function() {
 
@@ -34,7 +51,7 @@ AFRAME.registerComponent( "value-display", {
             wrapCount: data.wrapCount,
             color: data.textColor,
             align: "center", 
-            value: "Value: \n"
+            value: "Current: \n" + "Saved: "
         } );
         this.el.appendChild( this.textPlane );
 
@@ -44,9 +61,9 @@ AFRAME.registerComponent( "value-display", {
 
         if ( evt.detail.value === undefined || evt.detail.value === "" ) { return; }
 
-        const newText = evt.detail.value;
+        this.currentValue = evt.detail.value;
 
-        this.updateDisplay( newText );
+        this.updateDisplay( );
 
     },
 
@@ -54,7 +71,7 @@ AFRAME.registerComponent( "value-display", {
 
         if ( this.textPlane === undefined ) { return; }
         this.textPlane.setAttribute("text", {
-            value: "Value: \n" + text
+            value: "Current: " + this.currentValue + "\nSaved: " + this.savedValue
         })
 
     }

@@ -15,7 +15,8 @@ AFRAME.registerComponent( "laser-controls-2", {
 
         this.BUTTONS = {
             TRIGGER: 1,
-            SAVE_BUTTON: 3
+            SCALE_UP: 4,
+            SCALE_DOWN: 3
         }
 
         this.GRABBING_STATE = "grabbing";
@@ -72,6 +73,14 @@ AFRAME.registerComponent( "laser-controls-2", {
 
             this.onMoveStart();
 
+        } else if ( evt.detail.id === this.BUTTONS.SCALE_UP ) {
+
+            this.onScaleUp();
+
+        } else if ( evt.detail.id === this.BUTTONS.SCALE_DOWN ) {
+
+            this.onScaleDown();
+
         }
 
     },
@@ -82,7 +91,7 @@ AFRAME.registerComponent( "laser-controls-2", {
 
             this.onMoveEnd();
 
-        }
+        } 
 
     },
 
@@ -116,6 +125,32 @@ AFRAME.registerComponent( "laser-controls-2", {
         this.el.removeState( this.GRABBING_STATE );
 
     },
+
+    onScaleUp: function() {
+
+        const intersectedEl = this.els[ 0 ];
+        if ( intersectedEl === undefined ) { return; }
+        
+        const scaleParent = this.findParent( intersectedEl, "chart" );
+        if ( scaleParent === undefined ) { return; }
+
+        scaleParent.object3D.scale.multiplyScalar( 1.1 );
+        
+
+    },
+
+    onScaleDown: function() {
+
+        const intersectedEl = this.els[ 0 ];
+        if ( intersectedEl === undefined ) { return; }
+        
+        const scaleParent = this.findParent( intersectedEl, "chart" );
+        if ( scaleParent === undefined ) { return; }
+
+        scaleParent.object3D.scale.multiplyScalar( 0.9 );
+
+    },
+
 
     findParent: function( el, className ) {
 
