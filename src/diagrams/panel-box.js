@@ -5,11 +5,12 @@ AFRAME.registerComponent( "panel-box", {
         bottomColor: { type: "color", default: 0x000000 },
         sidesColor: { type: "color", default: 0x000000 },
         bottomOpacity: { type: "number", default: 0.8 },
-        sidesOpacity: { type: "number", default: 0.05 },
+        sidesOpacity: { type: "number", default: 0 },
     },
 
     init: function() {
 
+        const BIAS = 0.001;
 
         const data = this.data;
         const size = data.size;
@@ -47,6 +48,8 @@ AFRAME.registerComponent( "panel-box", {
         this.meshGroup.add( this.bottomMesh );
         this.meshGroup.add( this.sideMesh );
         this.meshGroup.add( this.backMesh );
+
+        this.meshGroup.position.set( -BIAS, -BIAS, -BIAS );
 
         this.el.setObject3D( "panel-box", this.meshGroup );
 

@@ -1,69 +1,62 @@
 AFRAME.registerComponent( "value-display", {
-    schema: {
-        width: {type: "number", default: 0.3},
-        height: {type: "number", default: 0.2},
 
-        xValue: {type: "string", default: 2 },
-        yValue: {type: "string", default: 3 },
-        zValue: {type: "string", default: 4 },
+    schema: {
+        width: {type: "number", default: 0.18 },
+        height: {type: "number", default: 0.07 },
+        wrapCount: {type: "number", default: 20 },
+        bgColor: {type: "color", default: "#000" },
+        textColor: {type: "color", default: 0xFFFFFF }
     },
+
     init: function() {
 
-        let data = this.data;
+        this.onReceivedValue = this.onReceivedValue.bind( this );
 
-        const text = document.createElement("a-entity");
-        text.setAttribute("geometry",{
-            primitive: "plane",
-            width: data.width,
-            height: data.height 
-        });
-        text.setAttribute("material", {
-            color: "#355C7D",
-            opacity: 0.8,  
-        });
-        text.setAttribute("text", {
-            value: "Hello",
-            align: "center",
-            width: 0.5
-        } );
+        this.el.sceneEl.addEventListener( "pointhovered", this.onReceivedValue );
 
-        const textWrapper = document.createElement("a-entity");
-        textWrapper.appendChild( text );
-        textWrapper.setAttribute("position", {
-            x: 0,
-            y: 0.1,
-            z: 0
-        });
-        textWrapper.setAttribute("rotation", {
-            x: - Math.PI,
-            y: 0,
-            z: 0
-        });
+        this.makeDisplay();
 
-/*        text.setAttribute("text", {
-            color: "#000",
-            side: "double",
-            value: "X: \n Y: \n Z: ",
-            align: "center",
-            width: 1,
-            font: 'roboto',
-            lineHeight: data.height*250,
-            xOffset: -data.width/2 +data.width*0.25,
-        });
-
-        result.setAttribute("text", {
-            color: "#000",
-            side: "double",
-            value: data.xValue + "\n" + data.yValue + "\n" + data.zValue,
-            align: "left",
-            width: 1,
-            font: 'roboto',
-            lineHeight: data.height*250,
-            xOffset: 0.3,
-        });*/
-
-        
-        this.el.appendChild( textWrapper );  
     },
+
+
+    makeDisplay: function() {
+
+        const el = this.el;
+        const data = this.data;
+
+        this.textPlane = document.createElement("a-plane");
+        this.textPlane.setAttribute( "color", data.bgColor );
+        this.textPlane.setAttribute( "rotation", "-55 0 0");
+        this.textPlane.setAttribute( "position", "0 0 -0.03");
+        this.textPlane.setAttribute( "width", data.width );
+        this.textPlane.setAttribute( "height", data.height );
+        this.textPlane.setAttribute( "text", {
+            wrapCount: data.wrapCount,
+            color: data.textColor,
+            align: "center", 
+            value: "Value: \n"
+        } );
+        this.el.appendChild( this.textPlane );
+
+    },
+
+    onReceivedValue: function( evt ) {
+
+        if ( evt.detail.value === undefined || evt.detail.value === "" ) { return; }
+
+        const newText = evt.detail.value;
+
+        this.updateDisplay( newText );
+
+    },
+
+    updateDisplay: function( text ) {
+
+        if ( this.textPlane === undefined ) { return; }
+        this.textPlane.setAttribute("text", {
+            value: "Value: \n" + text
+        })
+
+    }
 
 });

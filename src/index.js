@@ -17,6 +17,7 @@ require( "./diagrams/categorical-grid" );
 require( "./diagrams/numerical-grid" );
 
 require( "./listeners/pop-up-label" );
+require( "./diagrams/data-point" );
 
 // Controllers
 require( "./controllers/laser-controls-2" );

@@ -23,7 +23,7 @@ function RectilinearGrid( steps, stepLength, size ) {
 
     const geometry = new THREE.BufferGeometry();
     geometry.addAttribute( "position", new THREE.BufferAttribute( vertices32, 3 ) );
-    const material = new THREE.LineBasicMaterial( { color: 0x99AAB5 } );
+    const material = new THREE.LineBasicMaterial( { color: 0x99AAB5, lineWidth: 2 } );
     this.mesh = new THREE.LineSegments( geometry, material );
 
 }

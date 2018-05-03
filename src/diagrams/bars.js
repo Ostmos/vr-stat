@@ -30,6 +30,10 @@ AFRAME.registerComponent( "bar", {
             position: { x: 0, y: data.height / 2 + 0.12, z: 0 }
         } );
 
+        this.el.setAttribute( "data-point", {
+            value: data.value
+        } );
+
         this.el.addEventListener( "stateadded", function( evt ) {
 
             if ( evt.detail.state == "cursor-hovered" ) {

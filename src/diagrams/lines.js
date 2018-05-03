@@ -3,7 +3,7 @@ const SmallText = require( "../text/sprite-text" ).smallTextPanel;
 AFRAME.registerComponent( "line-point", {
 
     schema: {
-        label: { type: "string", default: "lorem" },
+        label: { type: "string" },
         color: { type: "color", default: 0x000000 },
         hoverColor: { type: "color", default: 0xF6903D }
     },
@@ -25,6 +25,10 @@ AFRAME.registerComponent( "line-point", {
 
         this.el.addEventListener( "stateadded", this.onStateAdded );
         this.el.addEventListener( "stateremoved", this.onStateRemoved );
+
+        this.el.setAttribute( "data-point", {
+            value: this.data.label 
+        } );
 
     },
 

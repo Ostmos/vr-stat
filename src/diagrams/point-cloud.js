@@ -23,34 +23,10 @@ AFRAME.registerComponent( "sphere", {
             text: "x: " + Number.parseFloat(data.value.x).toFixed(1),
             position: { x: 0, y: radius * 2, z: -0 }
         } );
-            /*" y:" + Number.parseFloat(data.value.y).toFixed(1) +
-            " z:" + Number.parseFloat(data.value.z).toFixed(1),*/
-        /* this.el.setAttribute( "pop-up-label", {
-            text: Number.parseFloat(data.value.x).toFixed(1) +
-            " y:" + Number.parseFloat(data.value.y).toFixed(1) +
-            " z:" + Number.parseFloat(data.value.z).toFixed(1),
-            position: { x: 0, y: radius * 2, z: -0 }
-        } ); */
         this.el.appendChild( ent );
 
-        this.el.addEventListener( "stateadded", function( evt ) {
-
-            if ( evt.detail.state == "cursor-hovered" ) {
-
-                console.log("hover")
-
-            }
-
-        } );
-
-        this.el.addEventListener( "stateremoved", function( evt ) {
-
-            if ( evt.detail.state == "cursor-hovered" ) {
-
-                console.log("not hover")
-
-            }
-
+        this.el.setAttribute( "data-point", {
+            value: this.vecToString( data.value ) 
         } );
 
         this.el.addEventListener( "stateadded", function( evt ) {
@@ -76,6 +52,22 @@ AFRAME.registerComponent( "sphere", {
         this.camera = document.querySelector('[camera]');
 
     },
+
+    vecToString: function( vec ) {
+
+        const PRECISION = 1;
+
+        const str =
+            " x:" +
+            Number.parseFloat( vec.x ).toFixed( PRECISION ) + 
+            " y:"  + 
+            Number.parseFloat( vec.y ).toFixed( PRECISION ) + 
+            " z:" + 
+            Number.parseFloat( vec.z ).toFixed( PRECISION );
+
+        return str;
+
+    }
 
 
 } );
