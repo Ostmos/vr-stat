@@ -1,5 +1,43 @@
-1. Tutorial system
-2. Room/Open-world screenshots
-3. Hover, rotation, shadow screenshots
-4. Controllers for move
-5. Move screenshots
+Tutorial
+    move, rotate, grab value,  -> move sound and cirlce + make visible things
+    trigger events: 
+        camera || teleport trigger: move
+            create position listener for trigger position
+        controller: grab
+            emit event onto object and listen to that in a component 
+        controller: rotate
+            emit event onto object and listen to that in a component 
+        controller: scale
+            emit event onto object and listen to that in a component 
+        controller: save 
+            emit event onto itself 
+
+    tutorial system:
+
+        circle attribute to scene 
+        text to scene use sdf shit instead 
+        teleporters 
+        sound thing
+        
+        swith case ( event ) {
+
+            case: grab 
+                if order === 1
+                    do visible this and that 
+            
+            case: move 
+                if order === 2
+                    do visible this and that 
+
+            case: scasle
+                if order === 3
+                    do visible thia and that 
+
+        }
+
+Scenes with shadows
+particle system improvement
+materials
+black background Scenes
+time for animations?
+screenshots&film 

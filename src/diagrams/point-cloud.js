@@ -12,7 +12,7 @@ AFRAME.registerComponent( "sphere", {
         const data = this.data;
         const radius = this.data.radius;
 
-        const sphereGeometry = new THREE.BoxGeometry( radius, radius, radius );
+        const sphereGeometry = new THREE.SphereGeometry( radius, 8, 8 );
         const sphereMaterial = new THREE.MeshBasicMaterial( {color: 0xF05053} );
         const sphereMesh = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
@@ -20,7 +20,7 @@ AFRAME.registerComponent( "sphere", {
 
         const ent = document.createElement("a-entity", "")
         ent.setAttribute( "pop-up-label", {
-            text: "x: " + Number.parseFloat(data.value.x).toFixed(1),
+            text: this.vecToString( this.data.value ),
             position: { x: 0, y: radius * 2, z: -0 }
         } );
         this.el.appendChild( ent );
@@ -138,14 +138,19 @@ AFRAME.registerComponent( "sprite-point-cloud", {
             geometry.vertices.push(
                 {x: origin.x + points.x[ i ],
                 y: origin.y + points.y[ i ],
-                z: origin.z + points.z[ i ]
+                z: origin.z + points.z[ i ] + Math.random() * 0.05
                 } 
             ); 
         }
 
-        var sprite = new THREE.TextureLoader().load( "../assets/textures/sphere_large.png" );
-        let material = new THREE.PointsMaterial( { size: 0.05, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
-        material.color.setHex( 0xfd5053 );
+        var sprite = new THREE.TextureLoader().load( "../assets/textures/light.png" );
+        let material = new THREE.PointsMaterial( { 
+            size: 0.08,
+            sizeAttenuation: true,
+            map: sprite,
+            alphaTest: 0.5,
+        } );
+        material.color.setHex( 0x4c4cff );
 
         this.mesh = new THREE.Points(geometry, material);
         this.el.setObject3D( "cloudMesh", this.mesh );

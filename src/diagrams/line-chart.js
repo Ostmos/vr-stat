@@ -71,6 +71,8 @@ AFRAME.registerComponent( "line-chart", {
         }
 
         const times = table.getColumn( this.data.time );
+        times.sort();
+
         // 3D Grid
         this.el.setAttribute( "categorical-grid", {
             size: this.data.size,

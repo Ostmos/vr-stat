@@ -8,7 +8,9 @@
     <a-scene stats>
         <!-- World -->
         <a-sky color="#ECECEC"></a-sky>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+        <a-plane shadow position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6; castShadow: true" position="-0.5 1 1"></a-entity>
 
         <!-- Diagrams -->
         <a-entity 
@@ -20,10 +22,9 @@
             yAxisLabel: Salary;
             zAxisLabel: Coding experience;
             steps: 10 10 10;
-            size: 2 5 2;
-            hoverableSpheres: true;
+            size: 2 10 2;
             "
-        position="-6 3 0"
+        position="-6 3 -3"
         shadow
         ></a-entity>
 
@@ -37,23 +38,24 @@
             categories: language;
             heights: percentage;
             heightsSuffix: %;"
-        position="0 1.5 0"
+        position="0 1.5 -6"
         shadow
         ></a-entity>
 
         <a-entity
         line-chart=
             "
-            src:url(../assets/statistics/lines-dummy.json);
+            title: Programming language popularity over time;
+            src:url(../assets/statistics/languages_over_time.json);
             dimensions: 1, 2, 1;
-            xAxisLabel: xLabel;
-            yAxisLabel: yLabel; 
-            lines: x, y, z; 
-            time: time; 
-            lineLabels: line1, line2, line3; 
-            title: Time series;
+            xAxisLabel: Year;
+            yAxisLabel: Popularity; 
+            lines: C++, C#, Java, Javascript; 
+            time: Year; 
+            lineLabels: C++, C#, Java, JS; 
+            heightsSuffix: %;
             "
-        position="6 1 0"
+        position="6 1 -3"
         shadow
         ></a-entity>
 
@@ -65,7 +67,7 @@
         </a-entity>
 
         <!-- NO VR-CONTROLLERS -->
-        <!--<a-entity camera look-controls position="0 1.9 4" wasd-controls>
+        !--<a-entity camera look-controls position="0 1.9 4" wasd-controls>
             <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
                       raycaster="objects: .hoverable"  
                       position="0 0 -1"

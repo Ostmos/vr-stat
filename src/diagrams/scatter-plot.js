@@ -18,7 +18,7 @@ AFRAME.registerComponent( "scatter-plot", {
         xSuffix: { type: "string" },
         ySuffix: { type: "string" },
         zSuffix: { type: "string" }, 
-        hoverableSpheres: { type: "boolean" }
+        hoverableSpheres: { type: "boolean" },
     },
  
     init: function() {

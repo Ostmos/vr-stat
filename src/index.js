@@ -30,4 +30,4 @@ require( "./components/bar-chart-listener" );
 require( "./tutorial/grab-trigger" );
 require( "./tutorial/move-trigger" );
 require( "./tutorial/rotate-trigger" );
-//require( "./tutorial/tutorial" );
+require( "./tutorial/tutorial" );

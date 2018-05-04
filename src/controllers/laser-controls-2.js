@@ -27,7 +27,8 @@ AFRAME.registerComponent( "laser-controls-2", {
         el.setAttribute( "laser-controls", "" );
         el.setAttribute( "raycaster", {
             objects: ".hoverable, a-link",
-            far: 10 
+            far: 20,
+            color: "#000" 
         } );
 
         this.raycaster = el.components.raycaster;

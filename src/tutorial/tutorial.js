@@ -1,45 +1,36 @@
 AFRAME.registerSystem( "tutorial", {
 
+    schema: {
+        
+        checkpoint: { type: "asset", default: "#checkpoint" },
+        
+    },
+
     init: function() {
 
         const self = this;
-        const NBR_OF_ACTIONS = Object.keys( this.STEPS ).length;
-        const actionsDone = 0;
+        const el = this.el;
 
-        this.el.addEventListener( "movedTrigger", function(){
-            if ( actionsDone === 0 ) {
-
-                actionsDone ++;
-            }
-        } );
-
-        this.el.addEventListener( "grabTrigger", function(){
-            if ( actionsDone === 1) {
-
-                actionsDone ++;
-            }
-        } );
-
-        this.el.addEventListener( "rotationTrigger", function() {
-            if ( actionsDone === 2 ) {
-
-                actionsDone ++;
-            }
-        } );
-
+        this.makeCheckpoint( "0 0 -2" );
+ 
     },
 
-    moveAction: function() {
-        console.log("move");
-    },
+    makeCheckpoint: function( position ) {
 
-    rotationAction: function() {
-        console.log("rotation");
-    },
+        const ent = document.createElement( "a-entity" );
+        ent.setAttribute( "gltf-model", this.data.checkpoint );
+        ent.setAttribute( "position", position );
+        ent.setAttribute( "color", "#FFF" );
 
-    moveAction: function() {
-        console.log("move");
+        const animation = document.createElement( "a-animation" );
+        animation.setAttribute( "attribute", "rotation" );
+        animation.setAttribute( "dur", 10000 );
+        animation.setAttribute( "to", "360 0 0" );
+        animation.setAttribute( "repeat", "indefinite" );
+        ent.appendChild(animation);
+
+        this.el.appendChild( ent );
+
     }
-
    
 } );
