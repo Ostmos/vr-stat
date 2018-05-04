@@ -1,21 +1,33 @@
 // Vendors
-require('aframe-teleport-controls');
+require( "aframe-teleport-controls" );
 
-// Systems
-require("./systems/intersections-handler");
+// Diagr ams
+require( "./diagrams/bar-chart" );
+require( "./diagrams/bars" );
 
-// Charts
-require("./components/bar-chart");
-require("./components/scatter-plot");
-require("./components/line-chart");
-require("./components/numerical-grid");
-require("./components/categorical-grid");
-require("./components/point-cloud");
-require("./components/bars");
-require("./components/lines");
+require( "./diagrams/line-chart" );
+require( "./diagrams/lines" );
 
-require("./components/chart-controller-listener");
-require("./components/chart-controller");
-require("./components/controller-display");
-require("./components/bar-chart-listener");
-require("./components/value-display");
+require( "./diagrams/panel-box" );
+
+require( "./diagrams/scatter-plot" );
+require( "./diagrams/point-cloud" );
+
+require( "./diagrams/categorical-grid" );
+require( "./diagrams/numerical-grid" );
+
+require( "./listeners/pop-up-label" );
+require( "./diagrams/data-point" );
+
+// Controllers
+require( "./controllers/laser-controls-2" );
+require( "./controllers/value-display" );
+
+require( "./components/controller-display" );
+require( "./components/bar-chart-listener" );
+
+// Tutorial
+require( "./tutorial/grab-trigger" );
+require( "./tutorial/move-trigger" );
+require( "./tutorial/rotate-trigger" );
+require( "./tutorial/tutorial" );

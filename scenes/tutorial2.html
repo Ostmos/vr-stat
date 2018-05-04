@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <title>vr-stat open-world</title>
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="../build/vr-stat.bundle.js"></script>
+</head>
+<body>
+    <a-scene stats tutorial>
+        <a-asset>
+            <a-asset-item id="checkpoint" src="../assets/models/circle.gltf"></a-asset-item>
+            
+            <a-asset-item id="modelTeleport" src="../assets/models/teleport_controller.gltf"></a-asset-item>
+            <a-asset-item id="modelMove" src="../assets/models/move_controller.gltf"></a-asset-item>
+            <a-asset-item id="modelScale" src="../assets/models/scale_controller.gltf"></a-asset-item>
+            <a-asset-item id="modelHover" src="../assets/models/hover_controller.gltf"></a-asset-item>
+            <a-asset-item id="modelRotate" src="../assets/models/rotate_controller.gltf"></a-asset-item>
+    
+            <img id="imgSky" src="../assets/images/equi.png">
+            <img id="imgBoard" src="../assets/images/museum_board.png">
+            <img id="imgTeleport" src="../assets/images/teleport_text_white.png">
+            <img id="imgMove" src="../assets/images/move_text_white.png">
+            <img id="imgHover" src="../assets/images/hover_text_white.png">
+            <img id="imgRotate" src="../assets/images/rotate_text_white.png">
+            <img id="imgMuseum" src="../assets/images/index360View.png">
+            <audio id="bingsrc" src="../assets/sounds/bing.mp3" preload="auto"></audio>
+        </a-asset>
+
+        <!-- World -->
+        <a-sky color="#ECECEC"></a-sky>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+
+        <!-- VR-CONTROLLERS -->
+        <a-entity id="player" position="0 0 5">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2 value-display></a-entity>
+        </a-entity>
+
+        <!-- NO VR-CONTROLLERS -->
+        <!--<a-entity camera look-controls position="0 1.9 4" wasd-controls>
+            <a-entity id="rotation-controller" cursor="fuse: true; fuseTimeout: 500" 
+                      raycaster="objects: .hoverable"  
+                      position="0 0 -1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; shader: flat">
+            </a-entity>
+        </a-entity>-->
+    </a-scene>
+</body>
+</html>

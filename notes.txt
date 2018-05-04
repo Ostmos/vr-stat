@@ -1,61 +1,43 @@
-Data
--------
-Numerical
-Categorical
-TimeData
+Tutorial
+    move, rotate, grab value,  -> move sound and cirlce + make visible things
+    trigger events: 
+        camera || teleport trigger: move
+            create position listener for trigger position
+        controller: grab
+            emit event onto object and listen to that in a component 
+        controller: rotate
+            emit event onto object and listen to that in a component 
+        controller: scale
+            emit event onto object and listen to that in a component 
+        controller: save 
+            emit event onto itself 
 
-Change all Const to const
+    tutorial system:
 
-Dataset
+        circle attribute to scene 
+        text to scene use sdf shit instead 
+        teleporters 
+        sound thing
+        
+        swith case ( event ) {
 
-    Loader.loadJSON( this.data.src, jsonData => {
+            case: grab 
+                if order === 1
+                    do visible this and that 
+            
+            case: move 
+                if order === 2
+                    do visible this and that 
 
-        const dataSet = new DataSet( jsonData );
-        dataSet.filterColumns("Wassup", "Hello", "Hello", "TimeLine");
-        (Check if numerical(
-            range = dataSet.getRange("Wassup");
-        ))
-        dataSet.get(attribute).scaleLinerar(0.1)
-        range.start = 0;
-        range.end = 0; 
+            case: scasle
+                if order === 3
+                    do visible thia and that 
 
-    })
+        }
 
-    datset.get("aasdf", "asdfasd", "asdfasd");
-
-    Use 32 arrays?
-    chaining (refrence d3)
-    loadData
-    get
-    range
-    fitLength
-
-TODO
-------------
-Data
-Raycaster (Create geomtries around diagrams) bars => lines => scatter plot 
-
-Intersectionsystem
-
-    Create geometries for diagrams {
-        bar chart
-        line chart 
-        scatter plot
-    }
-
-    chart geometries => intersection system
-
-    seperate collisions with diagrams and bars/lines/points
-
-    Raycaster {
-        objects to check for Intersection
-    }
-    keep intersetion objects in a system {
-        add,
-        remove
-    }
-
-    <diagram rotatable moveable hoverable pointlabel>
-
-Events, keys, change to grab controllers
-Screenshots: teleporter, laser, grid
+Scenes with shadows
+particle system improvement
+materials
+black background Scenes
+time for animations?
+screenshots&film 

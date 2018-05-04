@@ -1,0 +1,102 @@
+[
+  {
+    "language": "JavaScript",
+    "percentage": 62.5
+  },
+  {
+    "language": "SQL",
+    "percentage": 51.2
+  },
+  {
+    "language": "Java",
+    "percentage": 39.7
+  },
+  {
+    "language": "C#",
+    "percentage": 34.1
+  },
+  {
+    "language": "Python",
+    "percentage": 32
+  },
+  {
+    "language": "PHP",
+    "percentage": 28.1
+  },
+  {
+    "language": "C++",
+    "percentage": 22.3
+  },
+  {
+    "language": "C",
+    "percentage": 19
+  },
+  {
+    "language": "TypeScript",
+    "percentage": 9.5
+  },
+  {
+    "language": "Ruby",
+    "percentage": 9.1
+  },
+  {
+    "language": "Swift",
+    "percentage": 6.5
+  },
+  {
+    "language": "Objective-C",
+    "percentage": 6.4
+  },
+  {
+    "language": "VB.NET",
+    "percentage": 6.2
+  },
+  {
+    "language": "Assembly",
+    "percentage": 5
+  },
+  {
+    "language": "R",
+    "percentage": 4.5
+  },
+  {
+    "language": "Perl",
+    "percentage": 4.3
+  },
+  {
+    "language": "VBA",
+    "percentage": 4.3
+  },
+  {
+    "language": "Matlab",
+    "percentage": 4.3
+  },
+  {
+    "language": "Go",
+    "percentage": 4.3
+  },
+  {
+    "language": "Scala",
+    "percentage": 3.6
+  },
+  {
+    "language": "Groovy",
+    "percentage": 3.3
+  },
+  {
+    "language": "CoffeeScript",
+    "percentage": 3.3
+  },
+  {
+    "language": "Visual Basic 6",
+    "percentage": 2.9
+  },
+  {
+    "language": "Lua",
+    "percentage": 2.8
+  },
+  {
+    "language": "Haskell",
+    "percentage": 1.8
+  }
+]
