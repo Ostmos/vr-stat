@@ -143,7 +143,7 @@ AFRAME.registerComponent( "sprite-point-cloud", {
             ); 
         }
 
-        var sprite = new THREE.TextureLoader().load( "../assets/textures/light.png" );
+        var sprite = new THREE.TextureLoader().load( "../assets/textures/blur3.png" );
         let material = new THREE.PointsMaterial( { 
             size: 0.08,
             sizeAttenuation: true,
