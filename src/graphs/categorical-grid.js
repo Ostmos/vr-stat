@@ -9,11 +9,13 @@ AFRAME.registerComponent( "categorical-grid", {
     schema: {
         size: { type: "vec3" },
         categories: { type: "array" },
+        group: { type: "array" },
         heightRange: { type: "array", default: [ 5, 10 ] },
         nbrOfHeightSteps: { type: "number", default: 7 },
         heightsSuffix: {type: "string" },
         xAxisLabel: { type: "string" },
         yAxisLabel: { type: "string" },
+        zAxisLabel: { type: "string" },
         padding: { type: "number" }
     },
  
@@ -73,6 +75,24 @@ AFRAME.registerComponent( "categorical-grid", {
         this.el.setObject3D( "xAxis", AxisX.mesh );
         this.mesh.push("xAxis");
         AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, 0, 0.4 ) ); 
+
+        // Z-axis
+        const StepZ = (Dim.z - data.padding * 2) / (data.group.length - 1);
+        const AxisPositionZ = new THREE.Vector3( ( Dim.x / 2 ), -Dim.y / 2, Dim.z / 2 - data.padding );
+        const AxisDirectionZ = new THREE.Vector3( 0, 0, -1 ).normalize();
+        const LabelOffsetZ = new THREE.Vector3( 0.2, 0, 0 );
+        //start, direction, stepLength, length, categories, labelOffset
+        const AxisZ = new CategoryAxis(
+            AxisPositionZ,
+            AxisDirectionZ,
+            StepZ,
+            Dim.z,
+            data.group,
+            LabelOffsetZ,
+        );
+        this.el.setObject3D( "zAxis", AxisZ.mesh );
+        this.mesh.push("zAxis");
+        AxisZ.setTitle( data.zAxisLabel, new THREE.Vector3( 0.4, 0, 0 ) ); 
     },
 
     remove: function() {

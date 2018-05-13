@@ -2,9 +2,11 @@
 require( "aframe" );
 require( "aframe-teleport-controls" );
 
-// Diagr ams
+// Graphs
 require( "./graphs/bar-chart" );
+require( "./graphs/bar-graph" );
 require( "./graphs/bars" );
+require( "./graphs/bars2" );
 
 require( "./graphs/line-chart" );
 require( "./graphs/lines" );
