@@ -106,8 +106,8 @@ AFRAME.registerComponent( "lines", {
 
         const X_START = -size.x / 2;
         const Y_START = -size.y / 2; 
-        const Z_START = size.z / 2;
-
+        const Z_START = size.z / 2; 
+        
         const lineGroup = new THREE.Group();
 
         let x, y, z;
