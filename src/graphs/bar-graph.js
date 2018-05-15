@@ -111,15 +111,8 @@ AFRAME.registerComponent( "bar-graph", {
 
         } 
 
-        /*this.el.setAttribute( "lines", {
-            size: this.data.size,
-            heights: scaledLines,
-            pointLabels: pointLabels,
-            lineLabels: this.data.lineLabels
-        } ); */
-
         const bars = document.createElement( "a-entity" );
-        bars.setAttribute( "bars2", {
+        bars.setAttribute( "bars", {
             size: this.data.size,
             barWidth: this.data.barWidth,
             heights: scaledBars, 
@@ -138,7 +131,7 @@ AFRAME.registerComponent( "bar-graph", {
         const panelBox = document.createElement("a-entity");
         panelBox.setAttribute( "panel-box", {
             size: { x: this.size.x, y: this.size.y, z: this.size.z },
-            sidesOpacity: 0
+            sidesOpacity: 0.2
         } );
         panelBox.className = "hoverable";
         panelBox.addEventListener( "stateadded", function( evt ) { 

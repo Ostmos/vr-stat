@@ -1,10 +1,4 @@
-// Cursor component is used by laser controller 
-// Get raycaster
-// Loop and find entities
-//  If entity rotation or moveable
-//      manipulate that object directyl 
-
-AFRAME.registerComponent( "laser-controls-2", {
+AFRAME.registerComponent( "graphvr-controls", {
 
     dependencies: [ "raycaster" ],
 
@@ -27,7 +21,7 @@ AFRAME.registerComponent( "laser-controls-2", {
         el.setAttribute( "laser-controls", "" );
         el.setAttribute( "raycaster", {
             objects: ".hoverable, a-link",
-            far: 20,
+            far: 40,
             color: "#000" 
         } );
 
@@ -170,5 +164,13 @@ AFRAME.registerComponent( "laser-controls-2", {
         return el;
 
     },  
+
+    hasClass: function( el, className ) {
+
+        if ( el === undefined || className === undefined ) { return true };
+
+        return el.classList.contains( className );
+
+    }
 
 } );

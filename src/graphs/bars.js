@@ -23,15 +23,15 @@ AFRAME.registerComponent( "bar", {
         const mesh = new THREE.Mesh( geometry, material );
         const pos = data.position;
 
+        this.el.setAttribute( "data-point", {
+            value: data.value
+        } );
+
         this.el.setObject3D( this.attrName, mesh );
 
         this.el.setAttribute( "pop-up-label", {
             text: data.value,
             position: { x: 0, y: data.height / 2 + 0.12, z: 0 }
-        } );
-
-        this.el.setAttribute( "data-point", {
-            value: data.value
         } );
 
         this.el.addEventListener( "stateadded", function( evt ) {
@@ -64,7 +64,7 @@ AFRAME.registerComponent( "bars", {
         size: { type: "vec3" },
         barWidth: { type: "number" },
         heights: { type: "array" },
-        value: { type: "array" },
+        labels: { type: "array" },
         outSidePadding: { type: "number" }
     },
  
@@ -72,27 +72,48 @@ AFRAME.registerComponent( "bars", {
 
         let data = this.data;
 
-        const step = ( data.size.x - data.outSidePadding * 2 ) / ( data.heights.length - 1 );
-        const start = new THREE.Vector3( -data.size.x / 2 + data.outSidePadding, -data.size.y / 2, 0 );
-        this.mesh = new THREE.Group(); 
+        const colors = [];
 
-        for (let i = 0; i < data.heights.length; i++ ) {
+        for ( let i = 0; i < data.heights[ 0 ].length; i ++ ) {
 
-            const entity = document.createElement( "a-entity");
-            entity.setAttribute( "bar", {
-                width: data.barWidth / 2,
-                height: data.heights[ i ],
-                value: data.values[ i ],
-            });
-            entity.setAttribute("position", {
-                 x: start.x + i * step, y: start.y + data.heights[ i ] / 2, z: 0 
-            } );
-            this.el.appendChild(entity);
+            colors[ i ] = Math.random() * 0xFFFFFF;
 
         }
 
-        console.log(this.el.object3DMap);
+        const ROW_STEP = ( data.size.z - data.outSidePadding * 2 ) / ( data.heights[ 0 ].length - 1); 
+        const BAR_STEP = ( data.size.x - data.outSidePadding * 2 ) / ( data.heights.length - 1); 
 
-    }
+        const X_START = -data.size.x / 2 + data.outSidePadding;
+        const Y_START = -data.size.y / 2; 
+        const Z_START = data.size.z / 2 - data.outSidePadding; 
+
+        let x, y, z, color;
+
+        for ( let i = 0; i < data.heights.length; i ++ ) {
+
+            for ( let j = 0; j < data.heights[ i ].length; j ++ ) {
+
+                x = i; 
+                y = data.heights[ i ][ j ];
+                z = j;
+                color = colors[ j ];
+                label = data.labels[ i ][ j ];
+
+                const entity = document.createElement( "a-entity");
+                entity.setAttribute("position", {
+                    x: X_START + BAR_STEP * i, y: Y_START + y / 2 + 0.001, z: Z_START - ROW_STEP * j 
+                } );
+                entity.setAttribute( "bar", {
+                    width: data.barWidth / 2,
+                    height: y,
+                    value: label,
+                    color: color
+                });
+                this.el.appendChild(entity);
+            } 
+
+        }
+
+    },
 
 } );

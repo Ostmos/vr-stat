@@ -67,7 +67,7 @@ AFRAME.registerComponent( "numerical-grid", {
         // X-axis
         const AxisPositionX = new THREE.Vector3( -Dim.x / 2, -Dim.y / 2, Dim.z / 2);
         const AxisDirectionX = new THREE.Vector3( 1, 0, 0 ).normalize();
-        const LabelOffsetX = new THREE.Vector3( 0, 0, 0.08 );
+        const LabelOffsetX = new THREE.Vector3( 0, 0, 0.12 );
         const RangeX = new Range( data.xRange[0], data.xRange[1] );
         const AxisX = new LabelAxis(
             AxisPositionX,
@@ -81,12 +81,12 @@ AFRAME.registerComponent( "numerical-grid", {
         );
         this.el.setObject3D( "xAxis", AxisX.mesh );
         this.meshes.push("xAxis");
-        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, 0, 0.4 ) ); 
+        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, -0.2, 0.4 ) ); 
 
         // Y-axis
         const AxisPositionY = new THREE.Vector3( -Dim.x / 2, -Dim.y / 2, Dim.z / 2);
         const AxisDirectionY = new THREE.Vector3( 0, 1, 0 ).normalize();
-        const LabelOffsetY = new THREE.Vector3( -0.08, 0, 0.08 );
+        const LabelOffsetY = new THREE.Vector3( -0.12, 0, 0.12 );
         const RangeY = new Range( data.yRange[0], data.yRange[1] );
         const AxisY = new LabelAxis(
             AxisPositionY,
@@ -105,7 +105,7 @@ AFRAME.registerComponent( "numerical-grid", {
         // Z-axis
         const AxisPositionZ = new THREE.Vector3( Dim.x / 2, -Dim.y / 2, -Dim.z / 2);
         const AxisDirectionZ = new THREE.Vector3( 0, 0, 1 ).normalize();
-        const LabelOffsetZ = new THREE.Vector3( 0.08, 0, 0 );
+        const LabelOffsetZ = new THREE.Vector3( 0.12, 0, 0 );
         const RangeZ = new Range( data.zRange[0], data.zRange[1] );
         const AxisZ = new LabelAxis(
             AxisPositionZ,
@@ -119,7 +119,7 @@ AFRAME.registerComponent( "numerical-grid", {
         );
         this.el.setObject3D( "zAxis", AxisZ.mesh );
         this.meshes.push("zAxis");
-        AxisZ.setTitle( data.zAxisLabel, new THREE.Vector3( 0.4, 0, 0 ) ); 
+        AxisZ.setTitle( data.zAxisLabel, new THREE.Vector3( 0.4, -0.2, 0 ) ); 
 
     },
 

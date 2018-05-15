@@ -3,7 +3,7 @@ const DataTable = require( "../data/data-table" ).DataTable;
 const Range = require( "../data/data-table" ).Range;
 const MediumText = require ( "../text/sprite-text" ).mediumText;
 
-AFRAME.registerComponent( "line-chart", {
+AFRAME.registerComponent( "line-graph", {
 
     schema: {
         src: { type: "asset" },
@@ -16,6 +16,7 @@ AFRAME.registerComponent( "line-chart", {
         time: { type: "string" },
         nbrOfHeightSteps: {type: "number", default: 7},
         heightsSuffix: {type: "string" },
+        axisToBarPadding: { type: "number", default: 0.2 },
     },
  
     init: function() {
@@ -82,6 +83,7 @@ AFRAME.registerComponent( "line-chart", {
             xAxisLabel: this.data.xAxisLabel,
             yAxisLabel: this.data.yAxisLabel,
             categories: times,
+            padding: this.data.axisToBarPadding
         } );
 
 
@@ -104,7 +106,8 @@ AFRAME.registerComponent( "line-chart", {
             size: this.data.size,
             heights: scaledLines,
             pointLabels: pointLabels,
-            lineLabels: this.data.lineLabels
+            lineLabels: this.data.lineLabels,
+            outSidePadding: this.data.axisToBarPadding
         } ); 
 
     },
@@ -116,7 +119,7 @@ AFRAME.registerComponent( "line-chart", {
         const panelBox = document.createElement("a-entity");
         panelBox.setAttribute( "panel-box", {
             size: { x: this.size.x, y: this.size.y, z: this.size.z },
-            sidesOpacity: 0
+            sidesOpacity: 0.2
         } );
         panelBox.className = "hoverable";
         panelBox.addEventListener( "stateadded", function( evt ) { 

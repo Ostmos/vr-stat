@@ -74,7 +74,7 @@ AFRAME.registerComponent( "categorical-grid", {
         );
         this.el.setObject3D( "xAxis", AxisX.mesh );
         this.mesh.push("xAxis");
-        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( 0, 0, 0.4 ) ); 
+        AxisX.setTitle( data.xAxisLabel, new THREE.Vector3( -data.padding, -0.1, 0.4 ) ); 
 
         // Z-axis
         const StepZ = (Dim.z - data.padding * 2) / (data.group.length - 1);

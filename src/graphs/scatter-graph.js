@@ -2,7 +2,7 @@ const JSONLoader = require( "../data/data-loader" ).JSONLoader;
 const DataTable = require( "../data/data-table" ).DataTable;
 const MediumText = require ( "../text/sprite-text" ).mediumText;
 
-AFRAME.registerComponent( "scatter-plot", {
+AFRAME.registerComponent( "scatter-graph", {
 
     schema: {
         src: { type: "asset" },
@@ -143,7 +143,7 @@ AFRAME.registerComponent( "scatter-plot", {
         const panelBox = document.createElement("a-entity");
         panelBox.setAttribute( "panel-box", {
             size: { x: this.size.x, y: this.size.y, z: this.size.z },
-            bottomOpacity: 0.0,
+            bottomOpacity: 0.2,
             sidesOpacity: 0.0,
         } );
         panelBox.className = "hoverable";
