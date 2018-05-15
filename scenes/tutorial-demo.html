@@ -7,7 +7,7 @@
     <script src="../build/vr-stat.bundle.js"></script>
     
     <script>
-        var linkMuseum, linkNoRoom; 
+
     AFRAME.registerComponent('camera-listener', {
 
       init: function() {
@@ -23,16 +23,9 @@
 
         this.el.sceneEl.addEventListener("rotated", () => {
 
-            self.rotated = true;
+          self.rotated = true;
 
         });
-
-        this.el.sceneEl.addEventListener("tele", () => {
-
-            ;
-
-        });
-
 
       },
 
@@ -120,7 +113,6 @@
           
 
           if(this.rotated){
-            this.rotated = false;
             // soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
             
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
@@ -166,8 +158,8 @@
       <!--World-->
       <a-entity geometry="primitive: plane; width:50; height:50" material="color:#7BC8A4; opacity: 0.5" scale="70 70 0" position="0 0 0" rotation="-90 0 0" shadow></a-entity>
       <a-entity id="circle" camera-listener visible="true" position="-0.5 -1 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
-      <a-entity id="museumPortal" link="href: ../scenes/room.html; title: Right index finger to go to the Museum; image: #imgMuseum; highlighted: true; image: #imgMuseum; peekMode: on" visible="false" position="2.2 1.5 -20" scale="1 1 1" on="go"></a-entity>
-      <a-entity id="openWorldPortal" link="href: ../scenes/open-world.html; title: Right index finger to go to the open world; image: #imgOpenWorld; highlighted: true; peekMode: on" visible="false" position="6.6 1.5 -20" scale="1 1 1" on="go"></a-entity>
+      <a-entity id="museumPortal" class="a-link" link="href: ../scenes/room.html; title: Right index finger to go to the Museum; image: #imgMuseum; highlighted: true; image: #imgMuseum; peekMode: on" visible="false" position="2.2 1.5 -20" scale="1 1 1" grabbable></a-entity>
+      <a-entity id="openWorldPortal" class="a-link" link="href: ../scenes/open-world.html; title: Right index finger to go to the open world; image: #imgOpenWorld; highlighted: true; peekMode: on" visible="false" position="6.6 1.5 -20" scale="1 1 1" grabbable></a-entity>
       <a-entity id="leftPanelEl" geometry="primitive: plane; width:4.2; height:0.35" material="color:black" position="2.2 3 -20" visible="false"></a-entity>
       <a-entity id= "rightPanelEl" geometry="primitive: plane; width:4.45; height:0.35" material="color:black" position="6.6 3 -20" visible="false"></a-entity>
     
@@ -202,7 +194,7 @@
                 series: C++, Javascript;
                 heightsSuffix: %;
                 size: 1 1.5 2 "
-                position="3.1 0.5 -8"
+                position="3.1 1 -8"
                 camera-listener
                 visible="false"
                 rotation="0 -30 0"

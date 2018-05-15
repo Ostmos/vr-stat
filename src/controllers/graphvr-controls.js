@@ -20,7 +20,7 @@ AFRAME.registerComponent( "graphvr-controls", {
 
         el.setAttribute( "laser-controls", "" );
         el.setAttribute( "raycaster", {
-            objects: ".hoverable, a-link",
+            objects: ".hoverable, [link]",
             far: 40,
             color: "#000" 
         } );
@@ -69,8 +69,8 @@ AFRAME.registerComponent( "graphvr-controls", {
         if ( evt.detail.id === this.BUTTONS.TRIGGER ) {
 
             this.onMoveStart();
-            // remove
-            this.el.emit("tele", {})
+
+            this.onLink();
 
         } else if ( evt.detail.id === this.BUTTONS.SCALE_UP ) {
 
@@ -119,6 +119,7 @@ AFRAME.registerComponent( "graphvr-controls", {
     onMoveEnd: function() {
             
         this.el.object3D.updateMatrixWorld();
+        if ( this.moveParent === undefined ) { return; }
         THREE.SceneUtils.detach( this.moveParent.object3D, this.el.object3D, this.el.sceneEl.object3D );
 
         this.intersectedEl = undefined;
@@ -126,6 +127,14 @@ AFRAME.registerComponent( "graphvr-controls", {
 
         this.el.removeState( this.GRABBING_STATE );
 
+    },
+
+    onLink: function() {
+
+        const intersectedEl = this.els[ 0 ];
+        console.log(this.els[0])
+        if ( !intersectedEl || intersectedEl.components.link === undefined ) { return; }
+        intersectedEl.setAttribute( "link", "highlighted", true );
     },
 
     onScaleUp: function() {

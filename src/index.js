@@ -23,6 +23,8 @@ require( "./graphs/data-point" );
 // Controllers
 require( "./controllers/graphvr-controls" );
 require( "./controllers/value-display" );
+// remove
+require( "./controllers/link-controls" );
 
 // Tutorial
 require( "./tutorial/grab-trigger" );
