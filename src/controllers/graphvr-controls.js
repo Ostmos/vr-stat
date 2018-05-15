@@ -42,6 +42,8 @@ AFRAME.registerComponent( "graphvr-controls", {
         if ( this.el.is( this.GRABBING_STATE )) { return; }
 
         this.el.addState( this.ROTATION_STATE );
+        // remove
+        this.el.emit("rotated", {})
 
         if ( evt.detail.axis[ 0 ] == 0 && evt.detail.axis[ 1 ] == 0 ) {
 
@@ -67,6 +69,8 @@ AFRAME.registerComponent( "graphvr-controls", {
         if ( evt.detail.id === this.BUTTONS.TRIGGER ) {
 
             this.onMoveStart();
+            // remove
+            this.el.emit("tele", {})
 
         } else if ( evt.detail.id === this.BUTTONS.SCALE_UP ) {
 
@@ -94,6 +98,9 @@ AFRAME.registerComponent( "graphvr-controls", {
 
         const intersectedEl = this.els[ 0 ];
         if ( intersectedEl === undefined ) { return; }
+
+        // remove
+        this.el.emit( "moved", {})
 
         const moveParent = this.findParent( intersectedEl, "chart" );
         if ( moveParent == undefined ) { return; }

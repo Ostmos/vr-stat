@@ -4,17 +4,44 @@
   <meta charset="UTF-8">
   <title>VR-Stat - tutorial</title>
     
-    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
     <script src="../build/vr-stat.bundle.js"></script>
     
-    <script>AFRAME.registerComponent('camera-listener', {
+    <script>
+        var linkMuseum, linkNoRoom; 
+    AFRAME.registerComponent('camera-listener', {
+
+      init: function() {
+
+        let self = this;
+        self.moved = false;
+
+        this.el.sceneEl.addEventListener("moved", () => {
+
+            self.moved = true;
+
+        });
+
+        this.el.sceneEl.addEventListener("rotated", () => {
+
+            self.rotated = true;
+
+        });
+
+        this.el.sceneEl.addEventListener("tele", () => {
+
+            ;
+
+        });
+
+
+      },
 
         tick: function () {
           ///var cameraEl = this.el.sceneEl.camera.el;
           var cameraEl = document.querySelector('#player');
           var circleEl = document.querySelector('#circle');
-          var leftPanelEl = document.querySelector('#leftPanel');
-          var rightPanelEl = document.querySelector('#rightPanel');
+          var leftPanelEl = document.querySelector('#leftPanelEl');
+          var rightPanelEl = document.querySelector('#rightPanelEl');
 
           var cameraPosZ = cameraEl.getAttribute('position').z;
 
@@ -69,8 +96,9 @@
             moved = true;
           }
 
-          if(moved){
-            soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
+          if(this.moved){
+            this.moved = false;
+            //soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
             
             circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
 
@@ -91,8 +119,9 @@
           }
           
 
-          if(rotated){
-            soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
+          if(this.rotated){
+            this.rotated = false;
+            // soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
             
             circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
             // textRotate.setAttribute('visible', false);
@@ -113,7 +142,7 @@
 </head>
 
 <body>
-    <a-scene stats> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
+    <a-scene> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
       <a-asset>
         <a-asset-item id="modelTestRoom" src="../assets/models/tutorial_room.gltf"></a-asset-item>
         <a-asset-item id="modelCircle" src="../assets/models/circle.gltf"></a-asset-item>
@@ -135,12 +164,12 @@
       </a-asset>
   
       <!--World-->
-      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#7BC8A4; opacity: 0.5" scale="70 70 0" position="0 -1 0" rotation="-90 0 0" shadow></a-entity>
+      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#7BC8A4; opacity: 0.5" scale="70 70 0" position="0 0 0" rotation="-90 0 0" shadow></a-entity>
       <a-entity id="circle" camera-listener visible="true" position="-0.5 -1 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
-      <a-entity id="museumPortal" link="href: ../scenes/room.html; title: Right index finger to go to the Museum; image: #imgMuseum; highlighted: true; image: #imgMuseum; peekMode: on" visible="false" position="2.2 1.5 -20" scale="1 1 1" hoverable></a-entity>
-      <a-entity id="openWorldPortal" link="href: ../scenes/open-world.html; title: Right index finger to go to the open world; image: #imgOpenWorld; highlighted: true; peekMode: on" visible="false" position="6.6 1.5 -20" scale="1 1 1" hoverable></a-entity>
-      <a-entity id="leftPlane" geometry="primitive: plane; width:4.2; height:0.35" material="color:black" position="2.2 3 -20" visible="false"></a-entity>
-      <a-entity id= "rightPlane" geometry="primitive: plane; width:4.45; height:0.35" material="color:black" position="6.6 3 -20" visible="false"></a-entity>
+      <a-entity id="museumPortal" link="href: ../scenes/room.html; title: Right index finger to go to the Museum; image: #imgMuseum; highlighted: true; image: #imgMuseum; peekMode: on" visible="false" position="2.2 1.5 -20" scale="1 1 1" on="go"></a-entity>
+      <a-entity id="openWorldPortal" link="href: ../scenes/open-world.html; title: Right index finger to go to the open world; image: #imgOpenWorld; highlighted: true; peekMode: on" visible="false" position="6.6 1.5 -20" scale="1 1 1" on="go"></a-entity>
+      <a-entity id="leftPanelEl" geometry="primitive: plane; width:4.2; height:0.35" material="color:black" position="2.2 3 -20" visible="false"></a-entity>
+      <a-entity id= "rightPanelEl" geometry="primitive: plane; width:4.45; height:0.35" material="color:black" position="6.6 3 -20" visible="false"></a-entity>
     
       <a-sky color="#ECECEC"></a-sky> <!-- 212F3C -->
   
@@ -163,15 +192,16 @@
       <a-entity id="modelMoveController" visible="false" shadow rotation="-10 150 0" position="0.4 1.2 -4.2" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
       <a-entity id="move"
                 class="diagram"
-                bar-chart="
+                bar-graph="
                 src:url(../assets/statistics/tutorial-stat.json);
                 title: Move me!; 
-                xAxisLabel: x-axis; 
-                yAxisLabel: y-axis; 
-                categories: language;
-                heights: percentage;
+                xAxisLabel: Popularity; 
+                yAxisLabel: Languages; 
+                zAxisLabel: Year;
+                group: Year;
+                series: C++, Javascript;
                 heightsSuffix: %;
-                size: 2 1.5 0.5 "
+                size: 1 1.5 2 "
                 position="3.1 0.5 -8"
                 camera-listener
                 visible="false"
@@ -185,17 +215,19 @@
       <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Rotate me" bar-chart-listener scale="1 1 1" position="3.5 0.5 -14"  rotation="0 270 0" camera-listener></a-entity> -->      
       <a-entity id="rotate" 
                 class="diagram"
-                bar-chart="
+                bar-graph="
                 src:url(../assets/statistics/tutorial-stat.json);
-                title: Rotate me!; 
-                xAxisLabel: x-axis; 
-                yAxisLabel: y-axis; 
-                categories: language;
-                heights: percentage;
+                title: Move me!; 
+                xAxisLabel: Popularity; 
+                yAxisLabel: Languages; 
+                zAxisLabel: Year;
+                group: Year;
+                series: C++, Javascript;
                 heightsSuffix: %;
-                size: 2 1.5 0.5 "
-                position="15 0.5 -14" 
+                size: 1 1.5 2 "
+                position="15 1 -14" 
                 camera-listener
+                rotate-trigger
                 visible="false"
                 rotation="0 -45 0"></a-entity>
       <a-entity id="txtRotate" position="10.655 1.75 -12" scale="0.5 0.3 0.5" camera-listener visible="false">
@@ -221,10 +253,16 @@
         </a-entity>-->
 
         <!-- VR-CONTROLLERS -->
-        <a-entity id="player" position="0 0 0" move-trigger>
+        <!--<a-entity id="player" position="0 0 0" move-trigger>
             <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
             <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;" move-trigger></a-entity>
             <a-entity oculus-touch-controls="hand:right" laser-controls-2 tutorial-controller ></a-entity>
+        </a-entity>-->
+
+        <a-entity id="player" position="0 0 5">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" graphvr-controls></a-entity>
         </a-entity>
      
     </a-scene>
