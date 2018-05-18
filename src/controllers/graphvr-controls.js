@@ -132,7 +132,6 @@ AFRAME.registerComponent( "graphvr-controls", {
     onLink: function() {
 
         const intersectedEl = this.els[ 0 ];
-        console.log(this.els[0])
         if ( !intersectedEl || intersectedEl.components.link === undefined ) { return; }
         intersectedEl.setAttribute( "link", "highlighted", true );
     },
