@@ -1,34 +1,27 @@
 [
   {
-    "language": "Bar 1",
-    "percentage": 45.5
+    "C++": 27.6,
+    "Javascript": 56.6,
+    "Year": "2013"
   },
   {
-    "language": "Bar 2",
-    "percentage": 40.2
+    "C++": 21.1,
+    "Javascript": 58.9,
+    "Year": "2014"
   },
   {
-    "language": "Bar 3",
-    "percentage": 39.7
+    "C++": 20.6,
+    "Javascript": 54.4,
+    "Year": "2015"
   },
   {
-    "language": "Bar 4",
-    "percentage": 37.1
+    "C++": 19.7,
+    "Javascript": 56.2,
+    "Year": "2016"
   },
   {
-    "language": "Bar 5",
-    "percentage": 29.5
-  },
-  {
-    "language": "Bar 6",
-    "percentage": 25.2
-  },
-  {
-    "language": "Bar 7",
-    "percentage": 10.7
-  },
-  {
-    "language": "Bar 8",
-    "percentage": 10.1
+    "C++": 22.3,
+    "Javascript": 62.5,
+    "Year": "2017"
   }
 ]

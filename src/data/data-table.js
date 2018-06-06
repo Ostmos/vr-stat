@@ -1,4 +1,3 @@
-// Strict range, ex [5, 1, 2] = { start: 1, end: 5 }
 function Range( start = 0, end = 0 ) {
 
     this.start = start;
@@ -44,8 +43,6 @@ DataTable.prototype = {
             });
             
         });
-
-        // Remove objects from one array or the other when they're short on objects?
 
     },
 

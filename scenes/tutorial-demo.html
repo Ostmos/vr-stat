@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>VR-Stat - tutorial</title>
+    
+    <script src="../build/vr-stat.bundle.js"></script>
+    
+    <script>
+
+    AFRAME.registerComponent('camera-listener', {
+
+      init: function() {
+
+        let self = this;
+        self.moved = false;
+
+        this.el.sceneEl.addEventListener("moved", () => {
+
+            self.moved = true;
+
+        });
+
+        this.el.sceneEl.addEventListener("rotated", () => {
+
+          self.rotated = true;
+
+        });
+
+      },
+
+        tick: function () {
+          ///var cameraEl = this.el.sceneEl.camera.el;
+          var cameraEl = document.querySelector('#player');
+          var circleEl = document.querySelector('#circle');
+          var leftPanelEl = document.querySelector('#leftPanelEl');
+          var rightPanelEl = document.querySelector('#rightPanelEl');
+
+          var cameraPosZ = cameraEl.getAttribute('position').z;
+
+          var textTele = document.querySelector('#txtTeleport');
+          var controllerTeleport = document.querySelector('#modelTeleportController');
+          
+          var textMove = document.querySelector('#txtMove');
+          var controllerMove = document.querySelector('#modelMoveController');
+          var moveDiagram = document.querySelector('#move');
+
+          /*var moveDiagramPosX = moveDiagram.getAttribute('position').x;
+          var moveDiagramPosY = moveDiagram.getAttribute('position').y;
+          var moveDiagramPosZ = moveDiagram.getAttribute('position').z;*/
+          var moveDiagramPosX = moveDiagram.getAttribute('position').x;
+          var moveDiagramPosY = moveDiagram.getAttribute('position').y;
+          var moveDiagramPosZ = moveDiagram.getAttribute('position').z;
+          var moved;
+
+          //Rotate components
+          var textRotate = document.querySelector('#txtRotate');
+          var controllerRotate = document.querySelector('#modelRotateController');
+          var rotateDiagram = document.querySelector('#rotate');
+
+          var rotateDiagramPosX = rotateDiagram.getAttribute('rotation').x;
+          var rotateDiagramPosY = rotateDiagram.getAttribute('rotation').y;
+          var rotateDiagramPosZ = rotateDiagram.getAttribute('rotation').z;
+
+          //Hover components
+          var textHover = document.querySelector('#txtHover');
+
+          //Link componenet
+
+          var linkMuseum = document.querySelector('#museumPortal');
+          var linkNoRoom = document.querySelector('#openWorldPortal');
+
+          // Scene 1
+          if(cameraPosZ<-2){
+            circleEl.setAttribute('visible', false);
+            textTele.setAttribute('visible', false);
+            controllerTeleport.setAttribute('visible', false);
+
+            textMove.setAttribute('visible', true);
+            controllerMove.setAttribute('visible', true);
+            moveDiagram.setAttribute('visible', true);
+
+            //soundEl.components.sound.playSound();
+          }
+
+          // Scene 2
+
+          if(moveDiagramPosX!=3.1 || moveDiagramPosY!=0.5 || moveDiagramPosZ != -8){
+            moved = true;
+          }
+
+          if(this.moved){
+            this.moved = false;
+            //soundEl.setAttribute('position', {x:15, y:0.5, z:-14});
+            
+            circleEl.setAttribute('position', {x: 10, y: 0, z: -10});
+
+            circleEl.setAttribute('visible', true);
+            rotateDiagram.setAttribute('visible', true);
+            controllerRotate.setAttribute('visible', true);
+            textRotate.setAttribute('visible', true);
+            textHover.setAttribute('visible',true);
+
+           //soundEl.components.sound.playSound();
+
+          }
+
+          // Scene 3
+
+          if(rotateDiagramPosX!=0 || rotateDiagramPosY!=-45 || rotateDiagramPosZ!=0){
+            var rotated = true;
+          }
+          
+
+          if(this.rotated){
+            // soundEl.setAttribute('position', {x:2.2, y:1.5, z:-20});
+            
+            circleEl.setAttribute('position', {x: 4.2, y: 0, z: -15});
+            // textRotate.setAttribute('visible', false);
+            // textHover.setAttribute('visible',false);
+
+            linkMuseum.setAttribute('visible', true);
+            linkNoRoom.setAttribute('visible', true);
+            leftPanelEl.setAttribute('visible', true);
+            rightPanelEl.setAttribute('visible', true);
+
+           //soundEl.components.sound.playSound();
+
+          }
+          
+        }
+    })
+    </script>
+</head>
+
+<body>
+    <a-scene> <!-- avatar-replayer="src: src/assets/recordings/rotation.json">-->
+      <a-asset>
+        <a-asset-item id="modelTestRoom" src="../assets/models/tutorial_room.gltf"></a-asset-item>
+        <a-asset-item id="modelCircle" src="../assets/models/circle.gltf"></a-asset-item>
+        
+        <a-asset-item id="modelTeleport" src="../assets/models/teleport_controller.gltf"></a-asset-item>
+        <a-asset-item id="modelMove" src="../assets/models/move_controller.gltf"></a-asset-item>
+        <a-asset-item id="modelScale" src="../assets/models/scale_controller.gltf"></a-asset-item>
+        <a-asset-item id="modelHover" src="../assets/models/hover_controller.gltf"></a-asset-item>
+        <a-asset-item id="modelRotate" src="../assets/models/rotate_controller.gltf"></a-asset-item>
+  
+        <img id="imgSky" src="../assets/images/equi.png">
+        <img id="imgBoard" src="../assets/images/museum_board.png">
+        <img id="imgTeleport" src="../assets/images/teleport_text.png">
+        <img id="imgMove" src="../assets/images/move_text.png">
+        <img id="imgHover" src="../assets/images/hover_text.png">
+        <img id="imgRotate" src="../assets/images/rotate_text.png">
+        <img id="imgMuseum" src="../assets/images/index360View.png">
+        <img id="imgOpenWorld" src="../assets/images/open-world.png">
+      </a-asset>
+  
+      <!--World-->
+      <a-entity geometry="primitive: plane; width:50; height:50" material="color:#7BC8A4; opacity: 0.5" scale="70 70 0" position="0 0 0" rotation="-90 0 0" shadow></a-entity>
+      <a-entity id="circle" camera-listener visible="true" position="-0.5 -1 -3.5" scale="0.5 0.5 0.5" gltf-model="#modelCircle"></a-entity>
+      <a-entity id="museumPortal" class="a-link" link="href: ../scenes/room.html; title: Right index finger to go to the Museum; image: #imgMuseum; highlighted: true; image: #imgMuseum; peekMode: on" visible="false" position="2.2 1.5 -20" scale="1 1 1" grabbable></a-entity>
+      <a-entity id="openWorldPortal" class="a-link" link="href: ../scenes/open-world.html; title: Right index finger to go to the open world; image: #imgOpenWorld; highlighted: true; peekMode: on" visible="false" position="6.6 1.5 -20" scale="1 1 1" grabbable></a-entity>
+      <a-entity id="leftPanelEl" geometry="primitive: plane; width:4.2; height:0.35" material="color:black" position="2.2 3 -20" visible="false"></a-entity>
+      <a-entity id= "rightPanelEl" geometry="primitive: plane; width:4.45; height:0.35" material="color:black" position="6.6 3 -20" visible="false"></a-entity>
+    
+      <a-sky color="#ECECEC"></a-sky> <!-- 212F3C -->
+  
+      <!-- Light -->
+      <a-entity light="type: ambient; color: #FFF; intensity:1"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6; shadowCameraVisible: false; castShadow: true" position="-1 1 2">
+      </a-entity>
+
+      <!--Teleport-->
+      <a-entity id="txtTeleport" position="0 1.7 -3" rotation="0 0 0" scale="0.5 0.5 0.5" visible="true">
+        <a-image src="#imgTeleport" width="3" height="1" side="front"></a-image>
+      </a-entity>
+      <a-entity id="modelTeleportController" visible="true" shadow rotation="-40 150 0" position="-0.5 1.2 -2.5" scale="0.003 0.003 0.003" gltf-model="#modelTeleport" camera-listener></a-entity>
+
+      <!-- Move -->
+      <a-entity id="txtMove" position="-0.4 1.7 -6" rotation="0 0 0" scale="0.5 0.3 0.5" visible="false"  camera-listener>
+        <a-image src="#imgMove" width="3" height="1" side="front"></a-image>
+      </a-entity>
+     <!--  <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="3 1 -9" camera-listener bar-chart="yScale: 0.05; title: This is a diagram!; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
+      <a-entity id="modelMoveController" visible="false" shadow rotation="-10 150 0" position="0.4 1.2 -4.2" scale="0.003 0.003 0.003" gltf-model="#modelMove"  camera-listener></a-entity>
+      <a-entity id="move"
+                class="diagram"
+                bar-graph="
+                src:url(../assets/statistics/tutorial-stat.json);
+                title: Move me!; 
+                xAxisLabel: Popularity; 
+                yAxisLabel: Languages; 
+                zAxisLabel: Year;
+                group: Year;
+                series: C++, Javascript;
+                heightsSuffix: %;
+                size: 1 1.5 2 "
+                position="3.1 1 -8"
+                camera-listener
+                visible="false"
+                rotation="0 -30 0"
+                shadow
+                rotate-trigger
+                ></a-entity>
+      <!-- <a-entity id="move" class="cube rotate" visible="false" grabbable draggable bar-chart="title:I am a diagram!" bar-chart-listener position="3.5 0.5 -9" scale="1 1 1" rotation="0 270 0" camera-listener></a-entity> -->
+
+      <!-- Rotate -->
+      <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart="title:Rotate me" bar-chart-listener scale="1 1 1" position="3.5 0.5 -14"  rotation="0 270 0" camera-listener></a-entity> -->      
+      <a-entity id="rotate" 
+                class="diagram"
+                bar-graph="
+                src:url(../assets/statistics/tutorial-stat.json);
+                title: Move me!; 
+                xAxisLabel: Popularity; 
+                yAxisLabel: Languages; 
+                zAxisLabel: Year;
+                group: Year;
+                series: C++, Javascript;
+                heightsSuffix: %;
+                size: 1 1.5 2 "
+                position="15 1 -14" 
+                camera-listener
+                rotate-trigger
+                visible="false"
+                rotation="0 -45 0"></a-entity>
+      <a-entity id="txtRotate" position="10.655 1.75 -12" scale="0.5 0.3 0.5" camera-listener visible="false">
+        <a-image src="#imgRotate" width="3" height="1" side="both"></a-image>
+      </a-entity>
+      <a-entity id="txtHover" position="10.655 1.5 -12" scale="0.5 0.5 0.5" camera-listener visible="false">
+        <a-image src="#imgHover" width="3" height="0.5" side="both"></a-image>
+      </a-entity>
+      <a-entity id="modelRotateController" shadow rotation="-30 170 0" position="11 1 -10.6" scale="0.003 0.003 0.003" gltf-model="#modelRotate" camera-listener visible="false"></a-entity>
+      <!-- <a-entity id="rotate" class="cube rotate" visible="false" grabbable draggable bar-chart-listener position="5 1 -16"  rotation="0 0 0" camera-listener bar-chart="yScale: 0.05; title: Programming language popularity; suffix: %; src:url(./src/assets/statistics/language_popularity.json)"></a-entity> -->
+
+      <!-- Correct controllers I think -->
+      
+        <!--<a-entity id="rig" progressive-controls="objects: .diagram, a-link; maxLevel: point">
+          <a-entity id="controller1" class="right-controller" 
+            super-hands="grabEndButtons: triggerup; grabStartButtons: triggerdown; objects: .cube;"
+            rotation-controller
+            controller-display></a-entity>
+          <a-entity id="controller2" class="left-controller" 
+            teleport-controls="cameraRig:#rig; button: trigger; collisionEntities: #floor" 
+            raycaster="showLine:false; enabled:false"></a-entity>
+          <a-camera position="0 1.6 0"></a-camera>
+        </a-entity>-->
+
+        <!-- VR-CONTROLLERS -->
+        <!--<a-entity id="player" position="0 0 0" move-trigger>
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;" move-trigger></a-entity>
+            <a-entity oculus-touch-controls="hand:right" laser-controls-2 tutorial-controller ></a-entity>
+        </a-entity>-->
+
+        <a-entity id="player" position="0 0 5">
+            <a-entity id="cam" camera="userHeight: 1.9" look-controls wasd-controls></a-entity>
+            <a-entity oculus-touch-controls="hand:left" teleport-controls="cameraRig: #player; button: trigger; teleportOrigin: #cam;"></a-entity>
+            <a-entity oculus-touch-controls="hand:right" graphvr-controls></a-entity>
+        </a-entity>
+     
+    </a-scene>
+    
+
+</body>
+
+</html>

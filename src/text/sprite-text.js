@@ -28,7 +28,7 @@ function SpriteText( text = "Lorem", properties, panel ) {
     if ( TextWidth > canvasSize ) {
 
         while (TextWidth > canvasSize * scale ) {
-            scale *= 2;
+            scale *= 1.1;
         }
 
         this.canvas.width = canvasSize * scale;
@@ -43,7 +43,7 @@ function SpriteText( text = "Lorem", properties, panel ) {
     // Panel
     if ( panel ) {
 
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = "white";
         this.ctx.fillRect(0, this.canvas.height / 4, this.canvas.width, this.canvas.height / 2);
 
     }
@@ -103,7 +103,7 @@ function miniTextPanel( text, rotation = 0 ) {
 
 function smallTextPanel( text, rotation = 0 ) {
 
-    const Properties = new TextProperties( "Courier New", 48, "white", rotation);
+    const Properties = new TextProperties( "Courier New", 48, "black", rotation);
     return new SpriteText( text, Properties, true ); 
     
 }

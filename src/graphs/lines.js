@@ -78,12 +78,14 @@ AFRAME.registerComponent( "lines", {
         size: { type: "vec3" },
         heights: { type: "array" },
         pointLabels: { type: "array" },
-        lineLabels: { type: "array" }
+        lineLabels: { type: "array" },
+        outSidePadding: { type: "number"}
     },
  
     init: function() {
         
         let data = this.data;
+        this.padding = data.outSidePadding;
 
         this.makeLines();
 
@@ -97,17 +99,17 @@ AFRAME.registerComponent( "lines", {
 
         // Step length between each line on the z-axis
         const NBR_OF_LINES = heights.length;
-        const LINE_STEP =  size.z / ( NBR_OF_LINES - 1 );
+        const LINE_STEP =  ( size.z - this.padding ) / ( NBR_OF_LINES - 1 );
 
         // TODO: make more reliable 
         // Step length between each point on the x-axis
         const NBR_OF_POINTS = heights[ 0 ].length;
-        const POINT_STEP = size.x / ( NBR_OF_POINTS - 1 );
+        const POINT_STEP = ( size.x - this.padding * 2 ) / ( NBR_OF_POINTS - 1 );
 
-        const X_START = -size.x / 2;
+        const X_START = -size.x / 2 + this.padding;
         const Y_START = -size.y / 2; 
-        const Z_START = size.z / 2;
-
+        const Z_START = size.z / 2; 
+        
         const lineGroup = new THREE.Group();
 
         let x, y, z;

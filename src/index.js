@@ -1,30 +1,30 @@
 // Vendors
+require( "aframe" );
 require( "aframe-teleport-controls" );
 
-// Diagr ams
-require( "./diagrams/bar-chart" );
-require( "./diagrams/bars" );
+// Graphs
+require( "./graphs/bar-graph" );
+require( "./graphs/bars" );
 
-require( "./diagrams/line-chart" );
-require( "./diagrams/lines" );
+require( "./graphs/line-graph" );
+require( "./graphs/lines" );
 
-require( "./diagrams/panel-box" );
+require( "./graphs/panel-box" );
 
-require( "./diagrams/scatter-plot" );
-require( "./diagrams/point-cloud" );
+require( "./graphs/scatter-graph" );
+require( "./graphs/point-cloud" );
 
-require( "./diagrams/categorical-grid" );
-require( "./diagrams/numerical-grid" );
+require( "./graphs/categorical-grid" );
+require( "./graphs/numerical-grid" );
 
 require( "./listeners/pop-up-label" );
-require( "./diagrams/data-point" );
+require( "./graphs/data-point" );
 
 // Controllers
-require( "./controllers/laser-controls-2" );
+require( "./controllers/graphvr-controls" );
 require( "./controllers/value-display" );
-
-require( "./components/controller-display" );
-require( "./components/bar-chart-listener" );
+// remove
+require( "./controllers/link-controls" );
 
 // Tutorial
 require( "./tutorial/grab-trigger" );

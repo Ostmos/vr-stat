@@ -1,4 +1,4 @@
-const spriteText = require( "../text/sprite-text" ).smallText;
+const spriteText = require( "../text/sprite-text" ).smallTextPanel;
 
 AFRAME.registerComponent( "pop-up-label", {
 

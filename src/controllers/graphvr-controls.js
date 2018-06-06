@@ -1,10 +1,4 @@
-// Cursor component is used by laser controller 
-// Get raycaster
-// Loop and find entities
-//  If entity rotation or moveable
-//      manipulate that object directyl 
-
-AFRAME.registerComponent( "laser-controls-2", {
+AFRAME.registerComponent( "graphvr-controls", {
 
     dependencies: [ "raycaster" ],
 
@@ -26,8 +20,8 @@ AFRAME.registerComponent( "laser-controls-2", {
 
         el.setAttribute( "laser-controls", "" );
         el.setAttribute( "raycaster", {
-            objects: ".hoverable, a-link",
-            far: 20,
+            objects: ".hoverable, [link]",
+            far: 40,
             color: "#000" 
         } );
 
@@ -48,6 +42,8 @@ AFRAME.registerComponent( "laser-controls-2", {
         if ( this.el.is( this.GRABBING_STATE )) { return; }
 
         this.el.addState( this.ROTATION_STATE );
+        // remove
+        this.el.emit("rotated", {})
 
         if ( evt.detail.axis[ 0 ] == 0 && evt.detail.axis[ 1 ] == 0 ) {
 
@@ -73,6 +69,8 @@ AFRAME.registerComponent( "laser-controls-2", {
         if ( evt.detail.id === this.BUTTONS.TRIGGER ) {
 
             this.onMoveStart();
+
+            this.onLink();
 
         } else if ( evt.detail.id === this.BUTTONS.SCALE_UP ) {
 
@@ -101,6 +99,9 @@ AFRAME.registerComponent( "laser-controls-2", {
         const intersectedEl = this.els[ 0 ];
         if ( intersectedEl === undefined ) { return; }
 
+        // remove
+        this.el.emit( "moved", {})
+
         const moveParent = this.findParent( intersectedEl, "chart" );
         if ( moveParent == undefined ) { return; }
 
@@ -118,6 +119,7 @@ AFRAME.registerComponent( "laser-controls-2", {
     onMoveEnd: function() {
             
         this.el.object3D.updateMatrixWorld();
+        if ( this.moveParent === undefined ) { return; }
         THREE.SceneUtils.detach( this.moveParent.object3D, this.el.object3D, this.el.sceneEl.object3D );
 
         this.intersectedEl = undefined;
@@ -125,6 +127,13 @@ AFRAME.registerComponent( "laser-controls-2", {
 
         this.el.removeState( this.GRABBING_STATE );
 
+    },
+
+    onLink: function() {
+
+        const intersectedEl = this.els[ 0 ];
+        if ( !intersectedEl || intersectedEl.components.link === undefined ) { return; }
+        intersectedEl.setAttribute( "link", "highlighted", true );
     },
 
     onScaleUp: function() {
@@ -170,5 +179,13 @@ AFRAME.registerComponent( "laser-controls-2", {
         return el;
 
     },  
+
+    hasClass: function( el, className ) {
+
+        if ( el === undefined || className === undefined ) { return true };
+
+        return el.classList.contains( className );
+
+    }
 
 } );

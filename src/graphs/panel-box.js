@@ -2,10 +2,10 @@ AFRAME.registerComponent( "panel-box", {
 
     schema: {
         size: { type: "vec3", default: { x: 1, y: 1, z: 1 } },
-        bottomColor: { type: "color", default: 0x000000 },
-        sidesColor: { type: "color", default: 0x000000 },
+        bottomColor: { type: "color", default: 0xFFFFFF },
+        sidesColor: { type: "color", default: 0xFFFFFF },
         bottomOpacity: { type: "number", default: 0.8 },
-        sidesOpacity: { type: "number", default: 0 },
+        sidesOpacity: { type: "number", default: 0.0 },
     },
 
     init: function() {
